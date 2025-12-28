@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>SARDROID - Dropbox Direct Link Converter</title>
+  <title>SARDROID - JSON Generator per Aggiornamenti</title>
   <style>
     body {
       font-family: sans-serif;
@@ -43,19 +43,27 @@
     .hint {
       font-size: 0.85em;
       color: #666;
-      margin-top: -0.3em;
+      margin-top: 0.3em;
+    }
+    .url-display {
+      background: #f5f5f5;
+      padding: 0.5em;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+      word-break: break-all;
     }
   </style>
 </head>
 <body>
-  <h1>SARDROID - Dropbox Direct Link Converter</h1>
+  <h1>SARDROID - JSON Generator</h1>
   
   <label for="versionField">Versione:</label>
   <input id="versionField" type="text" placeholder="4.3.5" value="4.3.5" />
   
-  <label for="dropboxLink">Link Dropbox originale:</label>
-  <button id="pasteBtn">📋 Incolla dagli appunti</button>
-  <input id="dropboxLink" type="text" placeholder="https://www.dropbox.com/..." />
+  <label>URL Download (GitHub Releases):</label>
+  <div class="url-display">https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe</div>
+  <p class="hint">L'URL è fisso e punta sempre all'ultima release. Basta caricare una nuova release su GitHub.</p>
   
   <label for="noteField">Note di rilascio (una per riga):</label>
   <textarea id="noteField" placeholder="Nuova funzionalità X
@@ -72,57 +80,32 @@ Corretti bug minori</textarea>
   <button id="copyBtn">📋 Copia negli appunti</button>
   
   <script>
-    const inp = document.getElementById('dropboxLink');
     const out = document.getElementById('result');
     const versionField = document.getElementById('versionField');
     const noteField = document.getElementById('noteField');
     const btnConv = document.getElementById('convertBtn');
     const btnCopy = document.getElementById('copyBtn');
-    const btnPaste = document.getElementById('pasteBtn');
     
-    btnPaste.addEventListener('click', async () => {
-      if (!navigator.clipboard) {
-        alert("Il tuo browser non supporta la Clipboard API.");
-        return;
-      }
-      try {
-        const testo = await navigator.clipboard.readText();
-        if (!testo) {
-          alert("Gli appunti sono vuoti.");
-          return;
-        }
-        inp.focus();
-        inp.value = testo.trim();
-      } catch (err) {
-        alert("Impossibile leggere dagli appunti: " + err);
-      }
-    });
+    // URL fisso per GitHub Releases
+    const GITHUB_RELEASE_URL = 'https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe';
     
     btnConv.addEventListener('click', () => {
-      try {
-        let url = new URL(inp.value.trim());
-        url.host = 'dl.dropboxusercontent.com';
-        url.searchParams.set('dl', '1');
-        
-        // Parsing note (una per riga, ignora righe vuote)
-        const note = noteField.value
-          .split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 0);
-        
-        const jsonObj = {
-          versione: versionField.value.trim(),
-          url: url.href,
-          note: note
-        };
-        out.value = JSON.stringify(jsonObj, null, 2);
-      } catch (e) {
-        out.value = "❌ URL non valido. Inserisci un link Dropbox valido.";
-      }
+      // Parsing note (una per riga, ignora righe vuote)
+      const note = noteField.value
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
+      
+      const jsonObj = {
+        versione: versionField.value.trim(),
+        url: GITHUB_RELEASE_URL,
+        note: note
+      };
+      out.value = JSON.stringify(jsonObj, null, 2);
     });
     
     btnCopy.addEventListener('click', () => {
-      if (!out.value || out.value.startsWith('❌')) return;
+      if (!out.value) return;
       navigator.clipboard.writeText(out.value)
         .then(() => alert('✅ JSON copiato negli appunti!'))
         .catch(err => alert('Errore durante la copia: ' + err));
