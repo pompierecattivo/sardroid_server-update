@@ -20,29 +20,66 @@
     }
     textarea {
       font-family: monospace;
-      height: 130px;
+      height: 200px;
+    }
+    textarea#noteField {
+      height: 100px;
     }
     button {
       cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 1em;
+      display: block;
+    }
+    .hint {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: -0.3em;
     }
   </style>
 </head>
 <body>
   <h1>SARDROID - Dropbox Direct Link Converter</h1>
-  <button id="pasteBtn">Incolla dagli appunti</button>
+  
+  <label for="versionField">Versione:</label>
+  <input id="versionField" type="text" placeholder="4.3.5" value="4.3.5" />
+  
   <label for="dropboxLink">Link Dropbox originale:</label>
+  <button id="pasteBtn">📋 Incolla dagli appunti</button>
   <input id="dropboxLink" type="text" placeholder="https://www.dropbox.com/..." />
-  <button id="convertBtn">Converti in direct download</button>
-  <label for="result">Testo JSON da incollare:</label>
+  
+  <label for="noteField">Note di rilascio (una per riga):</label>
+  <textarea id="noteField" placeholder="Nuova funzionalità X
+Corretto bug Y
+Miglioramento Z">Sistema di aggiornamento automatico con notifica
+Export CSV per messaggi
+Miglioramenti UI pannelli laterali
+Corretti bug minori</textarea>
+  
+  <button id="convertBtn">🔄 Genera JSON</button>
+  
+  <label for="result">JSON da copiare in aggiornamento.json:</label>
   <textarea id="result" readonly></textarea>
-  <button id="copyBtn">Copia negli appunti</button>
+  <button id="copyBtn">📋 Copia negli appunti</button>
+  
   <script>
     const inp = document.getElementById('dropboxLink');
     const out = document.getElementById('result');
+    const versionField = document.getElementById('versionField');
+    const noteField = document.getElementById('noteField');
     const btnConv = document.getElementById('convertBtn');
     const btnCopy = document.getElementById('copyBtn');
     const btnPaste = document.getElementById('pasteBtn');
-    const VERSIONE = "Versione 4.1.0";
+    
     btnPaste.addEventListener('click', async () => {
       if (!navigator.clipboard) {
         alert("Il tuo browser non supporta la Clipboard API.");
@@ -60,24 +97,34 @@
         alert("Impossibile leggere dagli appunti: " + err);
       }
     });
+    
     btnConv.addEventListener('click', () => {
       try {
         let url = new URL(inp.value.trim());
         url.host = 'dl.dropboxusercontent.com';
         url.searchParams.set('dl', '1');
+        
+        // Parsing note (una per riga, ignora righe vuote)
+        const note = noteField.value
+          .split('\n')
+          .map(line => line.trim())
+          .filter(line => line.length > 0);
+        
         const jsonObj = {
-          versione: VERSIONE,
-          url: url.href
+          versione: "Versione " + versionField.value.trim(),
+          url: url.href,
+          note: note
         };
         out.value = JSON.stringify(jsonObj, null, 2);
       } catch (e) {
-        out.value = JSON.stringify({ versione: VERSIONE, url: "URL non valido" }, null, 2);
+        out.value = "❌ URL non valido. Inserisci un link Dropbox valido.";
       }
     });
+    
     btnCopy.addEventListener('click', () => {
-      if (!out.value) return;
+      if (!out.value || out.value.startsWith('❌')) return;
       navigator.clipboard.writeText(out.value)
-        .then(() => alert('JSON copiato negli appunti!'))
+        .then(() => alert('✅ JSON copiato negli appunti!'))
         .catch(err => alert('Errore durante la copia: ' + err));
     });
   </script>
