@@ -1,10 +1,7 @@
 {
-  "versione": "4.3.6",
+  "versione": "4.3.7",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Sistema di aggiornamento automatico con notifica",
-    "Export CSV per messaggi",
-    "Miglioramenti UI pannelli laterali",
     "Corretti bug minori"
   ]
 }
