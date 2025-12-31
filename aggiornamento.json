@@ -1,7 +1,7 @@
 {
-  "versione": "4.4.3",
+  "versione": "4.4.4",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Fix ID device"
+    "Fix ID Messaggi"
   ]
 }
