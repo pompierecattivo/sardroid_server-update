@@ -1,7 +1,7 @@
 {
-  "versione": "4.5.7",
+  "versione": "4.5.8",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "qrcode lightning"
+    "Fix stay alive"
   ]
 }
