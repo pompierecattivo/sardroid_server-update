@@ -1,7 +1,7 @@
 {
-  "versione": "4.5.6",
+  "versione": "4.5.7",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Fix sos automatico + heartbeat 15sec"
+    "qrcode lightning"
   ]
 }
