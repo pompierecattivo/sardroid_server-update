@@ -1,7 +1,7 @@
 {
-  "versione": "4.6.0",
+  "versione": "4.6.1",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Gestione Credenziali Broker"
+    "Gestione Credenziali Broker v3"
   ]
 }
