@@ -1,7 +1,7 @@
 {
-  "versione": "4.6.3",
+  "versione": "4.6.4",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Websocket ottimizzato per web clients"
+    "Fix UI"
   ]
 }
