@@ -1,7 +1,7 @@
 {
-  "versione": "4.7.1",
+  "versione": "5.0.0",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Fix Last Seen + online/offline"
+    "Gestione Utenti Server"
   ]
 }
