@@ -1,7 +1,7 @@
 {
-  "versione": "6.1.2",
+  "versione": "6.1.3",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Exit da live map"
+    "Gestione Admin, user e guest remoti"
   ]
 }
