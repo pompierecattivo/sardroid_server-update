@@ -1,8 +1,9 @@
 {
-  "versione": "6.1.5",
+  "versione": "6.1.6",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
     "Gestione Admin, user e guest remoti",
-    "Fix Simulatore"
+    "Fix Simulatore",
+    "Lampeggio last posizion"
   ]
 }
