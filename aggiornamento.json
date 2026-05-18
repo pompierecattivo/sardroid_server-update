@@ -1,9 +1,10 @@
 {
-  "versione": "6.2.1",
+  "versione": "6.2.2",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
     "Strumento di misura",
     "Menu ridisegnato",
-    "Rosa dei venti"
+    "Rosa dei venti",
+    "apk aggiornata"
   ]
 }
