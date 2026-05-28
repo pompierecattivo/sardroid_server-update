@@ -1,8 +1,8 @@
 {
-  "versione": "8.0.2",
+  "versione": "8.0.3",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
     "Windows Installer",
-    "Bug Fix"
+    "Bug Fix 2"
   ]
 }
