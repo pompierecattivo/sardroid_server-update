@@ -4,6 +4,6 @@
   "note": [
     "Windows Installer 2",
     "Bug Fix 5",
-    "Miglioramenti riconnessione MQTT"
+    "Fix riconnessione MQTT e WiFi"
   ]
 }
