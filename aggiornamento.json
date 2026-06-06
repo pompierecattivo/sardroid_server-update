@@ -1,7 +1,7 @@
 {
-  "versione": "8.1.0",
+  "versione": "8.2.0",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
-    "Georeferenziazione Mappe Raster"
+    "Refactoring Mappe Raster"
   ]
 }
