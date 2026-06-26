@@ -1,5 +1,5 @@
 {
-  "versione": "8.3.4",
+  "versione": "8.3.5",
   "url": "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
   "note": [
     "Refactoring Mappe Raster",
@@ -7,6 +7,7 @@
     "Migliorie per Raster - Supporto GeoTIFF 3",
     "Mappe 3D anche Raster",
     "SOS Migliorato",
-    "Georeferenziazione IA (sperimentale)"
+    "Georeferenziazione IA (sperimentale)",
+    "Gestione Aree"
   ]
 }
