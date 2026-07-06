@@ -1,0 +1,11 @@
+# Sardroid Server — Changelog
+
+## 9.0.1 - 2026-07-06
+
+Major Update - Aircraft Inject.
+
+- Nuovo endpoint `/api/local-ingest/positions` per plugin locali (Sardroid Airtrack, futuri Aistrack).
+- Nuovo endpoint `/api/local-ingest/tracker-sweep` per rimozione immediata dei tracker fuori bbox.
+- Discriminazione tracker vs device: i tracker non finiscono nel timer offline 60s.
+- Rendering trackers su mappa 2D Leaflet, 3D Cesium, live-map con icone e colori configurabili.
+- Vari fix vari alla pipeline georef, UI e logging.
