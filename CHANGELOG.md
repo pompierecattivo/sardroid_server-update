@@ -1,5 +1,14 @@
 # Sardroid Server — Changelog
 
+## 9.0.7 - 2026-07-11
+
+Rilascio di manutenzione per correggere il manifest `aggiornamento.json` verboso della 9.0.6.
+
+### Fix: aggiornamento.json non piu' verboso
+- `release.ps1` ora cap-pa le note di release a **6 bullet massimo** invece di estrarre tutti quelli del CHANGELOG. Prima con la 9.0.6 (16 bullet estratti) la modal update lato client mostrava tutti i 16 anche con il toggle "Mostra tutte" — troppo.
+- Aggiunta automatica di `changelog_url` che punta al CHANGELOG completo su GitHub (`.../blob/main/CHANGELOG.md`), cosi' chi vuole leggere tutto lo storico esteso ha il link nella modal update ("Note complete →").
+- Fix applicato in modo identico anche a `release.ps1` di Airtrack e Aistrack per omogeneita' della famiglia.
+
 ## 9.0.6 - 2026-07-11
 
 Estensioni Cesium ai vascelli + attivazione plugin Aistrack + fix UX minori.

@@ -1,22 +1,10 @@
 {
-    "versione":  "9.0.6",
+    "versione":  "9.0.7",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
+    "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il modulo `Aircraft3D` era già generico e prevedeva `CATEGORY_SIZE_METERS['vessel']=30` dalla 9.0.4, ma il gate `source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html) bloccava l'estrusione dei tracker vessel. Rimosso il gate: ora tracker con `source='vessel'` vengono estrusi in 3D con la silhouette ogiva-scafo coerente col rendering 2D.",
-                 "`tracker-icons.js::svgPathMetaForHint()` esteso: i case `vessel_generic/vessel_sar/vessel_cargo/vessel_fishing/vessel_passenger/vessel_tanker` ora ritornano metadata `{path, viewBox, category: 'vessel'}` per l'estrusione (prima ritornava `null`).",
-                 "**Galleggiamento corretto su mare, laghi e fiumi**: il polygon vessel usa `heightReference: CLAMP_TO_GROUND` + `extrudedHeightReference: RELATIVE_TO_GROUND` cosi' galleggia sulla superficie del terrain provider Cesium (mare, Lago Maggiore ~193m, Lago di Como ~199m, Lago di Garda ~65m, ecc). Funziona automaticamente ovunque perche' Cesium World Terrain include DTM per qualsiasi superficie geografica.",
-                 "Per gli aircraft l'estrusione classica con altezza assoluta resta invariata.",
-                 "Il modulo `AircraftTrail` era gia' internamente generico. Rimosso il gate `data.source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html): ora anche i tracker vessel emettono trail (rolling window 15 min con fade opacità).",
-                 "Zero setting UI nuovi, riusa \"Traccia flotta aerea\" delle impostazioni. Se in futuro serve un setting dedicato per vessel, si aggiunge.",
-                 "Effetto pratico: apri dashboard con Aistrack attivo → i vascelli AIS appaiono in 3D come silhouette estrusa ciano con trail delle ultime 15 min. Aircraft e vessel hanno rendering equivalente in dashboard e live-map.",
-                 "Il toggle \"Sardroid Aistrack\" nel Tab Plugin di `settings.html` era placeholder disabled con badge \"non ancora disponibile\". Ora attivato: checkbox funzionante, ingest da Aistrack via `POST /api/local-ingest/positions` con `source_hint=\"vessel\"` accettato.",
-                 "`loadPluginSettings()` in JS refactored per gestire N plugin (lista `PLUGINS = ['airtrack', 'aistrack']`) senza duplicare codice.",
-                 "Description i18n aggiornata: \"Ricezione posizioni natanti via AIS (AISStream, ricevitore locale, MarineTraffic)\" al posto di \"in sviluppo\".",
-                 "La modale che appare cliccando il badge \"Aggiornamento disponibile\" mostra ora al massimo 6 bullet iniziali di note di rilascio, con un toggle \"Mostra tutte (N)\" per espandere l'intera lista.",
-                 "Nuovo campo opzionale `changelog_url` in `aggiornamento.json` — se presente, la modale mostra un link \"Note complete →\" che apre il CHANGELOG completo su GitHub in una nuova tab.",
-                 "Motivazione: prima con le 41+ bullet della release 9.0.5 la modale diventava uno schermo intero di testo scorrevole difficile da leggere.",
-                 "Chiavi i18n aggiunte in IT/EN/ES: `show_all`, `show_less`, `full_changelog`.",
-                 "Retro-compat: `aggiornamento.json` senza `changelog_url` funziona come prima; installazioni server pre-9.0.6 semplicemente ignorano il campo.",
-                 "I toggle switch verdi di `settings.html` avevano il knob bianco che sporgeva di 1-2px oltre il bordo destro del container quando checked. Correzione `translateX(20px)` invece di `22px` per rispettare i 46px del container tenuto conto di border 1px per lato + padding 2px iniziale."
+                 "`release.ps1` ora cap-pa le note di release a **6 bullet massimo** invece di estrarre tutti quelli del CHANGELOG. Prima con la 9.0.6 (16 bullet estratti) la modal update lato client mostrava tutti i 16 anche con il toggle \"Mostra tutte\" — troppo.",
+                 "Aggiunta automatica di `changelog_url` che punta al CHANGELOG completo su GitHub (`.../blob/main/CHANGELOG.md`), cosi' chi vuole leggere tutto lo storico esteso ha il link nella modal update (\"Note complete →\").",
+                 "Fix applicato in modo identico anche a `release.ps1` di Airtrack e Aistrack per omogeneita' della famiglia."
              ]
 }
