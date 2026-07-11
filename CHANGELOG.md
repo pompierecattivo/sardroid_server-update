@@ -1,8 +1,53 @@
 # Sardroid Server — Changelog
 
+## 9.0.6 - 2026-07-11
+
+Estensioni Cesium ai vascelli + attivazione plugin Aistrack + fix UX minori.
+
+### Vascelli 3D estrusi su Cesium (parità con aircraft)
+- Il modulo `Aircraft3D` era già generico e prevedeva `CATEGORY_SIZE_METERS['vessel']=30` dalla 9.0.4, ma il gate `source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html) bloccava l'estrusione dei tracker vessel. Rimosso il gate: ora tracker con `source='vessel'` vengono estrusi in 3D con la silhouette ogiva-scafo coerente col rendering 2D.
+- `tracker-icons.js::svgPathMetaForHint()` esteso: i case `vessel_generic/vessel_sar/vessel_cargo/vessel_fishing/vessel_passenger/vessel_tanker` ora ritornano metadata `{path, viewBox, category: 'vessel'}` per l'estrusione (prima ritornava `null`).
+- **Galleggiamento corretto su mare, laghi e fiumi**: il polygon vessel usa `heightReference: CLAMP_TO_GROUND` + `extrudedHeightReference: RELATIVE_TO_GROUND` cosi' galleggia sulla superficie del terrain provider Cesium (mare, Lago Maggiore ~193m, Lago di Como ~199m, Lago di Garda ~65m, ecc). Funziona automaticamente ovunque perche' Cesium World Terrain include DTM per qualsiasi superficie geografica.
+- Per gli aircraft l'estrusione classica con altezza assoluta resta invariata.
+
+### Trail rolling window esteso ai vascelli
+- Il modulo `AircraftTrail` era gia' internamente generico. Rimosso il gate `data.source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html): ora anche i tracker vessel emettono trail (rolling window 15 min con fade opacità).
+- Zero setting UI nuovi, riusa "Traccia flotta aerea" delle impostazioni. Se in futuro serve un setting dedicato per vessel, si aggiunge.
+- Effetto pratico: apri dashboard con Aistrack attivo → i vascelli AIS appaiono in 3D come silhouette estrusa ciano con trail delle ultime 15 min. Aircraft e vessel hanno rendering equivalente in dashboard e live-map.
+
+### Attivazione plugin Aistrack (in preparazione al rilascio Aistrack 1.0.0)
+- Il toggle "Sardroid Aistrack" nel Tab Plugin di `settings.html` era placeholder disabled con badge "non ancora disponibile". Ora attivato: checkbox funzionante, ingest da Aistrack via `POST /api/local-ingest/positions` con `source_hint="vessel"` accettato.
+- `loadPluginSettings()` in JS refactored per gestire N plugin (lista `PLUGINS = ['airtrack', 'aistrack']`) senza duplicare codice.
+- Description i18n aggiornata: "Ricezione posizioni natanti via AIS (AISStream, ricevitore locale, MarineTraffic)" al posto di "in sviluppo".
+
+### Modale aggiornamento più compatta
+- La modale che appare cliccando il badge "Aggiornamento disponibile" mostra ora al massimo 6 bullet iniziali di note di rilascio, con un toggle "Mostra tutte (N)" per espandere l'intera lista.
+- Nuovo campo opzionale `changelog_url` in `aggiornamento.json` — se presente, la modale mostra un link "Note complete →" che apre il CHANGELOG completo su GitHub in una nuova tab.
+- Motivazione: prima con le 41+ bullet della release 9.0.5 la modale diventava uno schermo intero di testo scorrevole difficile da leggere.
+- Chiavi i18n aggiunte in IT/EN/ES: `show_all`, `show_less`, `full_changelog`.
+- Retro-compat: `aggiornamento.json` senza `changelog_url` funziona come prima; installazioni server pre-9.0.6 semplicemente ignorano il campo.
+
+### Fix knob toggle-slider fuori bordo (Tab Sicurezza/Plugin)
+- I toggle switch verdi di `settings.html` avevano il knob bianco che sporgeva di 1-2px oltre il bordo destro del container quando checked. Correzione `translateX(20px)` invece di `22px` per rispettare i 46px del container tenuto conto di border 1px per lato + padding 2px iniziale.
+
 ## 9.0.5 - 2026-07-11
 
 Controllo granulare dei plugin di ingest, filtro categoria in tab Dispositivi, `vertical_class` per rendering 3D coerente, parità Aircraft3D su live-map.
+
+### Vascelli 3D su Cesium + trail rolling window (fix UX 9.0.5)
+- **Silhouette 3D estruse anche per i vascelli**: `Aircraft3D` era gia' generico (aveva `CATEGORY_SIZE_METERS['vessel']=30` da 9.0.4) ma il gate `source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html) impediva l'estrusione. Rimosso il gate: ora tracker con `source='vessel'` vengono estrusi in 3D usando la silhouette ogiva del vessel (coerente col rendering 2D).
+- `tracker-icons.js::svgPathMetaForHint()` esteso: i case `vessel_generic/vessel_sar/vessel_cargo/vessel_fishing/vessel_passenger/vessel_tanker` ora ritornano metadata `{path: VESSEL_HULL_PATH, viewBox, category: 'vessel'}` per l'estrusione. Prima ritornava `null`.
+- Preparato lato server dalla 9.0.5 (source_hint='vessel' accettato, chip categoria "Vascelli" nella dashboard, border-left ciano `#06b6d4`, `vertical_class='ground'` con CLAMP_TO_GROUND).
+- **Trail rolling window (fade opacita' su 15 min) esteso ai vascelli**: il modulo `AircraftTrail` era gia' internamente generico. Rimosso il gate `data.source === 'aircraft'` nei call site di [index.html](static/index.html) e [live-map.html](static/live-map.html): ora ogni tracker aircraft O vessel emette trail. Zero setting UI nuovi, riusa "Traccia flotta aerea" delle impostazioni.
+- Effetto pratico: apri dashboard con Aistrack attivo → i vascelli AIS appaiono in 3D come silhouette estrusa ciano (colore ereditato da defaults.color_vessel), con trail delle ultime 15 min. Aircraft e vessel ora hanno rendering equivalente in dashboard e live-map.
+
+### Modale aggiornamento più compatta (fix UX 9.0.5)
+- La modale che appare cliccando il badge "Aggiornamento disponibile" ora mostra al massimo 6 bullet iniziali di note di rilascio, con un toggle "Mostra tutte" per espandere l'intera lista.
+- Nuovo campo opzionale `changelog_url` in `aggiornamento.json` — se presente, la modale mostra un link "Note complete →" che apre il CHANGELOG completo su GitHub in una nuova tab.
+- Motivazione: prima con le 41+ bullet della release 9.0.5 la modale diventava uno schermo intero di testo scorrevole difficile da leggere.
+- Il generatore `Genera_JSON_per Download_SardroidServer_da_github.html` aggiornato con il nuovo campo `changelog_url` e placeholder per note piu' concise (5-7 bullet).
+- Retro-compat: `aggiornamento.json` senza `changelog_url` funziona come prima; installazioni server pre-9.0.5 semplicemente ignorano il campo.
+- Chiavi i18n aggiunte in IT/EN/ES: `show_all`, `show_less`, `full_changelog`.
 
 ### Tab Plugin — interruttore per plugin
 - Aggiunto per ciascun plugin (Airtrack ora, futuri Aistrack, ecc.) un toggle switch on/off che governa se il server accetta o rifiuta dati da quel plugin.
