@@ -1,10 +1,13 @@
 {
-    "versione":  "9.0.7",
+    "versione":  "9.0.8",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "`release.ps1` ora cap-pa le note di release a **6 bullet massimo** invece di estrarre tutti quelli del CHANGELOG. Prima con la 9.0.6 (16 bullet estratti) la modal update lato client mostrava tutti i 16 anche con il toggle \"Mostra tutte\" — troppo.",
-                 "Aggiunta automatica di `changelog_url` che punta al CHANGELOG completo su GitHub (`.../blob/main/CHANGELOG.md`), cosi' chi vuole leggere tutto lo storico esteso ha il link nella modal update (\"Note complete →\").",
-                 "Fix applicato in modo identico anche a `release.ps1` di Airtrack e Aistrack per omogeneita' della famiglia."
+                 "**Bug**: dopo un auto-update, l'app mostrava ancora la vecchia versione nell'UI (osservato con 9.0.7 che continuava a mostrare 9.0.5). Motivo: `config.py::_read_version()` leggeva prima da `EXE_DIR/VERSION` (file esterno all'exe che l'auto-update NON tocca) e solo dopo dal bundle Nuitka embedded.",
+                 "**Fix**: inverto l'ordine — prima BUNDLE_DIR (embedded nell'exe, sempre allineato alla versione compilata), poi EXE_DIR come fallback.",
+                 "Aggiunto `--include-data-files=VERSION=VERSION` a `build_nuitka.py` per assicurare che VERSION sia embeddato nel bundle Nuitka (Airtrack e Aistrack lo avevano gia').",
+                 "Effetto: dopo update da 9.0.7 a 9.0.8, l'header dashboard mostrera' correttamente v9.0.8.",
+                 "Applicato lo stesso fix per omogeneita' anche a `get_current_version()` in Airtrack (1.2.3) e Aistrack (1.0.4).",
+                 "Nella pagina Impostazioni → tab **Plugin**, il cerchio bianco (knob) degli switch on/off visibilmente sporgeva oltre il bordo destro del container quando attivato."
              ]
 }

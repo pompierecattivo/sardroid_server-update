@@ -1,5 +1,25 @@
 # Sardroid Server — Changelog
 
+## 9.0.8 - 2026-07-11
+
+Fix bug versione mostrata dopo auto-update + rifiniture UI Settings.
+
+### Fix: versione app non aggiornata dopo auto-update
+- **Bug**: dopo un auto-update, l'app mostrava ancora la vecchia versione nell'UI (osservato con 9.0.7 che continuava a mostrare 9.0.5). Motivo: `config.py::_read_version()` leggeva prima da `EXE_DIR/VERSION` (file esterno all'exe che l'auto-update NON tocca) e solo dopo dal bundle Nuitka embedded.
+- **Fix**: inverto l'ordine — prima BUNDLE_DIR (embedded nell'exe, sempre allineato alla versione compilata), poi EXE_DIR come fallback.
+- Aggiunto `--include-data-files=VERSION=VERSION` a `build_nuitka.py` per assicurare che VERSION sia embeddato nel bundle Nuitka (Airtrack e Aistrack lo avevano gia').
+- Effetto: dopo update da 9.0.7 a 9.0.8, l'header dashboard mostrera' correttamente v9.0.8.
+- Applicato lo stesso fix per omogeneita' anche a `get_current_version()` in Airtrack (1.2.3) e Aistrack (1.0.4).
+
+### Fix visivo: toggle switch Plugin tab con knob sporgente
+- Nella pagina Impostazioni → tab **Plugin**, il cerchio bianco (knob) degli switch on/off visibilmente sporgeva oltre il bordo destro del container quando attivato.
+- Causa: due blocchi CSS `.toggle-switch` in conflitto in [settings.html](static/settings.html) — il blocco legacy usava `left: 23px` con `width: 44px`, il blocco nuovo aggiungeva `translateX(20px)` con `width: 46px`. Applicati entrambi il knob finiva a posizione 43px (fuori dal container di 46px).
+- Fix: rimosso il blocco CSS legacy, tenuto solo il nuovo con `translateX(20px)` + colore verde `#22c55e`.
+
+### Rename: "Traccia flotta aerea" → "Traccia tracker plugin"
+- La sezione trail in Settings era chiamata "Traccia flotta aerea" perche' inizialmente copriva solo tracker `source='aircraft'` (Airtrack). Dalla 9.0.6 il gate e' stato rimosso e la trail copre anche `source='vessel'` (Aistrack) e in generale tutti i tracker plugin.
+- Rinomina in [settings.html](static/settings.html) header, descrizione e hint. Aggiornati tutti e tre i file i18n (`it.json`, `en.json`, `es.json`) con testi generici che citano esplicitamente sia aeromobili che imbarcazioni.
+
 ## 9.0.7 - 2026-07-11
 
 Rilascio di manutenzione per correggere il manifest `aggiornamento.json` verboso della 9.0.6.
