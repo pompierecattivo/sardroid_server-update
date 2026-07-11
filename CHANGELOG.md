@@ -1,5 +1,20 @@
 # Sardroid Server — Changelog
 
+## 9.0.9 - 2026-07-11
+
+Fix "Sync mappa" del filtro categoria dispositivi: ora nasconde marker 2D e trail (prima solo marker 3D).
+
+### Fix: filtro categoria dispositivi con "Sync mappa" ora nasconde correttamente anche marker 2D e trail
+- **Bug**: nel pannello dispositivi con toggle "Sync mappa" attivo, nascondere una categoria (es. "Aeromobili") non nascondeva effettivamente i tracker sulla mappa:
+  - In **2D Leaflet** i marker restavano completamente visibili (il filtro non toccava affatto la mappa 2D)
+  - In **3D Cesium** i marker principali sparivano ma le **trail** (polyline aircraft/vessel) restavano visibili — sia in 2D che in 3D
+- **Fix** in [index.html::_applyDeviceCategoryToMap()](static/index.html): la funzione ora applica visibilita' a
+  - marker Leaflet 2D via `marker.setOpacity(0)`
+  - marker Cesium 3D + dropline + Aircraft3D group (gia' presente)
+  - trail via nuova API `window.AircraftTrail.setVisible(deviceId, visible)`
+- Aggiunta API `setVisible(deviceId, visible)` a [aircraft-trail.js](static/aircraft-trail.js) che copre sia il 2D (opacity dei segmenti polyline) che il 3D (entity.show). Uno stato `hiddenIds: Set` interno persiste attraverso i redraw del trail cosi' che un nuovo punto WS in arrivo mentre la categoria e' nascosta non faccia rispuntare la trail visibile.
+- Gate aggiunto anche in `updateDeviceMarker()` cosi' un marker 2D ricreato da un position_update mentre e' nascosto nasce con opacity 0.
+
 ## 9.0.8 - 2026-07-11
 
 Fix bug versione mostrata dopo auto-update + rifiniture UI Settings.

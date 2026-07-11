@@ -1,13 +1,13 @@
 {
-    "versione":  "9.0.8",
+    "versione":  "9.0.9",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: dopo un auto-update, l'app mostrava ancora la vecchia versione nell'UI (osservato con 9.0.7 che continuava a mostrare 9.0.5). Motivo: `config.py::_read_version()` leggeva prima da `EXE_DIR/VERSION` (file esterno all'exe che l'auto-update NON tocca) e solo dopo dal bundle Nuitka embedded.",
-                 "**Fix**: inverto l'ordine — prima BUNDLE_DIR (embedded nell'exe, sempre allineato alla versione compilata), poi EXE_DIR come fallback.",
-                 "Aggiunto `--include-data-files=VERSION=VERSION` a `build_nuitka.py` per assicurare che VERSION sia embeddato nel bundle Nuitka (Airtrack e Aistrack lo avevano gia').",
-                 "Effetto: dopo update da 9.0.7 a 9.0.8, l'header dashboard mostrera' correttamente v9.0.8.",
-                 "Applicato lo stesso fix per omogeneita' anche a `get_current_version()` in Airtrack (1.2.3) e Aistrack (1.0.4).",
-                 "Nella pagina Impostazioni → tab **Plugin**, il cerchio bianco (knob) degli switch on/off visibilmente sporgeva oltre il bordo destro del container quando attivato."
+                 "**Bug**: nel pannello dispositivi con toggle \"Sync mappa\" attivo, nascondere una categoria (es. \"Aeromobili\") non nascondeva effettivamente i tracker sulla mappa:",
+                 "In **2D Leaflet** i marker restavano completamente visibili (il filtro non toccava affatto la mappa 2D)",
+                 "In **3D Cesium** i marker principali sparivano ma le **trail** (polyline aircraft/vessel) restavano visibili — sia in 2D che in 3D",
+                 "**Fix** in [index.html::_applyDeviceCategoryToMap()](static/index.html): la funzione ora applica visibilita' a",
+                 "marker Leaflet 2D via `marker.setOpacity(0)`",
+                 "marker Cesium 3D + dropline + Aircraft3D group (gia' presente)"
              ]
 }
