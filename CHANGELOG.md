@@ -1,5 +1,59 @@
 # Sardroid Server — Changelog
 
+## 9.0.10 - 2026-09-05
+
+Fix connessione a broker MQTT esterno via WebSocket-Secure dietro proxy HTTP aziendale.
+
+### Sicurezza: rifiutati i payload in chiaro sui topic operativi
+- **Vulnerabilita'**: i payload operativi sono cifrati end-to-end, ma un messaggio **non cifrato** non entrava affatto nel ramo di decifratura (`is_encrypted()` == False): veniva parsato e instradato agli handler come valido. Chi otteneva le credenziali del broker (es. copiando un QR di pairing, che contiene anche `session_id` e `device_id`) non doveva quindi rompere la cifratura per iniettare posizioni o SOS falsi — gli bastava **non usarla**.
+- Un payload cifrato con la chiave sbagliata era invece gia' innocuo: fallisce la decifratura e resta `{"raw": ...}` senza campi utilizzabili.
+- **Fix** in [mqtt_handler.py::_handle_message()](mqtt_handler.py): da un device accoppiato, un messaggio con `was_encrypted == False` viene scartato prima di raggiungere gli handler e loggato come warning. Nuovo contatore `plaintext_rejected` nelle statistiche.
+- **Unica esenzione**: `sardroid/pairing/*` — la chiave Diffie-Hellman non e' ancora stabilita, il chiaro e' obbligatorio; il flusso esce dal percorso prima del controllo. La protezione qui e' la validazione DH lato server, non la cifratura di trasporto.
+- **Chiuso anche il ramo `heartbeat` legacy**: l'heartbeat era ammesso in chiaro anche da device privi di chiave, residuo del vecchio provisioning via MQTT (oggi il provisioning avviene via QR). Restando aperto era di fatto l'unica porta rimasta per l'iniezione, dato che l'attaccante conosce `session_id` e `device_id` dal QR copiato. Verificato che nessun client attuale ne dipenda: l'app Android esce se manca `sessionId` e pubblica sempre con `encrypt=true`; `device_simulator.py::_publish()` cifra sempre, heartbeat incluso; i servizi/plugin non pubblicano su topic di sessione. Ora l'heartbeat segue la regola generale: cifrato dopo il pairing, altrimenti rifiutato.
+- Il discriminante e' **strutturale** (presenza della chiave del device + tipo messaggio), non una whitelist di topic: ogni nuovo tipo di messaggio operativo e' coperto automaticamente senza modifiche.
+- Nessuna modifica richiesta lato app: dopo il pairing l'app cifra gia' sempre, e l'unico invio in chiaro e' la richiesta di pairing.
+
+### Pairing a configurazione zero: credenziali broker incluse nel QR
+- Quando il broker esterno richiede autenticazione, il QR di pairing (parte 1) include ora i campi `u` (username/token) e `w` (password, omesso se vuota). L'app li legge e completa il pairing **senza chiedere nulla all'operatore** — prima ogni operatore doveva conoscere e digitare a mano le credenziali su ogni telefono.
+- Implementato in [dh_service.py::generate_qr_data()](dh_service.py) e nel chiamante [server.py::create_pairing_session()](server.py). I campi compaiono solo in modalita' **external**: in embedded il broker e' anonimo.
+- Retrocompatibile: i QR senza `u` continuano a far comparire il dialog di inserimento manuale. Lato app il supporto era gia' rilasciato.
+- Verificato che il QR resti ampiamente entro la capacita' di lettura anche con token lunghi (~740 caratteri contro un limite di 2953 al livello di correzione L usato: margine 75%).
+
+**Nota di sicurezza — leggere prima di usare la funzione.** I campi `u`/`w` viaggiano **in chiaro**: il QR viene letto *prima* che la chiave Diffie-Hellman sia stabilita, quindi non e' tecnicamente cifrabile end-to-end. Chi fotografa il QR ottiene le credenziali del broker.
+- Mostrare il QR **solo** al momento del pairing, non lasciarlo stampato o proiettato.
+- Se si sospetta una copia: cambiare le credenziali sul broker, aggiornarle in Impostazioni → Rete e rigenerare i QR. I device gia' accoppiati vanno riaccoppiati.
+- Dove il broker lo consente, preferire credenziali dedicate all'esercitazione invece delle credenziali principali dell'account, cosi' una copia non compromette l'account e si revoca a fine attivita'.
+- Le credenziali **non** vengono mai scritte nei log del server.
+- Resta valida la cifratura end-to-end dei payload: chi ruba le credenziali puo' connettersi al broker ma **non** decifra le posizioni, la cui chiave non transita nel QR.
+
+### Fix: broker esterno su porta non standard ignorata in modalita' WebSocket
+- **Bug**: con broker esterno e connessione WebSocket, il client si collegava sempre alla porta di `mqtt.connection.ws_port` (default **8080**) ignorando la porta scelta dall'utente in `mqtt.external.port`. Su reti aziendali dove il proxy consente il `CONNECT` **solo verso la 443** (caso reale: server VVF Piemonte dietro Squid) la connessione falliva sempre, e la diagnostica ricadeva sul default `localhost:1883` di `server_config.ini` — facendo sembrare che la configurazione della UI non venisse salvata (in realta' era gia' persistita correttamente).
+- **Fix** in [mqtt_handler.py::connect_client()](mqtt_handler.py): la porta di `mqtt.external.port` ha ora la precedenza su `mqtt.connection.ws_port`; nel ramo WEBSOCKET il fallback e' `websocket_port → port → 8080`.
+
+### Fix: auto-detection WebSocket provava solo la porta 8080 in chiaro
+- L'auto-detection testava il WebSocket con porta **8080 hardcoded** e schema `http://` fisso: sulle porte TLS il test falliva sempre, quindi il metodo WEBSOCKET non veniva mai raccomandato.
+- **Fix** in [mqtt_handler.py::detect_network_context()](mqtt_handler.py): prova in ordine la porta configurata, poi 443, 8083, 8080. `_test_websocket()` usa `https://` sulle porte TLS (443/8084/8883), accetta il path come parametro e registra il proxy anche per lo schema `https` (prima era mappato solo `http`, quindi le richieste TLS non passavano dal proxy).
+
+### Fix: TLS e path WebSocket non configurabili
+- Il path WebSocket era hardcoded a `/mqtt`, non utilizzabile con broker che espongono `/` o `/ws`. Aggiunto il setting `mqtt.external.ws_path` con relativo campo in Impostazioni → Rete.
+- Il flag TLS veniva letto solo da `mqtt.external.use_tls`, mentre la UI salva **anche** `mqtt.connection.use_tls` dal tab Proxy: i due valori potevano divergere e il TLS restava spento. Ora basta che uno dei due sia attivo.
+- Sulle porte 443/8084/8883 il TLS viene forzato: li' il WebSocket e' per definizione `wss` e senza TLS l'handshake falliva senza un errore comprensibile.
+
+### Sicurezza: verifica dei certificati TLS ora attiva di default
+- **Prima**: ogni connessione TLS usava `CERT_NONE` + `tls_insecure_set(True)` — il traffico era cifrato ma il broker **non veniva autenticato**. Chi controlla il percorso di rete (tipicamente il proxy aziendale) poteva presentarsi come il broker e intercettare le credenziali, token compresi.
+- **Ora**: nuovo helper `_configure_tls()` con `CERT_REQUIRED` di default. Per i broker interni con certificato self-signed e' disponibile l'opt-out esplicito `mqtt.external.tls_insecure` (casella in Impostazioni → Rete), che logga un warning quando attivo.
+- **Impatto**: nessuno per chi usa broker pubblici (flespi, HiveMQ, EMQX), che hanno certificati validi. Chi usa un broker con certificato self-signed deve spuntare la nuova casella.
+
+### Fix: autenticazione con token senza password
+- La condizione `if username and password` impediva di autenticarsi ai broker che usano un **token come username senza password** (es. flespi): senza password le credenziali non venivano inviate affatto. Ora e' sufficiente lo username.
+
+### UI e i18n
+- Aggiunti in Impostazioni → Rete i campi "Path WebSocket" e "Accetta certificati non verificati", registrati in `settingsConfig` per salvataggio e ricarica.
+- Nuove chiavi tradotte in `it.json`, `en.json`, `es.json`.
+
+### Nota di verifica
+- La catena `proxy CONNECT → TLS → WebSocket → MQTT` riceve ora i parametri corretti, verificata in simulazione sui percorsi di connessione (incluse 4 prove di non regressione: embedded, TCP 1883, TCP+TLS 8883, HTTP_CONNECT). **Resta da confermare sul campo** che paho-mqtt instradi effettivamente il transport WebSocket attraverso il proxy HTTP CONNECT: in caso contrario serve il fallback con socket pre-aperto manualmente e passato al client.
+
 ## 9.0.9 - 2026-07-11
 
 Fix "Sync mappa" del filtro categoria dispositivi: ora nasconde marker 2D e trail (prima solo marker 3D).

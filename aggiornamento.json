@@ -1,13 +1,13 @@
 {
-    "versione":  "9.0.9",
+    "versione":  "9.0.10",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: nel pannello dispositivi con toggle \"Sync mappa\" attivo, nascondere una categoria (es. \"Aeromobili\") non nascondeva effettivamente i tracker sulla mappa:",
-                 "In **2D Leaflet** i marker restavano completamente visibili (il filtro non toccava affatto la mappa 2D)",
-                 "In **3D Cesium** i marker principali sparivano ma le **trail** (polyline aircraft/vessel) restavano visibili — sia in 2D che in 3D",
-                 "**Fix** in [index.html::_applyDeviceCategoryToMap()](static/index.html): la funzione ora applica visibilita' a",
-                 "marker Leaflet 2D via `marker.setOpacity(0)`",
-                 "marker Cesium 3D + dropline + Aircraft3D group (gia' presente)"
+                 "**Vulnerabilita'**: i payload operativi sono cifrati end-to-end, ma un messaggio **non cifrato** non entrava affatto nel ramo di decifratura (`is_encrypted()` == False): veniva parsato e instradato agli handler come valido. Chi otteneva le credenziali del broker (es. copiando un QR di pairing, che contiene anche `session_id` e `device_id`) non doveva quindi rompere la cifratura per iniettare posizioni o SOS falsi — gli bastava **non usarla**.",
+                 "Un payload cifrato con la chiave sbagliata era invece gia' innocuo: fallisce la decifratura e resta `{\"raw\": ...}` senza campi utilizzabili.",
+                 "**Fix** in [mqtt_handler.py::_handle_message()](mqtt_handler.py): da un device accoppiato, un messaggio con `was_encrypted == False` viene scartato prima di raggiungere gli handler e loggato come warning. Nuovo contatore `plaintext_rejected` nelle statistiche.",
+                 "**Unica esenzione**: `sardroid/pairing/*` — la chiave Diffie-Hellman non e' ancora stabilita, il chiaro e' obbligatorio; il flusso esce dal percorso prima del controllo. La protezione qui e' la validazione DH lato server, non la cifratura di trasporto.",
+                 "**Chiuso anche il ramo `heartbeat` legacy**: l'heartbeat era ammesso in chiaro anche da device privi di chiave, residuo del vecchio provisioning via MQTT (oggi il provisioning avviene via QR). Restando aperto era di fatto l'unica porta rimasta per l'iniezione, dato che l'attaccante conosce `session_id` e `device_id` dal QR copiato. Verificato che nessun client attuale ne dipenda: l'app Android esce se manca `sessionId` e pubblica sempre con `encrypt=true`; `device_simulator.py::_publish()` cifra sempre, heartbeat incluso; i servizi/plugin non pubblicano su topic di sessione. Ora l'heartbeat segue la regola generale: cifrato dopo il pairing, altrimenti rifiutato.",
+                 "Il discriminante e' **strutturale** (presenza della chiave del device + tipo messaggio), non una whitelist di topic: ogni nuovo tipo di messaggio operativo e' coperto automaticamente senza modifiche."
              ]
 }
