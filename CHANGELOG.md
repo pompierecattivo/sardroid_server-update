@@ -1,6 +1,6 @@
 # Sardroid Server — Changelog
 
-## 9.0.10 - 2026-09-05
+## 9.1.0 - 2026-09-05
 
 Fix connessione a broker MQTT esterno via WebSocket-Secure dietro proxy HTTP aziendale.
 
@@ -25,6 +25,24 @@ Fix connessione a broker MQTT esterno via WebSocket-Secure dietro proxy HTTP azi
 - Dove il broker lo consente, preferire credenziali dedicate all'esercitazione invece delle credenziali principali dell'account, cosi' una copia non compromette l'account e si revoca a fine attivita'.
 - Le credenziali **non** vengono mai scritte nei log del server.
 - Resta valida la cifratura end-to-end dei payload: chi ruba le credenziali puo' connettersi al broker ma **non** decifra le posizioni, la cui chiave non transita nel QR.
+
+### Fix: pulsanti della modale di aggiornamento irraggiungibili con note lunghe
+- **Bug**: con note di rilascio verbose (o con lo zoom del browser elevato) la modale "Aggiornamento Disponibile" cresceva oltre l'altezza del viewport e i pulsanti di conferma ("Piu' tardi" / "Installa e Riavvia") finivano oltre il bordo inferiore, **irraggiungibili**: l'utente non poteva ne' installare ne' rimandare l'aggiornamento. `.update-modal` non aveva alcun vincolo di altezza.
+- **Fix** in [index.html](static/index.html): la modale e' ora un contenitore flex con `max-height: 90vh`; il contenuto centrale (versioni, note di rilascio, progress bar, link) e' incapsulato in un nuovo wrapper `.update-modal-body` con `overflow-y: auto`. A scorrere e' solo l'area centrale — intestazione e pulsanti restano sempre visibili e ancorati.
+- Scrollbar in stile coerente con il tema scuro della dashboard; `overscroll-behavior: contain` evita che lo scroll si propaghi alla mappa sottostante a fine corsa.
+- Verificato con browser headless su viewport ridotto (620x480, 12 voci di note): la barra di scorrimento compare e i pulsanti restano raggiungibili, in entrambi gli stati della modale (download manuale e installazione dopo il download).
+
+### Fix: note di aggiornamento mostrate in markdown grezzo
+- **Bug**: le note di rilascio nella modale di aggiornamento venivano inserite con `<li>${n}</li>`, cioe' come testo non interpretato. Poiche' provengono dal CHANGELOG, l'utente vedeva letteralmente `**asterischi**`, i backtick del codice e i link in forma `[testo](url)` — praticamente illeggibili.
+- **Fix** in [index.html](static/index.html): aggiunto un convertitore markdown minimale per il sottoinsieme effettivamente usato nelle note — `**grassetto**`, `*corsivo*`, `` `codice` `` (reso con sfondo scuro) e `[testo](url)`.
+- I link vengono resi cliccabili **solo** se `http(s)`; i link relativi a file del repo (es. `[mqtt_handler.py](mqtt_handler.py)`) diventano testo semplice, perche' come URL non porterebbero da nessuna parte.
+- **Sicurezza**: l'escaping HTML avviene *prima* della conversione markdown, quindi eventuali tag presenti nel manifest restano testo inerte e non vengono eseguiti. Verificato con payload di prova (`<img onerror=...>`, `<script>`): resi come testo.
+
+### Fix: crash all'avvio in dev mode dopo un cambio di IP
+- **Bug**: al primo avvio dopo un cambio di indirizzo IP della macchina, il server terminava con `UnicodeEncodeError` prima ancora di partire. Il cambio di IP innesca la rigenerazione dei certificati SSL, che stampa `IP cambiato: <vecchio> -> <nuovo>`: quel messaggio conteneva il carattere `→` (U+2192), non rappresentabile nella codepage cp1252 usata dalla console Windows.
+- Il difetto era latente da sempre ed emergeva **solo lanciando `start_dev.bat`**: nell'exe compilato in modalita' windowed `sys.stdout` viene sostituito da uno stream nullo ([server.py](server.py) righe 13-23), che ingoiava il messaggio mascherando il problema.
+- **Fix** in [ssl_utils.py](ssl_utils.py): `→` sostituito con `->`. Verificati tutti i sorgenti per lo stesso rischio: i restanti caratteri non-cp1252 sono in commenti, docstring o etichette Tkinter (che gestisce Unicode nativamente), nessuno dentro una `print()`.
+- **Irrobustimento** in [start_dev.bat](start_dev.bat): aggiunto `set PYTHONIOENCODING=utf-8` prima del lancio, cosi' un qualsiasi carattere non-ASCII reintrodotto in futuro in una `print()` non potra' piu' impedire l'avvio del server. Effetto collaterale voluto: `logs\server.log` diventa UTF-8 e gli accenti italiani nei messaggi restano corretti.
 
 ### Fix: broker esterno su porta non standard ignorata in modalita' WebSocket
 - **Bug**: con broker esterno e connessione WebSocket, il client si collegava sempre alla porta di `mqtt.connection.ws_port` (default **8080**) ignorando la porta scelta dall'utente in `mqtt.external.port`. Su reti aziendali dove il proxy consente il `CONNECT` **solo verso la 443** (caso reale: server VVF Piemonte dietro Squid) la connessione falliva sempre, e la diagnostica ricadeva sul default `localhost:1883` di `server_config.ini` — facendo sembrare che la configurazione della UI non venisse salvata (in realta' era gia' persistita correttamente).
