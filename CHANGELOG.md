@@ -1,5 +1,21 @@
 # Sardroid Server — Changelog
 
+## 9.1.4 - 2026-09-06
+
+Gli errori di connessione al broker ora sono visibili nell'interfaccia: prima un token non valido produceva un "non connesso" senza alcuna spiegazione.
+
+### Fix: gli errori di connessione al broker non arrivavano all'interfaccia
+- **Bug**: quando il broker **rifiutava** la connessione (token non valido, credenziali errate, client id rifiutato), `_on_connect` si limitava a un `logger.error` e **non popolava `connection_error`**. Nella dashboard si vedeva "non connesso" con il campo errore **vuoto**: nessun indizio sulla causa.
+- Il difetto pesa soprattutto sull'**eseguibile distribuito**, dove non esiste un log su file: l'informazione andava semplicemente persa. Diagnosticare un token scaduto richiedeva di rilanciare l'exe da terminale per leggere i messaggi a schermo.
+- **Fix** in [mqtt_handler.py::_on_connect()](mqtt_handler.py): il codice di ritorno viene tradotto in un messaggio leggibile e assegnato a `connection_error`, quindi mostrato nel pannello del broker — ad esempio *"Connessione al broker rifiutata: non autorizzato: verifica il token o le credenziali del broker"* per `reason_code = 5`.
+- Caso reale che ha motivato il fix: un'installazione con un token flespi non valido restava "non connessa" senza spiegazione, pur avendo proxy, TLS e handshake WebSocket perfettamente funzionanti (`CONNECT 200` → `TLS 1.2` → `101 Switching Protocols`).
+
+### Fix: diagnostica del broker con host errato
+- **Bug**: in caso di connessione fallita la diagnostica riportava *"Broker localhost:1883 non raggiungibile"* anche con un broker esterno configurato, indicando un host che non c'entrava nulla.
+- **Causa**: [server.py::_diagnose_broker_reachability()](server.py) leggeva `mqtt.external_host` e `mqtt.external_port` con l'**underscore**, chiavi che nessuno scrive; cadeva quindi sui valori di default. Le chiavi salvate dalla UI usano il **punto** (`mqtt.external.host`).
+- **Fix**: allineate le due chiavi. La diagnostica ora nomina il broker realmente configurato.
+
+
 ## 9.1.3 - 2026-09-06
 
 Il proxy MQTT non funzionava nell'eseguibile distribuito: difetto visibile solo in produzione, non in sviluppo.
