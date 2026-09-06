@@ -1,13 +1,13 @@
 {
-    "versione":  "9.1.1",
+    "versione":  "9.1.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Problema**: il campo `m` del QR porta solo `host:porta:tls` e **non puo' esprimere il protocollo**. L'app Android assumeva quindi sempre MQTT nativo e costruiva `ssl://host:porta`: contro un broker che sulla stessa porta espone WebSocket (flespi:443) il TLS riusciva ma il CONNECT restava senza risposta, e il pairing falliva in timeout senza un errore comprensibile. La porta da sola non basta a dedurre il protocollo — la 443 puo' essere MQTT nativo su un broker e WebSocket su un altro, con path diversi.",
-                 "**Fix lato server** in [dh_service.py::generate_qr_data()](dh_service.py): la parte 1 del QR porta ora due campi **opzionali**",
-                 "`tr` — transport: `tcp` (MQTT nativo), `ws`, `wss`",
-                 "`wp` — path del WebSocket (solo per ws/wss, es. `/mqtt`)",
-                 "Il campo `m` resta a tre elementi: i QR restano leggibili dalle app che non conoscono i campi nuovi, e un QR privo di `tr` viene interpretato come `tcp` (comportamento storico).",
-                 "Il transport annunciato viene dedotto da [server.py::create_pairing_session()](server.py): eredita quello effettivamente usato dal server, oppure `tcp` se e' configurata una porta dedicata ai dispositivi."
+                 "**Bug**: il test in Impostazioni → Proxy provava sempre `test.mosquitto.org` **hardcoded**, e mai la porta **443**. Due conseguenze:",
+                 "le policy dei proxy aziendali sono **per destinazione**: mosquitto poteva risultare raggiungibile mentre il broker realmente in uso era bloccato, dando un esito rassicurante ma falso;",
+                 "le porte provate (1883, 8883, 8080, 8081, 8083, 8084, 8000) sono esattamente quelle che un proxy restrittivo blocca, mentre la 443 — l'unica ammessa — non veniva mai testata. Il risultato era \"nessun metodo disponibile\" anche quando una strada percorribile esisteva.",
+                 "**Fix** in [server.py::test_proxy()](server.py):",
+                 "il bersaglio e' ora `mqtt.external.host`, cioe' il broker davvero configurato (`test.mosquitto.org` resta solo come ripiego se il campo e' vuoto); l'host provato viene riportato nel risultato;",
+                 "la **443** e' in cima alla lista delle porte testate;"
              ]
 }

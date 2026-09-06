@@ -1,5 +1,21 @@
 # Sardroid Server — Changelog
 
+## 9.1.2 - 2026-09-06
+
+Diagnostica del proxy allineata agli scenari reali: il test provava un host fisso e mai la porta 443, quindi non rilevava l'unica strada percorribile nelle reti aziendali restrittive.
+
+### Test proxy: ora prova il broker configurato e la porta 443
+- **Bug**: il test in Impostazioni → Proxy provava sempre `test.mosquitto.org` **hardcoded**, e mai la porta **443**. Due conseguenze:
+  - le policy dei proxy aziendali sono **per destinazione**: mosquitto poteva risultare raggiungibile mentre il broker realmente in uso era bloccato, dando un esito rassicurante ma falso;
+  - le porte provate (1883, 8883, 8080, 8081, 8083, 8084, 8000) sono esattamente quelle che un proxy restrittivo blocca, mentre la 443 — l'unica ammessa — non veniva mai testata. Il risultato era "nessun metodo disponibile" anche quando una strada percorribile esisteva.
+- **Fix** in [server.py::test_proxy()](server.py):
+  - il bersaglio e' ora `mqtt.external.host`, cioe' il broker davvero configurato (`test.mosquitto.org` resta solo come ripiego se il campo e' vuoto); l'host provato viene riportato nel risultato;
+  - la **443** e' in cima alla lista delle porte testate;
+  - se l'utente ha configurato una porta non standard (es. 1234), viene provata per prima.
+- Aggiunto l'esito **`silent`**: un proxy che accetta la connessione TCP e poi tace sta quasi sempre scartando una richiesta non autenticata. Prima produceva un timeout generico che faceva sembrare il proxy irraggiungibile, nascondendo la causa vera.
+- Verificato sulla rete VVF: `mqtt.flespi.io:443` → tunnel aperto; 1883, 8000, 8081, 8083, 8084 e 8883 → `403 Forbidden`.
+
+
 ## 9.1.1 - 2026-09-06
 
 Supporto completo ai broker MQTT raggiungibili solo via WebSocket dietro proxy aziendale, verificato sul campo con dispositivo reale.
