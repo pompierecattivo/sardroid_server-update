@@ -1,13 +1,12 @@
 {
-    "versione":  "9.1.2",
+    "versione":  "9.1.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: il test in Impostazioni → Proxy provava sempre `test.mosquitto.org` **hardcoded**, e mai la porta **443**. Due conseguenze:",
-                 "le policy dei proxy aziendali sono **per destinazione**: mosquitto poteva risultare raggiungibile mentre il broker realmente in uso era bloccato, dando un esito rassicurante ma falso;",
-                 "le porte provate (1883, 8883, 8080, 8081, 8083, 8084, 8000) sono esattamente quelle che un proxy restrittivo blocca, mentre la 443 — l'unica ammessa — non veniva mai testata. Il risultato era \"nessun metodo disponibile\" anche quando una strada percorribile esisteva.",
-                 "**Fix** in [server.py::test_proxy()](server.py):",
-                 "il bersaglio e' ora `mqtt.external.host`, cioe' il broker davvero configurato (`test.mosquitto.org` resta solo come ripiego se il campo e' vuoto); l'host provato viene riportato nel risultato;",
-                 "la **443** e' in cima alla lista delle porte testate;"
+                 "**Bug**: sull'eseguibile prodotto da Nuitka il server **non riusciva a connettersi al broker attraverso il proxy**, pur con una configurazione identica a quella funzionante in modalita' sviluppo. Il pannello restava su \"non connesso\" **senza alcun errore**.",
+                 "**Causa**: `build_nuitka.py` non includeva **PySocks**. Il modulo e' importato in modo condizionale in [mqtt_handler.py](mqtt_handler.py) (`try: import socks / except ImportError: SOCKS_AVAILABLE = False`), quindi Nuitka non lo rilevava automaticamente e l'import falliva **in silenzio** nell'exe. Con `SOCKS_AVAILABLE = False` la configurazione del proxy veniva saltata e il client tentava la **connessione diretta**: dietro un proxy aziendale resta appesa fino al timeout, senza motivo apparente.",
+                 "Il difetto era invisibile in sviluppo, dove PySocks e' installato nel venv: si manifestava **solo sull'eseguibile distribuito**, cioe' proprio in produzione.",
+                 "**Fix**: aggiunti `--include-module=socks` e `--include-module=sockshandler` a [build_nuitka.py](build_nuitka.py).",
+                 "**Fallimento reso esplicito**: se il proxy e' richiesto ma PySocks non e' disponibile, il client non tenta piu' una connessione diretta destinata a fallire, ma si ferma subito riportando *\"PySocks non disponibile: impossibile usare il proxy... (build incompleta: manca il modulo 'socks')\"*. Prima l'utente non aveva alcun indizio."
              ]
 }

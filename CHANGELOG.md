@@ -1,5 +1,17 @@
 # Sardroid Server — Changelog
 
+## 9.1.3 - 2026-09-06
+
+Il proxy MQTT non funzionava nell'eseguibile distribuito: difetto visibile solo in produzione, non in sviluppo.
+
+### Fix: nell'exe compilato il proxy MQTT non funzionava (PySocks assente dal bundle)
+- **Bug**: sull'eseguibile prodotto da Nuitka il server **non riusciva a connettersi al broker attraverso il proxy**, pur con una configurazione identica a quella funzionante in modalita' sviluppo. Il pannello restava su "non connesso" **senza alcun errore**.
+- **Causa**: `build_nuitka.py` non includeva **PySocks**. Il modulo e' importato in modo condizionale in [mqtt_handler.py](mqtt_handler.py) (`try: import socks / except ImportError: SOCKS_AVAILABLE = False`), quindi Nuitka non lo rilevava automaticamente e l'import falliva **in silenzio** nell'exe. Con `SOCKS_AVAILABLE = False` la configurazione del proxy veniva saltata e il client tentava la **connessione diretta**: dietro un proxy aziendale resta appesa fino al timeout, senza motivo apparente.
+- Il difetto era invisibile in sviluppo, dove PySocks e' installato nel venv: si manifestava **solo sull'eseguibile distribuito**, cioe' proprio in produzione.
+- **Fix**: aggiunti `--include-module=socks` e `--include-module=sockshandler` a [build_nuitka.py](build_nuitka.py).
+- **Fallimento reso esplicito**: se il proxy e' richiesto ma PySocks non e' disponibile, il client non tenta piu' una connessione diretta destinata a fallire, ma si ferma subito riportando *"PySocks non disponibile: impossibile usare il proxy... (build incompleta: manca il modulo 'socks')"*. Prima l'utente non aveva alcun indizio.
+
+
 ## 9.1.2 - 2026-09-06
 
 Diagnostica del proxy allineata agli scenari reali: il test provava un host fisso e mai la porta 443, quindi non rilevava l'unica strada percorribile nelle reti aziendali restrittive.
