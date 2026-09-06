@@ -1,5 +1,35 @@
 # Sardroid Server — Changelog
 
+## 9.1.1 - 2026-09-06
+
+Supporto completo ai broker MQTT raggiungibili solo via WebSocket dietro proxy aziendale, verificato sul campo con dispositivo reale.
+
+### Transport del broker dichiarato nel QR di pairing (campi "tr" e "wp")
+- **Problema**: il campo `m` del QR porta solo `host:porta:tls` e **non puo' esprimere il protocollo**. L'app Android assumeva quindi sempre MQTT nativo e costruiva `ssl://host:porta`: contro un broker che sulla stessa porta espone WebSocket (flespi:443) il TLS riusciva ma il CONNECT restava senza risposta, e il pairing falliva in timeout senza un errore comprensibile. La porta da sola non basta a dedurre il protocollo — la 443 puo' essere MQTT nativo su un broker e WebSocket su un altro, con path diversi.
+- **Fix lato server** in [dh_service.py::generate_qr_data()](dh_service.py): la parte 1 del QR porta ora due campi **opzionali**
+  - `tr` — transport: `tcp` (MQTT nativo), `ws`, `wss`
+  - `wp` — path del WebSocket (solo per ws/wss, es. `/mqtt`)
+- Il campo `m` resta a tre elementi: i QR restano leggibili dalle app che non conoscono i campi nuovi, e un QR privo di `tr` viene interpretato come `tcp` (comportamento storico).
+- Il transport annunciato viene dedotto da [server.py::create_pairing_session()](server.py): eredita quello effettivamente usato dal server, oppure `tcp` se e' configurata una porta dedicata ai dispositivi.
+- Aggiunto il setting `mqtt.device.port` (campo "Porta per i dispositivi (QR)" in Impostazioni → Rete): permette di annunciare ai telefoni una porta diversa da quella usata dal server. Utile quando il server esce in WebSocket dietro proxy sulla 443 ma i dispositivi, con rete dati, possono usare la porta MQTT nativa del broker. Vuoto = stessa porta del server.
+- **Fix lato app** (progetto `D:\sardroid`, tre file): `SettingsService.kt` conserva `mqttTransport`/`mqttWsPath`; `MqttService.kt` costruisce `wss://host:porta/path` quando richiesto (Paho 1.2.5 supporta nativamente `ws`/`wss`, nessuna nuova dipendenza) e forza il socket factory TLS con `wss`; `PairingScreen.kt` legge `tr`/`wp` dal QR e li applica nei tre punti di configurazione del broker.
+- **Verificato end-to-end** con telefono reale in rete dati e server dietro la VPN aziendale: `Broker: wss://mqtt.flespi.io:443/mqtt`, pairing completato, e **442 posizioni di una traccia trasferite con ACK**. La catena `telefono (4G) → flespi ← proxy aziendale ← server (VPN)` funziona.
+
+### Fix: la scelta del metodo di connessione MQTT non veniva salvata
+- **Bug**: in Impostazioni → Rete la tendina "Metodo di connessione" e il campo "Porta WebSocket" tornavano sempre ad *Auto-detection* dopo il salvataggio. Causa: `mqtt.connection.method` e `mqtt.connection.ws_port` erano presenti nel form ma **non registrati in `settingsConfig`** ([settings.html](static/settings.html)); il salvataggio itera su quell'elenco, quindi i due campi venivano ignorati in silenzio.
+- Effetto pratico: impossibile forzare il metodo WebSocket. L'auto-detection sceglieva `http_connect` (tunnel con MQTT puro), il broker non riconosceva il protocollo e la connessione cadeva in *Keep alive timeout*.
+- **Fix**: entrambe le chiavi aggiunte a `settingsConfig`.
+
+### Fix: i metodi 'wss', 'tcp' e 'tls' non erano riconosciuti dal backend
+- **Bug**: la tendina offre otto metodi, ma [mqtt_handler.py::connect_client()](mqtt_handler.py) ne riconosceva solo cinque. Selezionando **WebSocket TLS (wss://)** — l'unica scelta corretta per un broker su 443 — il valore finiva nel ramo "metodo non riconosciuto" e ricadeva sull'auto-detection, vanificando la scelta dell'utente. Stessa sorte per `tcp` e `tls`.
+- **Fix**: `wss` viene trattato come WebSocket con TLS forzato; `tcp` e `tls` come connessioni dirette, la seconda con TLS.
+
+### Note operative emerse dalla verifica sul campo
+- La riserva sollevata nella segnalazione originale (§6: *"verificare che paho instradi il transport WebSocket attraverso il proxy CONNECT"*) e' **risolta**: `proxy_set(socks.HTTP)` instrada correttamente anche il transport `websockets`. Il fallback con socket pre-aperto a mano non serve.
+- **I proxy aziendali richiedono autenticazione Basic** (rispondono `407`), dettaglio assente dalla segnalazione originale. Senza credenziali il proxy **scarta la richiesta in silenzio**: si ottiene un timeout che ne maschera la causa e fa sembrare il proxy irraggiungibile. Se la connessione va in timeout, verificare le credenziali prima di concludere che il proxy sia giu'.
+- **Porte ammesse dal proxy**: verificato che il `CONNECT` e' consentito **solo verso la 443**; 8081, 8084 e 8884 rispondono `403 Forbidden`. Questo esclude i broker MQTT pubblici anonimi (test.mosquitto.org, broker.emqx.io, broker.hivemq.com), che espongono wss proprio su quelle porte. In una rete cosi' vincolata servono un broker con endpoint wss su 443 (es. flespi, che richiede un token) oppure un broker proprio dietro un reverse proxy TLS sulla 443.
+- Configurazione di riferimento funzionante: broker `mqtt.flespi.io` porta **443**, token flespi come *username* con password vuota, TLS attivo, path `/mqtt`, metodo **wss**, proxy con "usa proxy per MQTT" attivo.
+
 ## 9.1.0 - 2026-09-05
 
 Fix connessione a broker MQTT esterno via WebSocket-Secure dietro proxy HTTP aziendale.
@@ -70,7 +100,8 @@ Fix connessione a broker MQTT esterno via WebSocket-Secure dietro proxy HTTP azi
 - Nuove chiavi tradotte in `it.json`, `en.json`, `es.json`.
 
 ### Nota di verifica
-- La catena `proxy CONNECT → TLS → WebSocket → MQTT` riceve ora i parametri corretti, verificata in simulazione sui percorsi di connessione (incluse 4 prove di non regressione: embedded, TCP 1883, TCP+TLS 8883, HTTP_CONNECT). **Resta da confermare sul campo** che paho-mqtt instradi effettivamente il transport WebSocket attraverso il proxy HTTP CONNECT: in caso contrario serve il fallback con socket pre-aperto manualmente e passato al client.
+- La catena `proxy CONNECT → TLS → WebSocket → MQTT` riceve ora i parametri corretti, verificata in simulazione sui percorsi di connessione (incluse 4 prove di non regressione: embedded, TCP 1883, TCP+TLS 8883, HTTP_CONNECT).
+- La conferma sul campo e' arrivata con la **9.1.1**: paho-mqtt instrada correttamente il transport WebSocket attraverso il proxy HTTP CONNECT, quindi il fallback con socket pre-aperto manualmente non serve.
 
 ## 9.0.9 - 2026-07-11
 
