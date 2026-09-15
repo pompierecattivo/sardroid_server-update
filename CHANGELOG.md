@@ -1,5 +1,70 @@
 # Sardroid Server — Changelog
 
+## 9.2.0 - 2026-09-15
+
+Le zone non si inviano piu' a comando: si accende un interruttore e i dispositivi
+restano allineati da soli, compresi quelli che si accoppiano o tornano online in
+seguito.
+
+### Distribuzione automatica delle zone (messaggi retained)
+
+- **Prima**: le zone si inviavano premendo "Invia ai Device". Un dispositivo che
+  si accoppiava dopo, o che era spento in quel momento, **restava senza zone** e
+  nessuno se ne accorgeva, perche' il server non sa chi ha ricevuto.
+- **Ora**: le zone vengono pubblicate su MQTT con il flag **`retain`**. Il broker
+  conserva l'ultimo messaggio e lo consegna a chiunque si sottoscriva in seguito:
+  la consegna diventa responsabilita' del broker, e il server deve solo essere
+  certo di aver pubblicato qualcosa di ricevibile.
+- **Il pulsante e' diventato un interruttore** ("📡 Invia zone"):
+  - **acceso** — le zone sono pubblicate e **ripubblicate a ogni modifica**
+    (creazione, modifica, cancellazione, visibilita' singola e globale, e i
+    quattro percorsi di import): dieci punti agganciati a un'unica funzione, cosi'
+    non esistono percorsi che dimenticano di aggiornare i dispositivi
+  - **spento** — viene pubblicata una **lista vuota**: le zone non sono piu'
+    valide e i dispositivi le cancellano, restando allineati al server. Richiede
+    conferma, perche' cancella dati su tutti i telefoni
+- Le zone vengono pubblicate anche **al completamento del pairing**, sul topic del
+  device appena accoppiato ([mqtt_handler.py](mqtt_handler.py), callback
+  `set_on_device_paired`).
+- Nuovi endpoint `GET`/`POST /api/zones/distribution`. `POST /api/zones/send`
+  resta disponibile per invii a un singolo dispositivo e integrazioni esterne, ma
+  non e' piu' usato dalla dashboard.
+
+### Niente piu' messaggi inutili quando le zone non sono cambiate
+
+- **Prima**: ogni invio produceva un messaggio in chat ("Zone aggiornate: N zone")
+  anche quando il contenuto era identico a quello gia' presente sul dispositivo.
+  Con i retained il problema si sarebbe aggravato, perche' il broker riconsegna il
+  messaggio a ogni riconnessione.
+- **Ora**: il payload `zones_sync` porta un campo **`hash`**, impronta del
+  contenuto calcolata su zone ordinate per `id` (quindi insensibile a un
+  riordino). L'app lo confronta con quello memorizzato: **avvisa solo se le zone
+  sono davvero diverse**, e tace altrimenti.
+- Il server **non invia piu' il messaggio di chat separato**: la decisione e'
+  passata all'app, che e' l'unica a conoscere lo stato precedente.
+- Lato app (`D:\sardroid`): nuova preferenza persistente `zonesHash`, confronto in
+  `AppState`, e `MqttService.addLocalNotice()` per inserire l'avviso nella lista
+  messaggi. Serve perche' la schermata Messaggi legge la lista MQTT in memoria e
+  **non** il database, e il topic `/zones` ne e' escluso: era questa la ragione
+  per cui il server doveva inviare un messaggio separato.
+- Distinzione fra **lista vuota** (le zone non sono piu' valide: cancellare) e
+  **nessun messaggio ricevuto** (il server non si e' espresso: non toccare nulla).
+
+### Compatibilita'
+
+Topic, cifratura e struttura delle zone sono invariati: l'unica aggiunta e' il
+campo `hash`, che una versione precedente dell'app ignora continuando a funzionare
+come prima. **Non e' necessario un rilascio coordinato** di server e app.
+
+### Verifica sul campo
+
+Collaudo end-to-end con telefono reale, server dietro proxy aziendale e broker
+flespi in wss su 443. Verificati: ripubblicazione automatica alla modifica,
+consegna al pairing, consegna alla riapertura dopo modifiche ad app chiusa,
+cancellazione, e **assenza di notifica** quando le zone non sono cambiate.
+Contratto e log in [docs/zone_sync_contratto.md](docs/zone_sync_contratto.md).
+
+
 ## 9.1.4 - 2026-09-06
 
 Gli errori di connessione al broker ora sono visibili nell'interfaccia: prima un token non valido produceva un "non connesso" senza alcuna spiegazione.
