@@ -1,13 +1,13 @@
 {
-    "versione":  "9.2.0",
+    "versione":  "9.2.1",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Prima**: le zone si inviavano premendo \"Invia ai Device\". Un dispositivo che",
-                 "**Ora**: le zone vengono pubblicate su MQTT con il flag **`retain`**. Il broker",
-                 "**Il pulsante e' diventato un interruttore** (\"📡 Invia zone\"):",
-                 "**acceso** — le zone sono pubblicate e **ripubblicate a ogni modifica**",
-                 "**spento** — viene pubblicata una **lista vuota**: le zone non sono piu'",
-                 "Le zone vengono pubblicate anche **al completamento del pairing**, sul topic del"
+                 "Lo stato dell'interruttore e' persistente nel database, ma il messaggio",
+                 "Copre due casi prima scoperti:",
+                 "zone modificate a server spento (import diretto nel DB, ripristino di un",
+                 "broker che perde i retained (riavvio, cambio di token, pulizia): nessuno se",
+                 "Il **cambio sessione** era il caso piu' insidioso: il topic contiene il",
+                 "Entrambe le chiamate sono protette: se la pubblicazione fallisce il server"
              ]
 }

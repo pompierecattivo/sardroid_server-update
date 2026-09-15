@@ -1,5 +1,39 @@
 # Sardroid Server — Changelog
 
+## 9.2.1 - 2026-09-15
+
+Rifiniture alla sincronizzazione zone introdotta con la 9.2.0.
+
+### Riallineamento del broker all'avvio e al cambio sessione
+
+- Lo stato dell'interruttore e' persistente nel database, ma il messaggio
+  retained vive **sul broker**: i due potevano divergere. Il server ora
+  **ripubblica le zone all'avvio** e **all'attivazione di una sessione**, se la
+  distribuzione e' attiva.
+- Copre due casi prima scoperti:
+  - zone modificate a server spento (import diretto nel DB, ripristino di un
+    backup): il broker restava con la versione precedente
+  - broker che perde i retained (riavvio, cambio di token, pulizia): nessuno se
+    ne accorgeva finche' non si toccava una zona
+- Il **cambio sessione** era il caso piu' insidioso: il topic contiene il
+  `session_id`, quindi i dispositivi si sottoscrivono a topic nuovi dove non
+  c'e' ancora nulla. Senza ripubblicare sarebbero rimasti senza zone fino alla
+  prima modifica.
+- Entrambe le chiamate sono protette: se la pubblicazione fallisce il server
+  parte comunque e lo segnala nel log.
+
+### Fix: pallino sporgente sull'interruttore "Usa mappa offline"
+
+- Difetto introdotto in questa stessa versione: lo stile dell'interruttore delle
+  zone era stato definito su `.toggle-switch` **generico**, ma
+  `.force-offline-toggle` usa la stessa classe `.toggle-slider` con un proprio
+  cursore su `::after`. I due si sovrapponevano, e quello nuovo (18px contro
+  10px) sporgeva dal contenitore da 28px.
+- **Fix**: le regole sono state limitate a `#zonesDistLabel`, cosi' valgono solo
+  per l'interruttore delle zone. Verificato con render di entrambi i componenti
+  nei due stati.
+
+
 ## 9.2.0 - 2026-09-15
 
 Le zone non si inviano piu' a comando: si accende un interruttore e i dispositivi
