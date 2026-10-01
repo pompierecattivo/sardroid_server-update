@@ -1,10 +1,11 @@
 {
-    "versione":  "9.2.4",
+    "versione":  "9.2.5",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: su una macchina dietro proxy, il controllo aggiornamenti restava",
-                 "**Causa**: `httpx` legge solo le variabili d'ambiente `HTTP_PROXY` /",
-                 "**Fix**: nuovo modulo [net_proxy.py](net_proxy.py), usato da"
+                 "**Bug**: tenendo aperta la mappa 3D, dopo qualche minuto **tutti** i",
+                 "**Causa**: il timer di lampeggio dei dispositivi assegnava ogni **700 ms**",
+                 "**Fix** in [static/index.html](static/index.html) e",
+                 "Allineate anche `createWaypointCanvas` e `createDeviceCanvas`, che"
              ]
 }

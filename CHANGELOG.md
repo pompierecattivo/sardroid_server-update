@@ -1,5 +1,37 @@
 # Sardroid Server — Changelog
 
+## 9.2.5 - 2026-10-01
+
+Dopo qualche minuto di sessione 3D tutti i segnaposto diventavano quadrati
+neri. Era una perdita di memoria grafica causata dal lampeggio dei device.
+
+### Fix: segnaposto 3D anneriti dopo alcuni minuti
+
+- **Bug**: tenendo aperta la mappa 3D, dopo qualche minuto **tutti** i
+  segnaposto — dispositivi, foto, waypoint — diventavano quadrati neri
+  contemporaneamente. Ricaricando la pagina tornavano normali, per poi
+  annerirsi di nuovo. Si manifestava soprattutto sulle dashboard aperte **da
+  un altro PC**, raramente in locale.
+- **Causa**: il timer di lampeggio dei dispositivi assegnava ogni **700 ms**
+  un `<canvas>` nuovo a `billboard.image`. Cesium indicizza la cache delle
+  texture sull'oggetto immagine, quindi ogni canvas era una texture nuova
+  caricata sulla GPU e mai riutilizzata: circa 85 texture all'ora per
+  dispositivo. Quando la memoria grafica si esauriva, le allocazioni
+  successive fallivano e la scena rendeva nero tutto cio' che doveva
+  ricaricare — anche foto e waypoint, che non lampeggiano affatto ed erano
+  vittime, non causa. Da remoto il limite si raggiungeva prima, perche' quel
+  PC spende memoria anche per terreno e tessere satellitari.
+- **Fix** in [static/index.html](static/index.html) e
+  [static/live-map.html](static/live-map.html): le icone dei dispositivi sono
+  ora generate una sola volta per combinazione (colore x online x SOS x alone)
+  e tenute in cache come dataURL. Il lampeggio riassegna sempre lo **stesso**
+  oggetto, cosi' Cesium riconosce la texture e non ne carica una nuova. Nella
+  simulazione, 600 chiamate del blink producono **4** immagini invece di 600.
+- Allineate anche `createWaypointCanvas` e `createDeviceCanvas`, che
+  restituivano un elemento canvas vivo invece di un dataURL: tutte le altre
+  icone della scena gia' usavano dataURL.
+
+
 ## 9.2.4 - 2026-10-01
 
 Il controllo aggiornamenti e il download dell'exe ora usano il proxy
