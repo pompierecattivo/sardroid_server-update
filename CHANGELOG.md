@@ -1,5 +1,26 @@
 # Sardroid Server — Changelog
 
+## 9.2.6 - 2026-10-01
+
+Distribuisce la nuova app Android inclusa nel server.
+
+### Nuova APK Sardroid Mobile
+
+- Aggiornata l'app Android distribuita insieme al server: si scarica dalla
+  dashboard e viene estratta accanto all'eseguibile al primo avvio.
+  Chi ha gia' l'app installata ricevera' la nuova versione dal server.
+
+### Build: `net_proxy` incluso esplicitamente
+
+- Il modulo di rilevamento proxy introdotto nella 9.2.4 era dichiarato in
+  `build_nuitka.py`, che pero' **non** e' lo script usato dalla release:
+  quella passa da [build_exe.bat](build_exe.bat). Il modulo veniva comunque
+  seguito da Nuitka tramite gli import normali, ma al suo interno `winreg` e'
+  importato in modo condizionale — lo stesso motivo per cui `socks` e'
+  dichiarato esplicitamente. Ora `--include-module=net_proxy` e' anche in
+  `build_exe.bat`.
+
+
 ## 9.2.5 - 2026-10-01
 
 Dopo qualche minuto di sessione 3D tutti i segnaposto diventavano quadrati

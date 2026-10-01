@@ -1,11 +1,9 @@
 {
-    "versione":  "9.2.5",
+    "versione":  "9.2.6",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: tenendo aperta la mappa 3D, dopo qualche minuto **tutti** i",
-                 "**Causa**: il timer di lampeggio dei dispositivi assegnava ogni **700 ms**",
-                 "**Fix** in [static/index.html](static/index.html) e",
-                 "Allineate anche `createWaypointCanvas` e `createDeviceCanvas`, che"
+                 "Aggiornata l'app Android distribuita insieme al server: si scarica dalla",
+                 "Il modulo di rilevamento proxy introdotto nella 9.2.4 era dichiarato in"
              ]
 }
