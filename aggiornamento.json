@@ -1,11 +1,10 @@
 {
-    "versione":  "9.2.3",
+    "versione":  "9.2.4",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: con \"Servizi esposti\" impostato su una rete specifica (es. la",
-                 "**Causa**: il middleware `http_bind_filter` restituiva di proposito un 404",
-                 "**Fix** in [server.py::http_bind_filter()](server.py): ora risponde **403**",
-                 "In [static/settings.html](static/settings.html), sotto \"Servizi esposti\", un"
+                 "**Bug**: su una macchina dietro proxy, il controllo aggiornamenti restava",
+                 "**Causa**: `httpx` legge solo le variabili d'ambiente `HTTP_PROXY` /",
+                 "**Fix**: nuovo modulo [net_proxy.py](net_proxy.py), usato da"
              ]
 }

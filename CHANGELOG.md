@@ -1,5 +1,39 @@
 # Sardroid Server — Changelog
 
+## 9.2.4 - 2026-10-01
+
+Il controllo aggiornamenti e il download dell'exe ora usano il proxy
+configurato nel sistema: dietro una rete aziendale fallivano in silenzio.
+
+### Fix: nessun aggiornamento rilevato dietro un proxy aziendale
+
+- **Bug**: su una macchina dietro proxy, il controllo aggiornamenti restava
+  appeso per 10 secondi e poi riportava "Timeout", senza che nessun
+  aggiornamento risultasse mai disponibile — anche quando era pubblicato da
+  giorni. Lo stesso valeva per il **download** dell'exe.
+- **Causa**: `httpx` legge solo le variabili d'ambiente `HTTP_PROXY` /
+  `HTTPS_PROXY`. Un exe lanciato dal menu Start non le ha, quindi tentava
+  sempre l'uscita diretta, che in rete aziendale e' chiusa. Il proxy
+  configurato in Windows non veniva mai considerato.
+- **Fix**: nuovo modulo [net_proxy.py](net_proxy.py), usato da
+  [update_checker.py](update_checker.py) e [auto_updater.py](auto_updater.py).
+  Cerca il proxy in tre punti, dal piu' esplicito al piu' implicito:
+  1. variabili d'ambiente (se presenti, comandano);
+  2. proxy di sistema Windows, **solo** se `ProxyEnable = 1`;
+  3. script PAC, **solo** se l'uscita diretta non funziona.
+
+  Senza proxy configurato il comportamento resta identico a prima: chi esce
+  in diretta continua a uscire in diretta.
+
+### Nota: proxy con autenticazione
+
+Se il proxy aziendale richiede credenziali, il controllo ora riporta un
+errore esplicito (`407 Proxy Authentication Required`) invece di un timeout
+muto. L'aggiornamento non viene ancora scaricato in quel caso: le credenziali
+proxy gia' presenti nelle impostazioni MQTT non sono riusate dal
+controllo aggiornamenti.
+
+
 ## 9.2.3 - 2026-10-01
 
 Chiarisce il rifiuto del filtro anti-lockout: prima una restrizione di rete
