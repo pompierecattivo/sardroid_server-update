@@ -1,13 +1,11 @@
 {
-    "versione":  "9.2.2",
+    "versione":  "9.2.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Bug**: configurando un broker **senza** TLS (es. `test.mosquitto.org:1883`)",
-                 "**Causa**: il flag TLS esiste in due punti — `mqtt.external.use_tls` (tab",
-                 "**Fix** in [mqtt_handler.py::connect_client()](mqtt_handler.py): comanda il tab",
-                 "**Bug**: modificando \"Servizi esposti\" (bind HTTP/MQTT) e salvando, riaprendo",
-                 "**Causa**: `GET /api/network/routing` restituiva `WEB_HOST` e",
-                 "**Fix** in [server.py](server.py): i bind inbound vengono riletti dal file. La"
+                 "**Bug**: con \"Servizi esposti\" impostato su una rete specifica (es. la",
+                 "**Causa**: il middleware `http_bind_filter` restituiva di proposito un 404",
+                 "**Fix** in [server.py::http_bind_filter()](server.py): ora risponde **403**",
+                 "In [static/settings.html](static/settings.html), sotto \"Servizi esposti\", un"
              ]
 }

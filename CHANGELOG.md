@@ -1,5 +1,35 @@
 # Sardroid Server — Changelog
 
+## 9.2.3 - 2026-10-01
+
+Chiarisce il rifiuto del filtro anti-lockout: prima una restrizione di rete
+era indistinguibile da una pagina mancante.
+
+### Fix: il server rispondeva "404 non trovato" invece di dire che l'indirizzo non era autorizzato
+
+- **Bug**: con "Servizi esposti" impostato su una rete specifica (es. la
+  Ethernet), un telefono collegato al wifi che chiedeva la mappa riceveva un
+  **404**. Sembrava un file mancante o un problema dell'app; in realta' era il
+  bind che rifiutava la richiesta. La stessa cosa accadeva alla dashboard.
+- **Causa**: il middleware `http_bind_filter` restituiva di proposito un 404
+  muto, "per non rivelare la presenza del servizio a chi non e' autorizzato".
+  In rete locale quella prudenza non protegge da nessuno e costa ore di
+  diagnosi a chi non sospetta la restrizione.
+- **Fix** in [server.py::http_bind_filter()](server.py): ora risponde **403**
+  con un messaggio esplicito che indica l'indirizzo autorizzato, quello su cui
+  e' arrivata la richiesta e dove cambiare l'impostazione. Le rotte `/api/`
+  ricevono JSON (`detail`, `allowed_bind`, `requested_bind`), le altre testo
+  semplice. Le due eccezioni anti-lockout restano intatte: loopback come
+  destinazione e client da loopback passano sempre.
+
+### UI: avviso prima di restringere i servizi esposti
+
+- In [static/settings.html](static/settings.html), sotto "Servizi esposti", un
+  avviso segnala che scegliendo una rete diversa da *Tutte le reti* dashboard,
+  API e mappe diventano irraggiungibili dalle altre interfacce — cosi' la
+  conseguenza si conosce prima di subirla, non dopo.
+
+
 ## 9.2.2 - 2026-10-01
 
 Tre difetti che rendevano la configurazione poco affidabile: un flag TLS che
