@@ -1,5 +1,88 @@
 # Sardroid Server — Changelog
 
+## 9.2.2 - 2026-10-01
+
+Tre difetti che rendevano la configurazione poco affidabile: un flag TLS che
+impediva di tornare a un broker in chiaro, i parametri di rete che sembravano
+non salvarsi, e un pulsante "Salva" che non valeva per tutti i campi.
+
+### Fix: impossibile disattivare il TLS dopo aver usato un broker che lo richiede
+
+- **Bug**: configurando un broker **senza** TLS (es. `test.mosquitto.org:1883`)
+  dopo averne usato uno con TLS, la connessione falliva sempre in timeout, senza
+  alcun messaggio utile.
+- **Causa**: il flag TLS esiste in due punti — `mqtt.external.use_tls` (tab
+  Broker) e `mqtt.connection.use_tls` (tab Proxy) — e la regola era "basta che
+  **uno dei due** sia attivo". Il secondo non veniva mai azzerato, quindi restava
+  acceso per sempre: il server attivava il TLS su una porta in chiaro e il broker
+  non rispondeva.
+- **Fix** in [mqtt_handler.py::connect_client()](mqtt_handler.py): comanda il tab
+  Broker, dove l'utente dichiara com'e' fatto il broker. L'altro flag vale solo
+  come ripiego quando il primo non e' mai stato impostato.
+
+### Fix: i parametri di rete sembravano non salvarsi
+
+- **Bug**: modificando "Servizi esposti" (bind HTTP/MQTT) e salvando, riaprendo
+  la pagina si ritrovava il valore precedente. Il salvataggio **funzionava** — il
+  file veniva scritto — ma la UI mostrava altro.
+- **Causa**: `GET /api/network/routing` restituiva `WEB_HOST` e
+  `MQTT_BROKER_HOST`, costanti caricate **all'avvio del server**, invece di
+  rileggere `server_config.ini`. La UI mostrava quindi il valore *attivo* al
+  posto di quello *salvato*.
+- **Fix** in [server.py](server.py): i bind inbound vengono riletti dal file. La
+  risposta distingue ora `http_bind` (salvato, si applica al prossimo riavvio) da
+  `http_bind_active` (in uso adesso), con un flag `restart_pending`.
+- La pagina segnala in giallo quando i due differiscono: prima quella differenza
+  era invisibile e sembrava un salvataggio non riuscito.
+
+### Il pulsante "Salva" ora vale per tutta la pagina
+
+Nelle Impostazioni convivevano tre comportamenti diversi — campi che
+richiedevano il Salva, campi che si salvavano da soli, campi con un pulsante
+proprio — senza che nulla lo segnalasse. Modificare un campo del secondo o terzo
+gruppo e premere il Salva generale **perdeva la modifica in silenzio**.
+
+- **4 campi di routing**: non erano registrati in `settingsConfig`, quindi il
+  listener che accende il pulsante non si agganciava nemmeno. Ora lo fanno, e il
+  salvataggio li instrada al loro endpoint dedicato (nuovo flag `skipBulk`:
+  presenti nell'elenco per il rilevamento delle modifiche, esclusi dall'invio
+  massivo).
+- **7 permessi ospite**: si salvavano automaticamente al cambio, senza conferma.
+  Ora seguono la regola comune.
+- **Rimosso il pulsante "Salva routing"**: due comandi di salvataggio nella
+  stessa pagina erano la causa principale dell'equivoco.
+- **Campi della configurazione mappe**: lasciati invariati di proposito. Sono
+  parametri di un'operazione (si compilano e si avvia il download), non
+  impostazioni permanenti.
+- **Nuovo avviso in uscita**: chiudere o ricaricare la pagina con modifiche non
+  salvate chiede conferma.
+
+### Fix: il bind di rete non veniva applicato ai test di connessione
+
+- **Bug**: con due interfacce attive (es. Ethernet aziendale a metrica bassa e
+  Wi-Fi libero), impostare `network.outbound_mqtt_ip` sul Wi-Fi non bastava:
+  l'auto-detection provava la connessione **senza bind**, uscendo
+  dall'interfaccia di default. Il test falliva, il server concludeva "nessun
+  metodo di connessione disponibile" e non arrivava mai al punto in cui il bind
+  viene applicato.
+- **Fix**: l'impostazione viene letta **prima** dei test e passata a
+  `_test_direct`; il bind e' stato inoltre esteso a tutti i rami di connessione
+  (HTTP_CONNECT, SOCKS5 e i tre WebSocket), dove prima era usato solo da quello
+  diretto.
+- **Secondo difetto corretto nello stesso punto**: `_test_direct` usava
+  `connect_ex` su un socket con timeout, che rende `10035` ("connessione
+  avviata") invece di `0`. Il confronto con `0` falliva quindi **sempre**, anche
+  a rete perfettamente funzionante. Sostituito con `connect()`.
+
+### Nota per lo sviluppo
+
+Avviando il server da una shell in cui sono impostate le variabili
+`HTTPS_PROXY`/`HTTP_PROXY` (per esempio quella usata da Claude Proxy), PySocks le
+applica a **tutti** i socket, incluso MQTT: il traffico viene instradato al proxy
+e il bind sull'interfaccia scelta viene scavalcato. In sviluppo conviene avviare
+il server con `start_dev.bat`, che non eredita quelle variabili.
+
+
 ## 9.2.1 - 2026-09-15
 
 Rifiniture alla sincronizzazione zone introdotta con la 9.2.0.

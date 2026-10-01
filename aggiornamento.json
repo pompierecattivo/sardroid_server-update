@@ -1,13 +1,13 @@
 {
-    "versione":  "9.2.1",
+    "versione":  "9.2.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Lo stato dell'interruttore e' persistente nel database, ma il messaggio",
-                 "Copre due casi prima scoperti:",
-                 "zone modificate a server spento (import diretto nel DB, ripristino di un",
-                 "broker che perde i retained (riavvio, cambio di token, pulizia): nessuno se",
-                 "Il **cambio sessione** era il caso piu' insidioso: il topic contiene il",
-                 "Entrambe le chiamate sono protette: se la pubblicazione fallisce il server"
+                 "**Bug**: configurando un broker **senza** TLS (es. `test.mosquitto.org:1883`)",
+                 "**Causa**: il flag TLS esiste in due punti — `mqtt.external.use_tls` (tab",
+                 "**Fix** in [mqtt_handler.py::connect_client()](mqtt_handler.py): comanda il tab",
+                 "**Bug**: modificando \"Servizi esposti\" (bind HTTP/MQTT) e salvando, riaprendo",
+                 "**Causa**: `GET /api/network/routing` restituiva `WEB_HOST` e",
+                 "**Fix** in [server.py](server.py): i bind inbound vengono riletti dal file. La"
              ]
 }
