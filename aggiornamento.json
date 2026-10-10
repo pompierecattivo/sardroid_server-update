@@ -1,12 +1,13 @@
 {
-    "versione":  "9.2.9",
+    "versione":  "9.3.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il dialogo di riavvio ha ora un pulsante **\"Riavvia ora\"**: prima bisognava",
+                 "Il dialogo che segnala un cambio di \"Servizi esposti\" ha ora un pulsante",
                  "Nuovo endpoint `POST /api/server/restart`, riservato a **localhost** come lo",
-                 "**Bug**: spegnendo l'interruttore la mappa restava scaricabile dai",
-                 "**Causa**: la funzione che salva la configurazione scriveva sempre",
-                 "**Fix** in [static/settings.html](static/settings.html): l'interruttore"
+                 "Lo script di riavvio attende che **tutti** i processi dell'eseguibile siano",
+                 "Il rilancio passa `--no-browser`, come fa gia' l'aggiornamento automatico:",
+                 "Niente piu' richiesta di conferma del browser al ricaricamento: l'utente ha",
+                 "Lo script lascia una traccia in `restart.log` accanto all'eseguibile: si"
              ]
 }

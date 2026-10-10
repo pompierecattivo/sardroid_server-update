@@ -1,20 +1,52 @@
 # Sardroid Server — Changelog
 
-## 9.2.9 - 2026-10-10
+## 9.3.0 - 2026-10-10
 
-Il riavvio richiesto dopo un cambio di rete si fa ora dalla dashboard, e
-l'interruttore della mappa servita ha finalmente effetto.
+Il riavvio del server si fa ora dalla dashboard: niente piu' spegnimento e
+rilancio a mano per applicare un cambio di rete.
 
 ### Nuovo: riavvio del server dalla dashboard
 
-- Il dialogo di riavvio ha ora un pulsante **"Riavvia ora"**: prima bisognava
-  spegnere il server e rilanciare l'eseguibile a mano. La pagina attende che
-  il server torni a rispondere e si ricarica, cosi' l'esito e' visibile invece
-  di lasciare un errore di connessione.
+- Il dialogo che segnala un cambio di "Servizi esposti" ha ora un pulsante
+  **"Riavvia ora"**: prima bisognava spegnere il server e rilanciare
+  l'eseguibile a mano. La pagina attende che il server torni a rispondere e si
+  ricarica da sola, cosi' l'esito e' visibile invece di lasciare un errore di
+  connessione.
 - Nuovo endpoint `POST /api/server/restart`, riservato a **localhost** come lo
   spegnimento: un riavvio fallito da remoto lascerebbe il sistema
   irraggiungibile. In sviluppo risponde con un messaggio esplicito invece di
   tentare un riavvio che non tornerebbe su.
+- Lo script di riavvio attende che **tutti** i processi dell'eseguibile siano
+  chiusi e che la porta sia libera. Con Nuitka onefile l'exe e' due processi
+  (un bootstrap e quello reale): attendendo solo il secondo, il rilancio
+  partiva mentre il primo era ancora vivo, e il nuovo processo trovava la
+  porta occupata restando spento.
+- Il rilancio passa `--no-browser`, come fa gia' l'aggiornamento automatico:
+  la pagina che ha chiesto il riavvio si ricarica da sola, quindi aprirne
+  un'altra lasciava due schede sulla stessa dashboard.
+- Niente piu' richiesta di conferma del browser al ricaricamento: l'utente ha
+  appena premuto "Riavvia ora" e le impostazioni sono gia' salvate.
+- Lo script lascia una traccia in `restart.log` accanto all'eseguibile: si
+  cancella da solo a fine corsa, quindi senza log un riavvio fallito non
+  lasciava nulla da esaminare.
+
+### Fix: le pause dell'aggiornamento automatico non attendevano
+
+- Lo stesso difetto trovato nel riavvio valeva anche per
+  [auto_updater.py](auto_updater.py): `timeout /t N` esce subito quando non
+  c'e' una console interattiva, e lo script di update gira nascosto. I log lo
+  confermano: fra "Attendo chiusura server" e "Server chiuso" passavano 0,18
+  secondi invece di 4.
+- Non ha mai causato danni perche' l'aggiornamento non si affida all'attesa:
+  termina il processo con `taskkill /F` e verifica l'esito, con rollback in
+  caso di errore. Ma fra la terminazione e la sostituzione dell'exe passavano
+  10 millisecondi, e Windows puo' impiegare un istante a rilasciare gli handle
+  del file: in quel caso l'aggiornamento sarebbe saltato senza una ragione
+  reale. Le quattro pause ora attendono davvero.
+
+## 9.2.9 - 2026-10-10
+
+L'interruttore della mappa servita ha finalmente effetto.
 
 ### Fix: l'interruttore "Pubblica questa mappa" non aveva effetto
 
