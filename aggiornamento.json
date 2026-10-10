@@ -1,9 +1,13 @@
 {
-    "versione":  "9.2.6",
+    "versione":  "9.2.7",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Aggiornata l'app Android distribuita insieme al server: si scarica dalla",
-                 "Il modulo di rilevamento proxy introdotto nella 9.2.4 era dichiarato in"
+                 "**Bug**: con \"Interfaccia di uscita\" impostata su una scheda precisa, se",
+                 "**Causa**: l'indirizzo veniva passato al `bind()` del socket (e a",
+                 "**Fix** in [mqtt_handler.py](mqtt_handler.py) e [server.py](server.py): prima",
+                 "Questi problemi erano visibili solo aprendo le impostazioni — cosa che in",
+                 "La descrizione spiegava il meccanismo, non la decisione. Ora dice che si",
+                 "Il riquadro informativo ha ora quattro stati invece di due, e in particolare"
              ]
 }

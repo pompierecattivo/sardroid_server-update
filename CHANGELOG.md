@@ -1,5 +1,71 @@
 # Sardroid Server — Changelog
 
+## 9.2.7 - 2026-10-10
+
+Un indirizzo di rete salvato che non esiste piu' bloccava il server senza
+dirlo. Ora viene rilevato, aggirato e segnalato in dashboard. In piu', le
+coordinate del cursore si leggono nelle tre notazioni usate sul campo.
+
+### Fix: un IP di rete sparito bloccava tutte le connessioni, in silenzio
+
+- **Bug**: con "Interfaccia di uscita" impostata su una scheda precisa, se
+  quell'indirizzo cambiava (DHCP, rete diversa, cavo staccato) **nessuna
+  connessione partiva piu'**: ne' il broker MQTT, ne' mappe, orario e
+  aggiornamenti. I semafori restavano rossi senza alcuna indicazione, e in
+  modalita' embedded sembrava che il broker non si avviasse.
+- **Causa**: l'indirizzo veniva passato al `bind()` del socket (e a
+  `local_address` per le richieste web) senza verificare che appartenesse
+  ancora a una scheda locale. Un bind su un indirizzo inesistente fallisce e
+  impedisce ogni uscita.
+- **Fix** in [mqtt_handler.py](mqtt_handler.py) e [server.py](server.py): prima
+  dell'uso si verifica che l'indirizzo esista. Se non c'e' piu', viene ignorato
+  a favore dell'uscita automatica, con un avviso esplicito nel log. Il server
+  continua a funzionare invece di restare muto.
+
+### Nuovo: avviso in dashboard per la configurazione di rete
+
+- Questi problemi erano visibili solo aprendo le impostazioni — cosa che in
+  operazione non succede. Un badge rosso accanto ai semafori ora segnala le
+  configurazioni non piu' valide, con il dettaglio al passaggio del mouse e il
+  collegamento diretto al rimedio. Lo alimenta il nuovo endpoint
+  `GET /api/network/health`, interrogato all'avvio e ogni due minuti, perche'
+  la rete puo' cambiare a server acceso.
+
+### Chiarita la card "IP di default per i QR"
+
+- La descrizione spiegava il meccanismo, non la decisione. Ora dice che si
+  tratta dell'indirizzo che **i telefoni** useranno, quando lasciare
+  *Automatico* (una sola rete) e quando scegliere esplicitamente la scheda
+  (piu' reti: va presa quella sulla stessa rete dei dispositivi).
+- Il riquadro informativo ha ora quattro stati invece di due, e in particolare
+  segnala in rosso un indirizzo **non presente su questa macchina**: i QR di
+  pairing, APK e mappe punterebbero a un indirizzo irraggiungibile, cosa di cui
+  ci si accorgeva solo sul campo. Non viene corretto d'ufficio, perche' dietro
+  un NAT un indirizzo non locale e' legittimo.
+- Con piu' schede attive e *Automatico*, un avviso ricorda che la scelta del
+  sistema potrebbe non essere la rete dei telefoni.
+
+### Nuovo: tre notazioni per le coordinate del cursore
+
+- La barra in fondo alle mappe mostra una sigla (DD / DDM / DMS): un click
+  passa alla notazione successiva, e la scelta si ricorda. Servono interlocutori
+  diversi — gradi decimali per i sistemi, gradi e primi per aeronautica e
+  marina, gradi primi secondi per la cartografia IGM. Mostrarle tutte e tre
+  allungherebbe di tre volte una barra che insegue il cursore.
+- La finestra **Ctrl+Click** le mostra invece tutte e tre insieme, ognuna
+  copiabile con un click: li' si e' fermi e si sceglie. Sostituisce il bottone
+  "Copia coordinate", che copiava solo in decimale.
+- Corretto anche il passaggio del mouse sulla barra, che prima la faceva
+  sfarfallare o sparire.
+
+### Correzioni minori
+
+- Tre testi dell'interfaccia comparivano come chiavi grezze
+  (`settings.network.*`): traduzioni aggiunte in italiano, inglese e spagnolo.
+- L'avviso sulle interfacce mancanti elencava due volte lo stesso indirizzo
+  quando era usato da piu' campi.
+
+
 ## 9.2.6 - 2026-10-01
 
 Distribuisce la nuova app Android inclusa nel server.
