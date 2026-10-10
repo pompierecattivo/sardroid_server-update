@@ -1,12 +1,12 @@
 {
-    "versione":  "9.2.8",
+    "versione":  "9.2.9",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Il caso**: cambiando \"Servizi esposti\" il file viene scritto e la pagina",
-                 "Al salvataggio compare ora un **dialogo di conferma**, mostrato solo quando i",
-                 "Il badge in dashboard segnala il riavvio pendente anche a chi trova il server",
-                 "Il selettore segnalato in rosso apriva una tendina **bianca con il testo",
-                 "L'avviso accomunava interfacce di **uscita** ed **entrata** in un messaggio"
+                 "Il dialogo di riavvio ha ora un pulsante **\"Riavvia ora\"**: prima bisognava",
+                 "Nuovo endpoint `POST /api/server/restart`, riservato a **localhost** come lo",
+                 "**Bug**: spegnendo l'interruttore la mappa restava scaricabile dai",
+                 "**Causa**: la funzione che salva la configurazione scriveva sempre",
+                 "**Fix** in [static/settings.html](static/settings.html): l'interruttore"
              ]
 }

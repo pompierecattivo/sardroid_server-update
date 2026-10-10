@@ -1,5 +1,33 @@
 # Sardroid Server — Changelog
 
+## 9.2.9 - 2026-10-10
+
+Il riavvio richiesto dopo un cambio di rete si fa ora dalla dashboard, e
+l'interruttore della mappa servita ha finalmente effetto.
+
+### Nuovo: riavvio del server dalla dashboard
+
+- Il dialogo di riavvio ha ora un pulsante **"Riavvia ora"**: prima bisognava
+  spegnere il server e rilanciare l'eseguibile a mano. La pagina attende che
+  il server torni a rispondere e si ricarica, cosi' l'esito e' visibile invece
+  di lasciare un errore di connessione.
+- Nuovo endpoint `POST /api/server/restart`, riservato a **localhost** come lo
+  spegnimento: un riavvio fallito da remoto lascerebbe il sistema
+  irraggiungibile. In sviluppo risponde con un messaggio esplicito invece di
+  tentare un riavvio che non tornerebbe su.
+
+### Fix: l'interruttore "Pubblica questa mappa" non aveva effetto
+
+- **Bug**: spegnendo l'interruttore la mappa restava scaricabile dai
+  dispositivi. Cambiava solo l'aspetto della pagina.
+- **Causa**: la funzione che salva la configurazione scriveva sempre
+  `enabled: true`, e il checkbox non aveva alcun gestore: il suo stato non
+  arrivava mai al server. Il controllo lato download c'era gia' — mancava il
+  collegamento.
+- **Fix** in [static/settings.html](static/settings.html): l'interruttore
+  salva al cambio e la selezione di una mappa rispetta la scelta fatta. In
+  caso di errore torna allo stato precedente, invece di mostrarne uno falso.
+
 ## 9.2.8 - 2026-10-10
 
 Un cambio alle impostazioni di rete poteva restare inattivo senza che nulla lo
