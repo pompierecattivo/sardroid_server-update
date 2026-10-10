@@ -1,5 +1,36 @@
 # Sardroid Server — Changelog
 
+## 9.2.8 - 2026-10-10
+
+Un cambio alle impostazioni di rete poteva restare inattivo senza che nulla lo
+dicesse: il server continuava a rifiutare i dispositivi pur essendo
+configurato correttamente.
+
+### Fix: nessun avviso che serviva riavviare
+
+- **Il caso**: cambiando "Servizi esposti" il file viene scritto e la pagina
+  mostra il valore nuovo, ma i bind sono letti **all'avvio**: il processo in
+  esecuzione applica ancora quello precedente. Tutto sembra a posto e intanto i
+  telefoni ricevono un rifiuto — il sintomo arriva dal campo, non dal server.
+  L'unico avviso era un testo grigio in fondo alla card, generico e sempre
+  presente, facile da non vedere.
+- Al salvataggio compare ora un **dialogo di conferma**, mostrato solo quando i
+  bind sono davvero cambiati: dice che la modifica non e' ancora attiva e cosa
+  comporta finche' non si riavvia.
+- Il badge in dashboard segnala il riavvio pendente anche a chi trova il server
+  gia' in quello stato senza aver toccato nulla, confrontando il file con i
+  valori in uso.
+
+### Correzioni alla card "Routing rete"
+
+- Il selettore segnalato in rosso apriva una tendina **bianca con il testo
+  illeggibile**: lo sfondo semitrasparente veniva composto con il bianco di
+  sistema. Ora e' opaco, come gli altri campi.
+- L'avviso accomunava interfacce di **uscita** ed **entrata** in un messaggio
+  solo, parlando sempre di "connessioni in uscita". Le conseguenze sono
+  diverse — il server non si collega a nulla, oppure i servizi restano
+  raggiungibili solo da questa macchina — e ora sono distinte.
+
 ## 9.2.7 - 2026-10-10
 
 Un indirizzo di rete salvato che non esiste piu' bloccava il server senza
