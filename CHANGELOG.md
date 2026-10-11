@@ -1,5 +1,18 @@
 # Sardroid Server — Changelog
 
+## 9.3.1 - 2026-10-11
+
+### Avviso: la chat non garantisce il recapito
+
+- La tab **Messaggi** mostra ora un avviso fisso sopra l'elenco: i messaggi
+  passano da MQTT senza conferma di consegna, quindi possono non arrivare, e
+  sui dispositivi non vengono conservati. In emergenza questo va saputo prima,
+  non scoperto quando un messaggio importante non e' stato letto.
+- Stesso testo gia' presente nell'app mobile, cosi' l'operatore riceve la
+  stessa indicazione da entrambe le parti. Tradotto in italiano, inglese e
+  spagnolo.
+
+
 ## 9.3.0 - 2026-10-10
 
 Il riavvio del server si fa ora dalla dashboard: niente piu' spegnimento e

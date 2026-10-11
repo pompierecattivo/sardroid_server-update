@@ -1,13 +1,9 @@
 {
-    "versione":  "9.3.0",
+    "versione":  "9.3.1",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il dialogo che segnala un cambio di \"Servizi esposti\" ha ora un pulsante",
-                 "Nuovo endpoint `POST /api/server/restart`, riservato a **localhost** come lo",
-                 "Lo script di riavvio attende che **tutti** i processi dell'eseguibile siano",
-                 "Il rilancio passa `--no-browser`, come fa gia' l'aggiornamento automatico:",
-                 "Niente piu' richiesta di conferma del browser al ricaricamento: l'utente ha",
-                 "Lo script lascia una traccia in `restart.log` accanto all'eseguibile: si"
+                 "La tab **Messaggi** mostra ora un avviso fisso sopra l'elenco: i messaggi",
+                 "Stesso testo gia' presente nell'app mobile, cosi' l'operatore riceve la"
              ]
 }
