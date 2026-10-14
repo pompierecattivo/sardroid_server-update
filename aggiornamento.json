@@ -1,9 +1,13 @@
 {
-    "versione":  "9.3.1",
+    "versione":  "9.3.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "La tab **Messaggi** mostra ora un avviso fisso sopra l'elenco: i messaggi",
-                 "Stesso testo gia' presente nell'app mobile, cosi' l'operatore riceve la"
+                 "**Il caso**: modalita' *Integrato*, broker regolarmente in ascolto sulla",
+                 "**Causa**: il client applicava anche in modalita' integrata i parametri",
+                 "**Rimedio automatico**: in modalita' integrata TLS e credenziali vengono ora",
+                 "Dopo l'avvio il client verifica l'esito reale del collegamento: prima",
+                 "Ora, se dopo pochi secondi il collegamento non c'e', viene indicata la causa",
+                 "`installer.iss` conteneva un numero di versione fisso che sovrascriveva"
              ]
 }

@@ -1,5 +1,48 @@
 # Sardroid Server — Changelog
 
+## 9.3.2 - 2026-10-14
+
+Il broker integrato poteva non connettersi mai, senza che nulla ne spiegasse
+il motivo. Ora la causa viene rimossa da sola, e quando non basta viene detta.
+
+### Fix: broker integrato che non si connette, in silenzio
+
+- **Il caso**: modalita' *Integrato*, broker regolarmente in ascolto sulla
+  1883, client che non si collega mai. La dashboard mostrava solo
+  "Riconnessione automatica in corso" all'infinito, senza alcuna indicazione:
+  per capirne la causa bisognava leggere la configurazione a mano.
+- **Causa**: il client applicava anche in modalita' integrata i parametri
+  `use_tls`, utente e password, che descrivono un broker **esterno**. Il
+  broker integrato e' avviato dal server stesso in chiaro e anonimo, quindi
+  l'handshake TLS non si completava mai. Bastava un flag rimasto acceso da una
+  vecchia configurazione con broker esterno — e paho, in quel caso, ritenta
+  senza riportare errori, quindi nessuno se ne accorgeva.
+- **Rimedio automatico**: in modalita' integrata TLS e credenziali vengono ora
+  ignorati, con una nota nel log. I valori restano salvati per quando si torna
+  a un broker esterno, quindi non si perde nulla.
+
+### Nuovo: il server dice perche' la connessione MQTT non riesce
+
+- Dopo l'avvio il client verifica l'esito reale del collegamento: prima
+  `connect_async()` ritornava subito e il server registrava "connesso" senza
+  sapere se fosse vero. Un fallimento restava muto.
+- Ora, se dopo pochi secondi il collegamento non c'e', viene indicata la causa
+  piu' probabile, distinguendo i casi: porta che non risponde (broker spento o
+  filtrato da firewall), TLS verso un broker che non lo parla, credenziali non
+  accettate, oppure un servizio che non parla MQTT. Il messaggio compare nella
+  dashboard sotto lo stato del broker.
+
+### Fix: l'installer annunciava sempre la versione 9.1.5
+
+- `installer.iss` conteneva un numero di versione fisso che sovrascriveva
+  quello passato da `build_exe.bat`: in Inno Setup l'ultimo `#define` vince,
+  quindi il parametro da riga di comando non aveva effetto e il numero e'
+  rimasto indietro per decine di versioni.
+- Ora la versione si legge dal file `VERSION`, la stessa fonte usata per
+  l'eseguibile: non c'e' piu' nulla da allineare a mano. Se la compilazione
+  passa comunque un valore esplicito, quello continua ad avere la precedenza.
+
+
 ## 9.3.1 - 2026-10-11
 
 ### Avviso: la chat non garantisce il recapito
