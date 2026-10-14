@@ -1,5 +1,37 @@
 # Sardroid Server — Changelog
 
+## 9.3.3 - 2026-10-14
+
+Il broker integrato poteva non collegarsi mai perche' il client contattava
+l'indirizzo sbagliato, e il messaggio d'errore non diceva cosa fare.
+
+### Fix: con broker integrato il client contattava il broker esterno
+
+- **Il caso**: modalita' *Integrato*, broker regolarmente in ascolto sulla
+  1883, client che non si collega mai. Premendo **Start** nel tab Broker non
+  cambiava nulla.
+- **Causa**: quando l'indirizzo non viene passato esplicitamente, il client
+  ricade su quello del broker **esterno** salvato nelle impostazioni. Due punti
+  non lo passavano — il pulsante Start e la riconnessione automatica — quindi
+  con un vecchio broker esterno rimasto in configurazione il client tentava
+  quello (nel caso riscontrato `mqtt.flespi.io:443`, per giunta irraggiungibile
+  dalla rete d'ufficio) mentre il broker integrato ascoltava sul computer
+  stesso.
+- **Fix**: in modalita' integrata indirizzo e porta sono ora sempre quelli del
+  broker locale, qualunque sia la via da cui si avvia la connessione. Le
+  impostazioni del broker esterno restano salvate e tornano valide appena si
+  cambia modalita'.
+
+### Fix: il messaggio d'errore cancellava la diagnosi
+
+- Quando i tentativi di riconnessione si esaurivano, il server sostituiva
+  l'eventuale spiegazione gia' scritta con "Riconnessione fallita dopo tutti i
+  tentativi": una frase che dice cosa e' successo ma non cosa verificare, e
+  che cancellava proprio l'informazione utile introdotta nella 9.3.2.
+- Ora la diagnosi gia' presente viene mantenuta, e in sua assenza il messaggio
+  indica almeno dove guardare.
+
+
 ## 9.3.2 - 2026-10-14
 
 Il broker integrato poteva non connettersi mai, senza che nulla ne spiegasse

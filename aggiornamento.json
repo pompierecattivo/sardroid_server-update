@@ -1,13 +1,12 @@
 {
-    "versione":  "9.3.2",
+    "versione":  "9.3.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
                  "**Il caso**: modalita' *Integrato*, broker regolarmente in ascolto sulla",
-                 "**Causa**: il client applicava anche in modalita' integrata i parametri",
-                 "**Rimedio automatico**: in modalita' integrata TLS e credenziali vengono ora",
-                 "Dopo l'avvio il client verifica l'esito reale del collegamento: prima",
-                 "Ora, se dopo pochi secondi il collegamento non c'e', viene indicata la causa",
-                 "`installer.iss` conteneva un numero di versione fisso che sovrascriveva"
+                 "**Causa**: quando l'indirizzo non viene passato esplicitamente, il client",
+                 "**Fix**: in modalita' integrata indirizzo e porta sono ora sempre quelli del",
+                 "Quando i tentativi di riconnessione si esaurivano, il server sostituiva",
+                 "Ora la diagnosi gia' presente viene mantenuta, e in sua assenza il messaggio"
              ]
 }
