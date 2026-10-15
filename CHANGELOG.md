@@ -1,5 +1,37 @@
 # Sardroid Server — Changelog
 
+## 9.3.5 - 2026-10-15
+
+Il dialogo di riavvio poteva non comparire, o restare in attesa mentre il
+server era gia' tornato disponibile.
+
+### Fix: il dialogo di riavvio non compariva in un caso
+
+- Cambiando i **Servizi esposti** insieme alla **modalita' broker**, il
+  dialogo non veniva mostrato affatto: il controllo finiva in un ramo diverso
+  del codice. Le impostazioni venivano salvate ma nessuno avvisava che
+  servisse un riavvio per applicarle, cioe' proprio la situazione che il
+  dialogo esiste per evitare.
+
+### Fix: l'attesa del riavvio poteva fallire a server gia' attivo
+
+- **Il caso**: premuto "Riavvia ora", il server e' tornato disponibile dopo
+  sei secondi, ma la pagina e' rimasta in attesa fino a dare il riavvio per
+  fallito.
+- Ogni verifica ha ora un tempo limite proprio: una richiesta partita mentre
+  il server stava chiudendo poteva restare appesa, bloccando tutti i
+  tentativi successivi.
+- La scadenza complessiva si misura sull'orologio invece che contando i
+  cicli, cosi' una scheda lasciata in secondo piano non altera l'attesa; e
+  tornando sulla scheda la verifica riparte subito.
+
+### Il dialogo chiarisce che le impostazioni sono gia' salvate
+
+- Dato che il dialogo compare al posto della normale conferma di
+  salvataggio, non era ovvio se occorresse premere **Salva** una seconda
+  volta. Ora il testo lo dice: le impostazioni sono gia' scritte, il riavvio
+  serve solo ad applicarle.
+
 ## 9.3.4 - 2026-10-15
 
 Diagnosi piu' facile quando qualcosa non va, e avvisi che compaiono solo
