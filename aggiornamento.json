@@ -1,12 +1,13 @@
 {
-    "versione":  "9.3.3",
+    "versione":  "9.3.4",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "**Il caso**: modalita' *Integrato*, broker regolarmente in ascolto sulla",
-                 "**Causa**: quando l'indirizzo non viene passato esplicitamente, il client",
-                 "**Fix**: in modalita' integrata indirizzo e porta sono ora sempre quelli del",
-                 "Quando i tentativi di riconnessione si esaurivano, il server sostituiva",
-                 "Ora la diagnosi gia' presente viene mantenuta, e in sua assenza il messaggio"
+                 "Nell'eseguibile i messaggi del server non finivano da nessuna parte: la",
+                 "Ora il server scrive in **`sardroid.log`**, accanto all'eseguibile, con",
+                 "Salvando una qualsiasi impostazione — per esempio la sola modalita' broker",
+                 "Separatamente, l'avviso giallo nella card confrontava il bind salvato con il",
+                 "Entrambi corretti: ora si confronta con lo stato effettivo. Un avviso che",
+                 "Premendo \"Riavvia ora\", se il server non tornava disponibile entro 40"
              ]
 }

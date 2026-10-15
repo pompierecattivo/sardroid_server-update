@@ -1,5 +1,53 @@
 # Sardroid Server — Changelog
 
+## 9.3.4 - 2026-10-15
+
+Diagnosi piu' facile quando qualcosa non va, e avvisi che compaiono solo
+quando servono davvero.
+
+### Nuovo: il server scrive un file di log
+
+- Nell'eseguibile i messaggi del server non finivano da nessuna parte: la
+  build non ha una console, quindi andavano persi, e il livello impostato
+  tagliava via proprio le righe piu' utili (indirizzo del broker, metodo di
+  connessione, interfaccia scelta). Davanti a un guasto non c'era nulla da
+  leggere.
+- Ora il server scrive in **`sardroid.log`**, accanto all'eseguibile, con
+  rotazione automatica: al massimo quattro file da 2 MB. In sviluppo nulla
+  cambia, li' la console c'e' gia'.
+
+### Fix: il riavvio veniva richiesto anche quando non serviva
+
+- Salvando una qualsiasi impostazione — per esempio la sola modalita' broker
+  — compariva il dialogo "Riavvia il server per applicare la modifica", pur
+  senza aver toccato i Servizi esposti. Il server considerava i bind
+  "cambiati" ogni volta che arrivavano nella richiesta, e la pagina li invia
+  sempre tutti.
+- Separatamente, l'avviso giallo nella card confrontava il bind salvato con il
+  valore predefinito invece che con quello realmente in ascolto: con un bind
+  ristretto gia' attivo avrebbe continuato a chiedere un riavvio all'infinito.
+- Entrambi corretti: ora si confronta con lo stato effettivo. Un avviso che
+  compare sempre smette di essere letto proprio quando conta.
+
+### Fix: il dialogo di riavvio poteva restare bloccato
+
+- Premendo "Riavvia ora", se il server non tornava disponibile entro 40
+  secondi il pulsante restava disabilitato su "Attendo il server" per sempre,
+  senza messaggio e senza modo di riprovare: il timeout non solleva
+  un'eccezione, quindi non veniva intercettato.
+- Ora il pulsante torna attivo come **"Riprova"** e spiega cosa fare. Durante
+  l'attesa mostra l'avanzamento, cosi' una pausa lunga non sembra un blocco.
+
+### I QR mostrano l'indirizzo che useranno davvero
+
+- Nelle card della mappa e dell'APK il selettore "Pubblica su" diceva
+  "Predefinito (Rete)", come se il server scegliesse da solo. In realta' usa
+  l'indirizzo della card "IP di default per i QR": se quello e' il residuo di
+  un'altra rete, i QR non funzionano e li' non se ne vedeva traccia.
+- Ora l'opzione mostra l'indirizzo effettivo e, se non corrisponde a nessuna
+  scheda della macchina, lo segnala. Tradotto in italiano, inglese e spagnolo.
+
+
 ## 9.3.3 - 2026-10-14
 
 Il broker integrato poteva non collegarsi mai perche' il client contattava
