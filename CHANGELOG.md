@@ -1,5 +1,15 @@
 # Sardroid Server — Changelog
 
+## 9.3.6 - 2026-10-22
+
+### Nuova APK Sardroid Mobile
+
+- Aggiornata l'app Android distribuita insieme al server: si scarica dalla
+  dashboard e viene estratta accanto all'eseguibile al primo avvio. Chi ha
+  gia' l'app installata ricevera' la nuova versione dal server.
+- Nessuna modifica al server rispetto alla 9.3.5.
+
+
 ## 9.3.5 - 2026-10-15
 
 Il dialogo di riavvio poteva non comparire, o restare in attesa mentre il

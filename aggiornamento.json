@@ -1,12 +1,9 @@
 {
-    "versione":  "9.3.5",
+    "versione":  "9.3.6",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Cambiando i **Servizi esposti** insieme alla **modalita' broker**, il",
-                 "**Il caso**: premuto \"Riavvia ora\", il server e' tornato disponibile dopo",
-                 "Ogni verifica ha ora un tempo limite proprio: una richiesta partita mentre",
-                 "La scadenza complessiva si misura sull'orologio invece che contando i",
-                 "Dato che il dialogo compare al posto della normale conferma di"
+                 "Aggiornata l'app Android distribuita insieme al server: si scarica dalla",
+                 "Nessuna modifica al server rispetto alla 9.3.5."
              ]
 }
