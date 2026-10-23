@@ -1,9 +1,9 @@
 {
-    "versione":  "9.3.6",
+    "versione":  "9.3.7",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
                  "Aggiornata l'app Android distribuita insieme al server: si scarica dalla",
-                 "Nessuna modifica al server rispetto alla 9.3.5."
+                 "Nessuna modifica al server rispetto alla 9.3.6."
              ]
 }
