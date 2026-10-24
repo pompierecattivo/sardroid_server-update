@@ -1,5 +1,82 @@
 # Sardroid Server — Changelog
 
+## 9.4.0 - 2026-10-24
+
+Messaggi urgenti con conferma di lettura, nome dei dispositivi deciso dalla
+sala operativa, dati delle tracce cliccabili sulla mappa.
+
+### Messaggi urgenti
+
+- Un messaggio puo' essere inviato come **urgente**: sul dispositivo fa
+  scattare un allarme sonoro e una schermata a tutto schermo che restano
+  attivi finche' l'operatore non conferma di aver letto. Suona anche a
+  telefono silenziato e a schermo bloccato, e riaccende lo schermo.
+- La casella "Urgente" chiede conferma prima dell'invio e si disattiva da
+  sola dopo: un urgente lasciato acceso per distrazione farebbe suonare
+  allarmi per messaggi di servizio, e dopo qualche falso allarme nessuno ci
+  farebbe piu' caso.
+- In chat ogni urgente mostra **chi ha letto e chi no**, aggiornato in tempo
+  reale senza ricaricare la pagina. I dispositivi che non si vedono da piu'
+  di un giorno sono indicati a parte come non raggiungibili: restare in
+  eterna attesa di una loro conferma renderebbe l'indicazione inutile.
+- I messaggi vengono conservati anche sull'app e sopravvivono al riavvio.
+  Un urgente non ancora confermato resta pendente: l'allarme riparte se
+  l'app viene chiusa e riaperta.
+
+### Nome dei dispositivi
+
+- Il nome assegnato dalla dashboard **non viene piu' sovrascritto** dal
+  dispositivo. Prima ogni heartbeat riportava il nome scelto dal
+  proprietario del telefono, quindi rinominare un mezzo sembrava funzionare
+  e dopo pochi secondi tornava tutto come prima.
+- La scelta della sala operativa non e' definitiva: **svuotando il campo**
+  si torna al nome del dispositivo, e un nuovo pairing riparte sempre da
+  quello. Il dialogo di rinomina mostra il nome scelto sul dispositivo
+  quando differisce.
+
+### Tracce: dati e evidenziazione sulla mappa
+
+- Cliccando una traccia, in 2D e in 3D, compare un riquadro con dispositivo,
+  distanza, durata, velocita' media e massima, numero di punti, inizio e
+  fine. Prima quei dati erano solo nell'elenco laterale, non raggiungibili
+  dalla mappa, dove si lavora.
+- La traccia selezionata si distingue per **spessore e alone chiaro**,
+  mantenendo il colore del dispositivo. Un click a vuoto, o su un altro
+  elemento della mappa, chiude la selezione.
+
+### Fix: i comandi al dispositivo non arrivavano
+
+- **Richiedi posizione** e **risincronizza traccia** venivano cifrati con la
+  chiave sbagliata: il dispositivo li riceveva, falliva la decifratura e li
+  scartava in silenzio. Ora usano la chiave del dispositivo, come i
+  messaggi. (L'app non gestisce ancora questi comandi: la correzione
+  riguarda il trasporto.)
+
+### Fix: messaggi di servizio in chat
+
+- I comandi interni inviati al dispositivo finivano fra i messaggi salvati e
+  nel conteggio dei non letti, pur non essendo visibili in elenco. Ora
+  vengono riconosciuti e tenuti fuori.
+
+### Fix: avviso sulla chat non piu' veritiero
+
+- L'avviso diceva che i messaggi non vengono conservati: non e' piu' vero,
+  la chat ha una propria persistenza su entrambi i lati. Resta vero il
+  limite che conta: un messaggio inviato mentre l'app e' chiusa non arriva
+  e non viene recuperato. Un avviso che dice il falso e' peggio di nessun
+  avviso, perche' fa perdere fiducia anche nella parte vera.
+
+### App Sardroid Mobile
+
+- Nella schermata Messaggi l'elenco viene letto dall'archivio locale, quindi
+  **sopravvive alla chiusura dell'app**. Prima era una lista in memoria,
+  limitata a 100 messaggi e persa a ogni riavvio.
+- In impostazioni il pulsante di salvataggio di nome e telefono dice cosa
+  sta succedendo: **floppy ambra** se ci sono modifiche da salvare, **spunta
+  verde** quando sono salvate. Prima passava da un colore all'altro senza
+  segnalare l'avvenuto salvataggio.
+
+
 ## 9.3.7 - 2026-10-23
 
 ### Nuova APK Sardroid Mobile

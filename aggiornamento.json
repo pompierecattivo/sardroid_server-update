@@ -1,9 +1,13 @@
 {
-    "versione":  "9.3.7",
+    "versione":  "9.4.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Aggiornata l'app Android distribuita insieme al server: si scarica dalla",
-                 "Nessuna modifica al server rispetto alla 9.3.6."
+                 "Un messaggio puo' essere inviato come **urgente**: sul dispositivo fa",
+                 "La casella \"Urgente\" chiede conferma prima dell'invio e si disattiva da",
+                 "In chat ogni urgente mostra **chi ha letto e chi no**, aggiornato in tempo",
+                 "I messaggi vengono conservati anche sull'app e sopravvivono al riavvio.",
+                 "Il nome assegnato dalla dashboard **non viene piu' sovrascritto** dal",
+                 "La scelta della sala operativa non e' definitiva: **svuotando il campo**"
              ]
 }
