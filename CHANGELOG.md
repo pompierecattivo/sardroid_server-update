@@ -1,5 +1,32 @@
 # Sardroid Server — Changelog
 
+## 9.5.2 - 2026-10-25
+
+Leggibilita' del tema chiaro e miniature delle foto gia' in archivio.
+
+### Messaggi di avviso illeggibili nel tema chiaro
+
+- Gli avvisi che compaiono in alto a destra avevano testo bianco su fondo
+  pastello: si leggeva il colore, non le parole. Il contrasto era circa
+  un quarto del minimo leggibile.
+- Il testo segue ora il tema. Il tipo di avviso - informazione, buon
+  esito, attenzione, errore - resta riconoscibile dal fondo colorato e
+  dalla barra laterale, come nel tema scuro.
+
+### Miniature delle foto gia' in archivio
+
+- Le miniature si generano all'arrivo della foto, quindi quelle ricevute
+  prima del 9.5.0 erano rimaste a 100 pixel sul lato lungo: nelle card
+  della galleria venivano ingrandite di quattro volte e si vedevano
+  sgranate.
+- Per le sessioni di questa installazione sono state rifatte
+  dall'immagine piena, che resta sempre in archivio, con gli stessi
+  parametri usati alla ricezione: una foto vecchia e una nuova risultano
+  ora identiche.
+- Chi aggiorna da una versione precedente **continuera' a vedere sgranate
+  le foto gia' ricevute**: il server non rigenera le miniature da solo.
+  Le foto nuove sono a piena definizione fin dal 9.5.0.
+
 ## 9.5.1 - 2026-10-25
 
 Due correzioni: i dispositivi non venivano piu' visti dopo un cambio di
