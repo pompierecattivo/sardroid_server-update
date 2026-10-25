@@ -1,13 +1,13 @@
 {
-    "versione":  "9.4.0",
+    "versione":  "9.5.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Un messaggio puo' essere inviato come **urgente**: sul dispositivo fa",
-                 "La casella \"Urgente\" chiede conferma prima dell'invio e si disattiva da",
-                 "In chat ogni urgente mostra **chi ha letto e chi no**, aggiornato in tempo",
-                 "I messaggi vengono conservati anche sull'app e sopravvivono al riavvio.",
-                 "Il nome assegnato dalla dashboard **non viene piu' sovrascritto** dal",
-                 "La scelta della sala operativa non e' definitiva: **svuotando il campo**"
+                 "Una card sulla mappa definisce un cerchio attorno al posto comando:",
+                 "Della traccia si nasconde **solo il tratto interno**: una squadra che",
+                 "Si imposta dalla vista 2D; la 3D e la mappa ospiti la ereditano.",
+                 "Spegnere l'interruttore non cancella centro e raggio: servono per",
+                 "Il centro si sposta premendo \"Sposta centro\" e poi un punto della mappa.",
+                 "Un pulsante in testata passa fra tema scuro e chiaro, nella dashboard e"
              ]
 }

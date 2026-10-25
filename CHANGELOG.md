@@ -1,5 +1,113 @@
 # Sardroid Server — Changelog
 
+## 9.5.0 - 2026-10-25
+
+Zona silenziosa attorno al posto comando, tema chiaro, filtri della barra
+laterale riorganizzati, import GeoJSON con coordinate proiettate.
+
+### Zona silenziosa
+
+- Una card sulla mappa definisce un cerchio attorno al posto comando:
+  dentro, tracce e foto non vengono disegnate. Attorno al PC si accumulano
+  decine di passaggi che non dicono nulla e coprono il resto della mappa.
+- Della traccia si nasconde **solo il tratto interno**: una squadra che
+  parte dal posto comando resta tracciabile da quando ne esce.
+- Si imposta dalla vista 2D; la 3D e la mappa ospiti la ereditano.
+  L'impostazione resta al cambio vista e al riavvio del browser: durante
+  un intervento la zona e' quella e non cambia.
+- Spegnere l'interruttore non cancella centro e raggio: servono per
+  guardare sotto un momento, non per rifare tutto da capo.
+- Il centro si sposta premendo "Sposta centro" e poi un punto della mappa.
+  Serve il passaggio esplicito, altrimenti ogni click lo muoverebbe e non
+  si potrebbe piu' selezionare una traccia.
+
+### Tema chiaro
+
+- Un pulsante in testata passa fra tema scuro e chiaro, nella dashboard e
+  nella pagina impostazioni. La scelta e' condivisa fra le due pagine e
+  viene ricordata. La mappa ospiti resta scura: e' quasi tutta
+  cartografia, e il tema non cambierebbe nulla di visibile.
+- Dalla mappa ospiti e' stato tolto anche il selettore di lingua: le
+  poche etichette seguono la lingua scelta nella dashboard, che e' dove
+  la scelta conta davvero.
+- I colori dell'interfaccia sono ora definiti in un unico punto per
+  **ruolo** - sfondo di una card, testo attenuato, stato di errore - invece
+  che ripetuti tinta per tinta.
+- I colori di mappa, tracce e dispositivi non seguono il tema: servono a
+  riconoscere le squadre e devono restare quelli.
+
+### Filtri della barra laterale
+
+- Il filtro per dispositivo vale ora **anche per la mappa** in tutte le
+  schede. Prima lo stesso comando si comportava in quattro modi diversi:
+  in Foto e Tracce l'elenco si riduceva e i segnaposto restavano tutti.
+- Un'unica casella di ricerca per scheda, al posto delle tendine. Cerca
+  nel contenuto e nei dati del dispositivo, **compreso il numero di
+  telefono**: in operazione spesso si ha in mano quello e non il nome.
+- Nei Dispositivi si filtra anche per stato: Online, Offline, SOS.
+- Pulsante "Azzera filtri" uguale in tutte le schede, visibile solo quando
+  c'e' qualcosa da azzerare.
+- Il contatore in testata dice "3 di 12" quando un filtro e' attivo: prima
+  in una scheda mostrava il totale e contraddiceva cio' che era a schermo.
+- La scheda Aree, che era l'unica priva di filtro per dispositivo pur
+  avendone il dato, e' stata allineata alle altre.
+
+### Tracce: dati e selezione sulla mappa
+
+- Cliccando una traccia compare un riquadro con dispositivo, distanza,
+  durata, velocita' e numero di punti. Vale in 2D e in 3D.
+- La traccia selezionata si distingue per spessore e alone chiaro,
+  mantenendo il colore del dispositivo.
+
+### Foto
+
+- Le miniature passano da 100 a 400 pixel: sulle card erano ingrandite
+  fino a otto volte e si vedevano sgranate. Quelle gia' in archivio sono
+  state rigenerate.
+- Le card danno spazio all'immagine e mettono in evidenza la nota, che e'
+  cio' che dice di che foto si tratta. Le coordinate restano nel
+  suggerimento e nella finestra di dettaglio.
+- I segnaposto sulla mappa non sono piu' ruotati secondo l'angolo di
+  scatto: a quaranta gradi la miniatura era illeggibile e i segnaposto
+  vicini si accavallavano, senza che la direzione si capisse comunque. Ora
+  e' scritta in chiaro fra i dati, in gradi e punto cardinale.
+
+### Messaggi
+
+- Un messaggio si puo' eliminare singolarmente: prima si poteva solo
+  svuotare l'intera chat.
+
+### Import: coordinate proiettate e nomi delle zone
+
+- Un GeoJSON che dichiara un sistema di riferimento diverso da WGS84 -
+  tipicamente UTM, come fanno gli export cartografici italiani - viene
+  ora **riproiettato**. Prima quelle coordinate erano lette come gradi e
+  le zone finivano fuori dal mondo.
+- Il nome della zona viene cercato anche nei campi che gli export usano
+  davvero (NOME, Label, title...) e, se non ce n'e' nessuno, nel nome del
+  file: meglio di "Zona importata 1".
+- Un file .kml che in realta' e' un archivio compresso viene riconosciuto
+  dal contenuto: diversi portali cartografici li distribuiscono cosi'.
+
+### Comandi al dispositivo
+
+- **Richiedi posizione** e **risincronizza traccia** venivano cifrati con
+  la chiave sbagliata e il dispositivo li scartava in silenzio. Ora usano
+  la chiave del dispositivo. (L'app non gestisce ancora questi comandi: la
+  correzione riguarda il trasporto.)
+
+### Mappe offline
+
+- Il vincolo sul formato `.mbtiles` e' ora indicato accanto al selettore
+  della mappa, non solo in cima alla pagina: chi copia un file nella
+  cartella scopriva solo dall'elenco vuoto che il formato era sbagliato.
+
+### Impostazioni
+
+- Titolo e schede restano in alto mentre si scorre: nelle sezioni lunghe
+  si perdeva di vista in quale scheda si stava lavorando.
+
+
 ## 9.4.0 - 2026-10-24
 
 Messaggi urgenti con conferma di lettura, nome dei dispositivi deciso dalla
