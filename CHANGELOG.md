@@ -1,5 +1,35 @@
 # Sardroid Server — Changelog
 
+## 9.5.1 - 2026-10-25
+
+Due correzioni: i dispositivi non venivano piu' visti dopo un cambio di
+sessione, e lo spegnimento era illeggibile nel tema chiaro.
+
+### Dispositivi invisibili dopo un cambio di sessione
+
+- Attivando o importando un'altra sessione a server avviato, i
+  dispositivi collegati risultavano **tutti offline** pur continuando a
+  trasmettere. Il server restava in ascolto sui canali della sessione
+  precedente: connesso, ma sordo.
+- Il sintomo era insidioso perche' non assomigliava a un guasto. Nessun
+  errore, stato MQTT "connesso", e i dispositivi semplicemente spenti.
+  L'unico rimedio era riavviare il server.
+- Ora il cambio di sessione aggiorna i canali di ascolto senza
+  riconnettersi. Se l'operazione non riesce resta una segnalazione nel
+  log, cosi' il problema non e' piu' muto.
+
+### Tema chiaro: leggibilita'
+
+- La conferma di spegnimento aveva testo giallo pallido e grigio chiaro,
+  scelti quando il tema era solo scuro: sul fondo chiaro erano
+  illeggibili. E' la finestra che chiede conferma prima di spegnere
+  tutto, e deve essere la piu' leggibile della dashboard.
+- Stesso difetto nei **campi di scrittura**: ricerca tracce, filtro,
+  casella del messaggio, scelta del destinatario, nome dispositivo e
+  telefono. Si scriveva in bianco su bianco.
+- Corretti anche le note di rilascio della finestra di aggiornamento e il
+  nome scelto sul dispositivo.
+
 ## 9.5.0 - 2026-10-25
 
 Zona silenziosa attorno al posto comando, tema chiaro, filtri della barra

@@ -1,13 +1,13 @@
 {
-    "versione":  "9.5.0",
+    "versione":  "9.5.1",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Una card sulla mappa definisce un cerchio attorno al posto comando:",
-                 "Della traccia si nasconde **solo il tratto interno**: una squadra che",
-                 "Si imposta dalla vista 2D; la 3D e la mappa ospiti la ereditano.",
-                 "Spegnere l'interruttore non cancella centro e raggio: servono per",
-                 "Il centro si sposta premendo \"Sposta centro\" e poi un punto della mappa.",
-                 "Un pulsante in testata passa fra tema scuro e chiaro, nella dashboard e"
+                 "Attivando o importando un'altra sessione a server avviato, i",
+                 "Il sintomo era insidioso perche' non assomigliava a un guasto. Nessun",
+                 "Ora il cambio di sessione aggiorna i canali di ascolto senza",
+                 "La conferma di spegnimento aveva testo giallo pallido e grigio chiaro,",
+                 "Stesso difetto nei **campi di scrittura**: ricerca tracce, filtro,",
+                 "Corretti anche le note di rilascio della finestra di aggiornamento e il"
              ]
 }
