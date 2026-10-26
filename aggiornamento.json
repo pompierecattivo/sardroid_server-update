@@ -1,13 +1,11 @@
 {
-    "versione":  "9.5.7",
+    "versione":  "9.5.8",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Le mappe 2D e 3D hanno ora una casella di ricerca in alto al centro:",
-                 "La stessa casella accetta le **coordinate incollate**, nelle notazioni",
-                 "La ricerca c'e' anche nella finestra \"Scarica mappa offline\", dove",
-                 "Nella georeferenziazione raster, dove la ricerca per nome c'era gia',",
-                 "Il servizio e' quello di OpenStreetMap e passa dal proxy del server,",
-                 "Le finestre delle mappe offline erano rimaste fuori dalla conversione"
+                 "Quando un dispositivo ritrasmetteva una traccia gia' visibile sulla",
+                 "Inclusa una versione dell'app che corregge la trasmissione dei punti",
+                 "Risolta anche una perdita di dati: chiudendo una traccia mentre",
+                 "**Il collo di bottiglia principale era il broker pubblico**"
              ]
 }

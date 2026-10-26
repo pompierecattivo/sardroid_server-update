@@ -1,5 +1,29 @@
 # Sardroid Server — Changelog
 
+## 9.5.8 - 2026-10-26
+
+Traccia ritrasmessa che non si aggiornava, e nuova versione dell'app.
+
+### Traccia ritrasmessa dal dispositivo
+
+- Quando un dispositivo ritrasmetteva una traccia gia' visibile sulla
+  mappa, i punti arrivati entravano in archivio ma il percorso disegnato
+  restava quello vecchio e incompleto: serviva ricaricare la pagina per
+  vederlo intero. Ora la traccia viene ridisegnata da sola.
+
+### App per i dispositivi
+
+- Inclusa una versione dell'app che corregge la trasmissione dei punti
+  accumulati senza rete. In prova, un arretrato di circa 120 punti
+  passava da oltre quattro minuti a un secondo e mezzo.
+- Risolta anche una perdita di dati: chiudendo una traccia mentre
+  alcuni punti non erano ancora partiti, quei punti non venivano piu'
+  inviati da nessun meccanismo automatico e restavano nel telefono.
+- **Il collo di bottiglia principale era il broker pubblico**
+  `broker.emqx.io`, che limita il flusso e scarta i messaggi in eccesso
+  senza segnalarlo. Chi usa quel broker dovrebbe passare a un'altra
+  configurazione: le correzioni dell'app da sole non bastano.
+
 ## 9.5.7 - 2026-10-26
 
 Ricerca di luoghi sulle mappe e leggibilita' delle impostazioni nel tema
