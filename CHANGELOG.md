@@ -1,5 +1,24 @@
 # Sardroid Server — Changelog
 
+## 9.5.4 - 2026-10-26
+
+Selezione delle tracce nella vista 3D.
+
+### Dati della traccia in 3D
+
+- Cliccando in 3D un tratto di percorso oltre il primo, il riquadro dei
+  dati compariva vuoto: i tratti separati hanno un identificativo
+  proprio, e chi riceveva il click non risaliva alla traccia.
+- Evidenziazione della traccia e riquadro dei dati ora compaiono e
+  spariscono sempre insieme. Passando da 2D a 3D il riquadro restava
+  aperto mentre l'evidenziazione se ne andava, e il riquadro finiva per
+  riferirsi a una traccia che nulla indicava piu' sulla mappa.
+- Chiudendo la selezione senza che i dati fossero disponibili, la
+  traccia restava evidenziata: ora la selezione si chiude per intero.
+- Scegliendo un'altra traccia mentre i dati della precedente erano
+  ancora in arrivo, la risposta tardiva poteva sostituire il riquadro
+  appena aperto.
+
 ## 9.5.3 - 2026-10-26
 
 Zona silenziosa nelle viste 3D e card della galleria foto.

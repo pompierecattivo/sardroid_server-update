@@ -1,13 +1,11 @@
 {
-    "versione":  "9.5.3",
+    "versione":  "9.5.4",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Nella vista 3D una traccia che entrava e usciva dal cerchio veniva",
-                 "I pin di inizio e fine percorso restavano dentro il cerchio anche",
-                 "I due capi si valutano separatamente: una squadra partita dal posto",
-                 "Una traccia mostrata **dopo** aver impostato la zona nasce ora gia'",
-                 "Stessa correzione nella mappa ospiti.",
-                 "L'interruttore e' ora anche nella vista 3D e nella mappa ospiti: per"
+                 "Cliccando in 3D un tratto di percorso oltre il primo, il riquadro dei",
+                 "Evidenziazione della traccia e riquadro dei dati ora compaiono e",
+                 "Chiudendo la selezione senza che i dati fossero disponibili, la",
+                 "Scegliendo un'altra traccia mentre i dati della precedente erano"
              ]
 }
