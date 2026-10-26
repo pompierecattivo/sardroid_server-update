@@ -1,11 +1,10 @@
 {
-    "versione":  "9.5.4",
+    "versione":  "9.5.5",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Cliccando in 3D un tratto di percorso oltre il primo, il riquadro dei",
-                 "Evidenziazione della traccia e riquadro dei dati ora compaiono e",
-                 "Chiudendo la selezione senza che i dati fossero disponibili, la",
-                 "Scegliendo un'altra traccia mentre i dati della precedente erano"
+                 "Cliccando una traccia nell'elenco laterale, ora si evidenzia sulla",
+                 "Vale nella vista 2D e nella 3D.",
+                 "Ricliccare la stessa voce dell'elenco riporta sulla sua traccia senza"
              ]
 }

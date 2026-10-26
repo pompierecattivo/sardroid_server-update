@@ -1,5 +1,20 @@
 # Sardroid Server — Changelog
 
+## 9.5.5 - 2026-10-26
+
+Le tracce si scelgono dall'elenco come dalla mappa.
+
+### Selezione dall'elenco delle tracce
+
+- Cliccando una traccia nell'elenco laterale, ora si evidenzia sulla
+  mappa e compare il riquadro con distanza, durata, velocita' e numero
+  di punti - lo stesso che si otteneva solo cliccandola sulla mappa.
+  Prima il percorso veniva soltanto inquadrato.
+- Vale nella vista 2D e nella 3D.
+- Ricliccare la stessa voce dell'elenco riporta sulla sua traccia senza
+  deselezionarla: liberare la selezione resta un gesto della mappa,
+  dove si riclicca la linea.
+
 ## 9.5.4 - 2026-10-26
 
 Selezione delle tracce nella vista 3D.
