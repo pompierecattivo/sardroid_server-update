@@ -1,5 +1,48 @@
 # Sardroid Server — Changelog
 
+## 9.5.7 - 2026-10-26
+
+Ricerca di luoghi sulle mappe e leggibilita' delle impostazioni nel tema
+chiaro.
+
+### Ricerca di luoghi e coordinate
+
+- Le mappe 2D e 3D hanno ora una casella di ricerca in alto al centro:
+  si scrive un toponimo e la mappa ci va. Durante un intervento il nome
+  di una localita' arriva per radio, e finora andava cercato a mano
+  trascinando e ingrandendo.
+- La stessa casella accetta le **coordinate incollate**, nelle notazioni
+  che si usano sul campo: gradi decimali, gradi e primi, gradi primi e
+  secondi, con o senza simboli, con il punto cardinale davanti o dietro,
+  con la virgola decimale all'italiana. `45.4101, 7.5771` e
+  `45°24'36.4"N 7°34'37.6"E` portano allo stesso punto.
+- La ricerca c'e' anche nella finestra "Scarica mappa offline", dove
+  l'area da scaricare si trovava trascinando la mappa dall'Italia
+  intera.
+- Nella georeferenziazione raster, dove la ricerca per nome c'era gia',
+  ora si possono incollare anche le coordinate.
+- Il servizio e' quello di OpenStreetMap e passa dal proxy del server,
+  quindi funziona anche dietro una rete aziendale. **Senza connessione**
+  la ricerca per nome lo segnala e nient'altro cambia: mappa,
+  selezione dell'area e scarico restano quelli di prima, e le coordinate
+  continuano a funzionare perche' non interrogano nessun servizio.
+
+### Tema chiaro: leggibilita' delle impostazioni
+
+- Le finestre delle mappe offline erano rimaste fuori dalla conversione
+  al tema: restavano scure dentro una pagina chiara, con alcune
+  etichette al limite della leggibilita'.
+- I **titoli delle opzioni** nelle schede Plugin e Sicurezza erano
+  grigio chiarissimo su pannello bianco, quindi quasi invisibili.
+- Stesso difetto nel pulsante di chiusura della finestra donazione,
+  nella riga di avanzamento della georeferenziazione assistita,
+  nell'anteprima MBTiles e nel referto dei test di rete.
+- Il selettore dell'interfaccia di rete mancante aveva un fondo scuro
+  fisso con testo che seguiva il tema: il nome dell'interfaccia non si
+  leggeva.
+- Tre pulsanti - fra cui "Genera MBTiles" - usavano uno stile mai
+  definito e apparivano come testo senza sfondo in entrambi i temi.
+
 ## 9.5.6 - 2026-10-26
 
 Gli elenchi laterali portano all'elemento scelto, in entrambe le viste.
