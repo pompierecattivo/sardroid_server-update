@@ -1,5 +1,20 @@
 # Sardroid Server — Changelog
 
+## 9.5.9 - 2026-10-26
+
+Nome della traccia quando l'evento di avvio si perde.
+
+### Nome della traccia quando l'avvio si perde
+
+- Se i punti di una traccia arrivano prima del suo evento di avvio -
+  succede quando il server e' spento o irraggiungibile nel momento in
+  cui la registrazione comincia - il server la crea con un nome
+  provvisorio tipo "Traccia 9056d96a". Ora, se l'avvio arriva in
+  ritardo, il nome viene corretto con quello vero.
+- Quella correzione prima avrebbe riscritto la riga intera, perdendo
+  fine, durata, distanza e stato: una traccia gia' chiusa sarebbe
+  tornata attiva. Ora si aggiornano solo nome e orario di inizio.
+
 ## 9.5.8 - 2026-10-26
 
 Traccia ritrasmessa che non si aggiornava, e nuova versione dell'app.

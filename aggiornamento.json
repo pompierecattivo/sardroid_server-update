@@ -1,11 +1,9 @@
 {
-    "versione":  "9.5.8",
+    "versione":  "9.5.9",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Quando un dispositivo ritrasmetteva una traccia gia' visibile sulla",
-                 "Inclusa una versione dell'app che corregge la trasmissione dei punti",
-                 "Risolta anche una perdita di dati: chiudendo una traccia mentre",
-                 "**Il collo di bottiglia principale era il broker pubblico**"
+                 "Se i punti di una traccia arrivano prima del suo evento di avvio -",
+                 "Quella correzione prima avrebbe riscritto la riga intera, perdendo"
              ]
 }
