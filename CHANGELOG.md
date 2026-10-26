@@ -1,5 +1,63 @@
 # Sardroid Server — Changelog
 
+## 9.5.3 - 2026-10-26
+
+Zona silenziosa nelle viste 3D e card della galleria foto.
+
+### Zona silenziosa: tracce e pin nelle viste 3D
+
+- Nella vista 3D una traccia che entrava e usciva dal cerchio veniva
+  ricongiunta con una linea dritta che lo attraversava: proprio
+  l'ingombro che la zona doveva togliere. Ora i tratti restano separati.
+  Sui dati di un intervento reale, con raggio 50 m, sparivano cosi' tre
+  linee di troppo.
+- I pin di inizio e fine percorso restavano dentro il cerchio anche
+  quando la traccia non si vedeva piu'. Ora seguono la zona come il
+  resto: nello stesso intervento erano dodici.
+- I due capi si valutano separatamente: una squadra partita dal posto
+  comando ha l'inizio dentro la zona, ma il pin di arrivo - che dice
+  dov'e' finita - resta visibile.
+- Una traccia mostrata **dopo** aver impostato la zona nasce ora gia'
+  ritagliata, in tutte le viste. Prima compariva intera e si sistemava
+  solo toccando il raggio.
+- Stessa correzione nella mappa ospiti.
+
+### Zona silenziosa: interruttore nelle viste 3D
+
+- L'interruttore e' ora anche nella vista 3D e nella mappa ospiti: per
+  spegnere la zona non serve piu' tornare in 2D, cambiarla e tornare
+  indietro.
+- In 3D la card sta a destra degli altri comandi, nella stessa posizione
+  che ha in 2D: la stessa cosa si cerca nello stesso posto in entrambe
+  le viste.
+- La card della vista 2D non resta piu' visibile sotto i comandi 3D.
+- Raggio e centro restano nella vista 2D. Il raggio si giudica male in
+  prospettiva, e spostare il centro richiede un click sul terreno, che
+  in 3D fa gia' altro.
+- Nella mappa ospiti la scelta di chi guarda prevale su quella della
+  sala operativa: spegnendo la zona resta spenta, mentre centro e raggio
+  continuano ad arrivare dalla dashboard, perche' dicono dove si sta
+  nascondendo. Ricaricando la pagina si torna a seguire la dashboard.
+
+### Card della galleria foto
+
+- Le miniature cambiavano dimensione da una card all'altra: un nome
+  lungo mandava l'ora a capo, e una foto senza nota aveva una riga in
+  meno. Ora la struttura e' la stessa per tutte e le miniature sono
+  tutte uguali.
+- La card mostra chi ha scattato e la nota, una per riga; data e ora
+  sono in un piccolo riquadro sulla miniatura, su fascia scura perche'
+  la foto sotto puo' essere chiara. Il nome ha cosi' la riga per se' e
+  non si accorcia piu' con i puntini.
+- La quota non e' piu' nella card. Tutti i dati - compresi quota,
+  coordinate e direzione di scatto - restano nel suggerimento al
+  passaggio del mouse e sotto la foto aperta.
+- Le card sono un po' piu' alte, e lo spazio guadagnato va alla
+  miniatura: da circa 87 a 117 pixel di altezza utile.
+- I dati sotto la foto aperta erano quasi illeggibili nel tema chiaro:
+  il fondo li' e' nero in entrambi i temi, ma il testo seguiva la
+  tavolozza e diventava nero su nero.
+
 ## 9.5.2 - 2026-10-25
 
 Leggibilita' del tema chiaro e miniature delle foto gia' in archivio.

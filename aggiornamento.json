@@ -1,12 +1,13 @@
 {
-    "versione":  "9.5.2",
+    "versione":  "9.5.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Gli avvisi che compaiono in alto a destra avevano testo bianco su fondo",
-                 "Il testo segue ora il tema. Il tipo di avviso - informazione, buon",
-                 "Le miniature si generano all'arrivo della foto, quindi quelle ricevute",
-                 "Per le sessioni di questa installazione sono state rifatte",
-                 "Chi aggiorna da una versione precedente **continuera' a vedere sgranate"
+                 "Nella vista 3D una traccia che entrava e usciva dal cerchio veniva",
+                 "I pin di inizio e fine percorso restavano dentro il cerchio anche",
+                 "I due capi si valutano separatamente: una squadra partita dal posto",
+                 "Una traccia mostrata **dopo** aver impostato la zona nasce ora gia'",
+                 "Stessa correzione nella mappa ospiti.",
+                 "L'interruttore e' ora anche nella vista 3D e nella mappa ospiti: per"
              ]
 }
