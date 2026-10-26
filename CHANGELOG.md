@@ -1,5 +1,43 @@
 # Sardroid Server — Changelog
 
+## 9.5.6 - 2026-10-26
+
+Gli elenchi laterali portano all'elemento scelto, in entrambe le viste.
+
+### Click sulle voci degli elenchi
+
+- Cliccando una voce - dispositivo, waypoint, foto - ora si apre anche
+  la sua scheda, non solo si sposta la mappa. Prima bisognava ritrovare
+  l'elemento a video e centrare la mira sul segnaposto. Vale in 2D e in
+  3D, come gia' per le tracce.
+- Le **aree** non venivano inquadrate affatto nella vista 3D: il
+  comando agiva solo sulla mappa 2D. Ora l'area si inquadra in entrambe,
+  a una distanza che tiene conto della sua estensione.
+- Il **dispositivo** si apriva a una distanza molto maggiore degli altri
+  elementi dell'elenco, e diversa fra 2D e 3D. Ora e' la stessa delle
+  foto.
+- L'elemento non finisce piu' di lato: aprendo una scheda la mappa si
+  sposta per farla stare tutta, e la posizione veniva persa.
+
+### Vista 3D: primo posizionamento sottoterra
+
+- Alla prima apertura della pagina, il primo dispositivo o waypoint
+  scelto dall'elenco poteva mostrare uno schermo scuro: la camera
+  finiva sotto la superficie. I segnaposto sono registrati a due metri
+  sul livello del mare e si appoggiano al terreno solo nel disegno,
+  quindi in montagna il punto di arrivo cadeva centinaia di metri sotto
+  la quota reale. Ora la quota del terreno viene misurata prima di
+  spostare la vista.
+- Dal secondo click in poi non si notava, perche' il terreno era ormai
+  caricato.
+
+### Tracce
+
+- Dopo "Nascondi tutte", cliccando una traccia nell'elenco tornava in
+  mappa senza essere evidenziata: la selezione precedente non veniva
+  chiusa, e il comando la considerava gia' scelta. Il "Nascondi" della
+  singola traccia lo faceva gia' correttamente.
+
 ## 9.5.5 - 2026-10-26
 
 Le tracce si scelgono dall'elenco come dalla mappa.

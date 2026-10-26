@@ -1,10 +1,13 @@
 {
-    "versione":  "9.5.5",
+    "versione":  "9.5.6",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Cliccando una traccia nell'elenco laterale, ora si evidenzia sulla",
-                 "Vale nella vista 2D e nella 3D.",
-                 "Ricliccare la stessa voce dell'elenco riporta sulla sua traccia senza"
+                 "Cliccando una voce - dispositivo, waypoint, foto - ora si apre anche",
+                 "Le **aree** non venivano inquadrate affatto nella vista 3D: il",
+                 "Il **dispositivo** si apriva a una distanza molto maggiore degli altri",
+                 "L'elemento non finisce piu' di lato: aprendo una scheda la mappa si",
+                 "Alla prima apertura della pagina, il primo dispositivo o waypoint",
+                 "Dal secondo click in poi non si notava, perche' il terreno era ormai"
              ]
 }
