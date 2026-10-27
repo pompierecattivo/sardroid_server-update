@@ -1,9 +1,13 @@
 {
-    "versione":  "9.5.9",
+    "versione":  "9.6.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Se i punti di una traccia arrivano prima del suo evento di avvio -",
-                 "Quella correzione prima avrebbe riscritto la riga intera, perdendo"
+                 "Eliminando **un solo** dispositivo, l'elenco sembrava svuotarsi tutto:",
+                 "Lo stesso accadeva agli **altri operatori collegati**, che vedevano",
+                 "Finche' l'elenco restava vuoto si perdeva anche il resto: nome,",
+                 "Il nome scelto sul telefono non compariva nei menu di un dispositivo",
+                 "Ora, quando arriva un aggiornamento per un dispositivo non ancora",
+                 "Il **blocco** era il piu' delicato: perdendolo, un dispositivo"
              ]
 }

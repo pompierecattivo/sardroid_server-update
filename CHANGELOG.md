@@ -1,5 +1,74 @@
 # Sardroid Server — Changelog
 
+## 9.6.0 - 2026-10-27
+
+Aggiornamenti dai dispositivi che non si perdono piu', e rifiniture
+alla mappa.
+
+### Elenco dispositivi che si svuotava
+
+- Eliminando **un solo** dispositivo, l'elenco sembrava svuotarsi tutto:
+  ricaricando la pagina ricomparivano quelli non eliminati. La pulizia
+  degli elementi sulla mappa azzera l'elenco tenuto in memoria - serve
+  a togliere gli strascichi del dispositivo cancellato - ma subito dopo
+  la lista veniva ridisegnata da li'.
+- Lo stesso accadeva agli **altri operatori collegati**, che vedevano
+  svuotarsi l'elenco senza aver toccato nulla.
+- Finche' l'elenco restava vuoto si perdeva anche il resto: nome,
+  recapito, colore e blocco di un dispositivo vengono applicati solo a
+  chi e' gia' in elenco, quindi ogni aggiornamento successivo cadeva
+  nel vuoto.
+
+### Aggiornamenti su dispositivi appena accoppiati
+
+- Il nome scelto sul telefono non compariva nei menu di un dispositivo
+  appena accoppiato: restava l'identificativo (SD_xxxxxxxx) finche' non
+  si ricaricava la pagina. Lo stesso valeva per recapito, annotazioni,
+  colore e blocco.
+- Ora, quando arriva un aggiornamento per un dispositivo non ancora
+  noto, l'elenco viene riletto dal server invece di scartare il dato.
+- Il **blocco** era il piu' delicato: perdendolo, un dispositivo
+  bloccato restava visibile sulla mappa e selezionabile come
+  destinatario di un messaggio.
+
+### Nuove foto che non comparivano nell'elenco
+
+- All'arrivo di una foto il segnaposto compariva sulla mappa ma la
+  scheda laterale non si aggiornava, e bisognava ricaricare.
+- Le coordinate viaggiano nel messaggio del dispositivo come l'app le
+  manda, cioe' come testo, e l'interfaccia le trattava come numeri:
+  l'errore interrompeva in silenzio l'aggiornamento dell'elenco,
+  l'avviso e le statistiche. Il segnaposto ricompariva comunque per
+  un'altra via, da cui il difetto asimmetrico.
+- Ora il server converte le coordinate, l'interfaccia non si fida
+  comunque del tipo, e un errore sul segnaposto non blocca piu' il
+  resto.
+
+### Mappa: fumetti e card
+
+- I fumetti di waypoint, dispositivi e capi di traccia si aprivano
+  **sopra il segnaposto**, coprendo proprio il punto appena cliccato.
+  Ora stanno piu' in alto e il segno resta visibile.
+- Il fumetto di inizio e fine traccia diceva solo "Inizio traccia": ora
+  riporta nome della traccia, dispositivo, orario, distanza e numero di
+  punti.
+- La card della **zona silenziosa** occupava quattro righe sopra la
+  mappa. L'interruttore e' salito sulla riga del titolo - che dice gia'
+  cosa accende - ed e' sparito il conteggio degli elementi nascosti,
+  che si vede guardando la mappa. Vale per la vista 2D e per la 3D.
+- Il valore del raggio non manda piu' l'unita' di misura a capo.
+
+### Altro
+
+- Il riquadro degli aggiornamenti disponibili aveva il testo quasi
+  illeggibile nel tema chiaro: il fondo viola resta in entrambi i temi,
+  ma il colore del testo seguiva la tavolozza.
+- Il menu dei destinatari di un messaggio restava con il solo
+  "Broadcast" appena aperta la pagina: i singoli dispositivi
+  comparivano solo al primo evento ricevuto.
+- Il comando "mostra/nascondi tutte le zone" non raggiungeva gli altri
+  operatori collegati: il server lo annunciava, ma nessuno ascoltava.
+
 ## 9.5.9 - 2026-10-26
 
 Nome della traccia quando l'evento di avvio si perde.
