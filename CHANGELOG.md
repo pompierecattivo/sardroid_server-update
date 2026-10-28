@@ -1,5 +1,25 @@
 # Sardroid Server — Changelog
 
+## 9.6.1 - 2026-10-28
+
+Apertura di una sessione a server gia' avviato, e nuova versione
+dell'app.
+
+### Impossibile aprire una sessione senza riavviare
+
+- Aprendo una sessione a server gia' avviato compariva un errore
+  interno e la sessione non si attivava: capitava sempre, perche' il
+  controllo sullo stato della connessione al broker usava un nome
+  sbagliato.
+- Il difetto era stato introdotto nella 9.5.1 insieme alla
+  risottoscrizione automatica dei canali al cambio sessione, e scattava
+  solo a broker gia' connesso - cioe' esattamente nel caso per cui
+  quella correzione era stata scritta.
+
+### App per i dispositivi
+
+- Inclusa una nuova versione dell'app.
+
 ## 9.6.0 - 2026-10-27
 
 Aggiornamenti dai dispositivi che non si perdono piu', e rifiniture
