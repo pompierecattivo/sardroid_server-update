@@ -1,5 +1,45 @@
 # Sardroid Server — Changelog
 
+## 9.6.2 - 2026-10-28
+
+Nomi dei dispositivi che non comparivano, e nuova versione dell'app.
+
+### Identificativo al posto del nome
+
+- In una sessione nuova un dispositivo si presenta quasi sempre con una
+  posizione, prima di qualunque altro messaggio. Quel messaggio non
+  portava il nome, quindi nei menu e nelle liste restava
+  l'identificativo (SD_xxxxxxxx) fino al ricaricamento della pagina.
+- Peggio, da quel momento il dispositivo risultava gia' noto e i
+  controlli aggiunti nella 9.6.0 - che rileggono i dati per i
+  dispositivi sconosciuti - non intervenivano piu'.
+- La stessa mancanza riguardava l'intestazione dei messaggi inviati.
+- Gli avvisi di inizio e fine traccia dicevano "Traccia avviata da
+  SD_xxxxxxxx" invece del nome.
+- Il rimedio e' all'origine: il nome viaggia insieme alla posizione e
+  al messaggio, e l'interfaccia considera incompleta una voce senza
+  nome, rileggendola dal server. Ne beneficiano tutte le schede, perche'
+  foto, waypoint, aree e messaggi leggono il nome dallo stesso posto.
+
+### Tracce di dispositivi bloccati
+
+- Chiudendo una traccia, l'avviso non diceva a quale dispositivo
+  appartenesse: il controllo che impedisce di disegnare le tracce dei
+  dispositivi bloccati riceveva un valore vuoto e non interveniva mai,
+  quindi quelle tracce finivano comunque sulla mappa.
+
+### Dispositivo in emergenza
+
+- Un allarme da un dispositivo mai visto prima creava una voce con i
+  soli dati dell'allarme: mancavano recapito, colore e versione, e
+  nessuno li completava.
+- Senza coordinate valide la voce non veniva creata affatto, quindi il
+  dispositivo in emergenza non compariva nemmeno in elenco.
+
+### App per i dispositivi
+
+- Inclusa una nuova versione dell'app.
+
 ## 9.6.1 - 2026-10-28
 
 Apertura di una sessione a server gia' avviato, e nuova versione

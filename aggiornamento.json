@@ -1,10 +1,13 @@
 {
-    "versione":  "9.6.1",
+    "versione":  "9.6.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Aprendo una sessione a server gia' avviato compariva un errore",
-                 "Il difetto era stato introdotto nella 9.5.1 insieme alla",
-                 "Inclusa una nuova versione dell'app."
+                 "In una sessione nuova un dispositivo si presenta quasi sempre con una",
+                 "Peggio, da quel momento il dispositivo risultava gia' noto e i",
+                 "La stessa mancanza riguardava l'intestazione dei messaggi inviati.",
+                 "Gli avvisi di inizio e fine traccia dicevano \"Traccia avviata da",
+                 "Il rimedio e' all'origine: il nome viaggia insieme alla posizione e",
+                 "Chiudendo una traccia, l'avviso non diceva a quale dispositivo"
              ]
 }
