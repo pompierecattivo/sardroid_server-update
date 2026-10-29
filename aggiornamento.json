@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.3",
+    "versione":  "9.6.4",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "L'archivio di una sessione finiva sempre in una sottocartella dentro",
-                 "Ora \"Esporta\" apre il \"Salva con nome\" di Windows: si sceglie",
-                 "Il nome proposto e' quello della sessione con la data - \"ALPETTE 2026",
-                 "29-10-2026.zip\" - invece dell'identificativo interno seguito da due",
-                 "Dalla seconda esportazione in poi la finestra si riapre sull'ultima",
-                 "Annullando non resta alcun file. Lavorando da un altro computer il"
+                 "I waypoint sulla mappa 2D erano puntini colorati senza nome: per",
+                 "Le aree il nome lo avevano, ma sempre: su una panoramica regionale",
+                 "Ora i nomi degli elementi compaiono dall'ingrandimento 15 in su -",
+                 "Un nome non intercetta i clic: resta possibile aprire il popup del",
+                 "Inizio e fine di una traccia erano due cerchi dello stesso colore,",
+                 "Ora il cerchio di partenza porta un triangolo e quello di arrivo un"
              ]
 }

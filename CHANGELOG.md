@@ -1,5 +1,39 @@
 # Sardroid Server — Changelog
 
+## 9.6.4 - 2026-10-29
+
+I nomi degli elementi sulla mappa, e da che parte e' cominciata una
+traccia.
+
+### Nomi sulla mappa
+
+- I waypoint sulla mappa 2D erano puntini colorati senza nome: per
+  sapere quale fosse l'ingresso del sentiero e quale il posto comando
+  bisognava cliccarli uno per uno. Ora il nome sta accanto al puntino.
+- Le aree il nome lo avevano, ma sempre: su una panoramica regionale
+  diventavano scritte accavallate.
+- Ora i nomi degli elementi compaiono dall'ingrandimento 15 in su -
+  lo stesso che il programma usa quando centra la mappa su un elemento
+  o su un allarme, cioe' quando si smette di guardare la panoramica.
+  Allargando la veduta restano puntini, poligoni, miniature delle foto
+  e tracce: sparisce solo il testo, che a quel livello sarebbe
+  comunque illeggibile.
+- Un nome non intercetta i clic: resta possibile aprire il popup del
+  waypoint che ci sta sotto.
+
+### Partenza e arrivo di una traccia
+
+- Inizio e fine di una traccia erano due cerchi dello stesso colore,
+  distinti solo da due pixel di raggio: guardando la mappa non si
+  capiva da che parte fosse cominciata.
+- Ora il cerchio di partenza porta un triangolo e quello di arrivo un
+  quadrato - i simboli di avvio e arresto. Si leggono a qualsiasi
+  ingrandimento e non aggiungono scritte: con piu' squadre partite
+  dallo stesso posto comando, altrettante etichette "Partenza"
+  sarebbero state inutilizzabili.
+- Il popup di inizio e fine traccia mostrava il nome interno della
+  voce di traduzione al posto del testo.
+
 ## 9.6.3 - 2026-10-29
 
 Dove finiscono gli archivi, una sessione nuova che non riparte da zero,
