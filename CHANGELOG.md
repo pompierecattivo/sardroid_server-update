@@ -1,5 +1,73 @@
 # Sardroid Server — Changelog
 
+## 9.6.3 - 2026-10-29
+
+Dove finiscono gli archivi, una sessione nuova che non riparte da zero,
+e gli schermi collegati che si accorgono del cambio di sessione.
+
+### Si sceglie dove salvare l'archivio
+
+- L'archivio di una sessione finiva sempre in una sottocartella dentro
+  i dati del programma, nella cartella utente: difficile da ritrovare,
+  scomoda se l'archivio va passato a qualcuno.
+- Ora "Esporta" apre il "Salva con nome" di Windows: si sceglie
+  cartella e nome, e l'archivio sta dove l'operatore ha deciso.
+- Il nome proposto e' quello della sessione con la data - "ALPETTE 2026
+  - 29-10-2026.zip" - invece dell'identificativo interno seguito da due
+  date.
+- Dalla seconda esportazione in poi la finestra si riapre sull'ultima
+  cartella usata, perche' se ne occupa Windows.
+- Annullando non resta alcun file. Lavorando da un altro computer il
+  selettore non si apre - comparirebbe sullo schermo del server - e
+  l'archivio resta nella cartella interna, come prima.
+
+### Una sessione nuova non riparte da zero
+
+- Broker, proxy, chiavi API e password descrivono il computer su cui
+  gira il server, non l'intervento. Erano pero' legate alla singola
+  sessione: aprendone una nuova sullo stesso computer sparivano, e
+  certe chiavi vanno riemesse.
+- Ora una sessione nuova riprende quelle impostazioni dall'ultima
+  usata, attiva o chiusa che sia: anche aprendo la mattina dopo aver
+  chiuso tutto la sera prima, il broker e' quello di ieri.
+- Un avviso dice da quale sessione arrivano, senza chiedere conferma:
+  si cambiano dalle impostazioni, come sempre.
+- Restano fuori le scelte che appartengono all'intervento - cosa vedono
+  gli ospiti, le zone, il blend delle mappe - che ripartono dai valori
+  predefiniti.
+
+### Spesa delle analisi IA
+
+- Il conteggio delle chiamate e della spesa del mese era legato alla
+  sessione: aprendone una nuova a meta' mese il totale ripartiva da
+  zero, mentre la spesa reale continuava a salire. Ora il conteggio e'
+  uno solo, come il mese a cui si riferisce.
+
+### Lo stato delle sessioni
+
+- Aprire una sessione non liberava la precedente: con il tempo
+  risultavano tutte "attive", l'etichetta CHIUSA non compariva mai e
+  l'elenco non distingueva piu' nulla.
+- Di conseguenza nessuna sessione si riusciva a eliminare, e il
+  messaggio d'errore - "potrebbe essere attiva" - era lo stesso per
+  qualunque motivo.
+- Ora una sola sessione per volta risulta in uso, le altre restano a
+  disposizione senza essere archiviate, e l'errore dice cosa e'
+  successo davvero.
+- "Esporta" e "Riapri" restano disponibili anche sulle sessioni chiuse,
+  che e' poi quando servono.
+- Chi aggiorna da una versione precedente non deve fare nulla: l'elenco
+  si riordina al primo avvio.
+
+### Schermi collegati
+
+- Cambiando sessione si aggiornava solo la pagina di chi l'aveva
+  cambiata. Le altre - la dashboard in sala operativa, la mappa ospiti
+  su un monitor - restavano a mostrare dispositivi e tracce di un
+  intervento che il server aveva gia' lasciato, senza alcun segno.
+- Ora ogni schermo collegato avvisa del cambio, con il nome della
+  sessione, e si aggiorna qualche secondo dopo.
+
 ## 9.6.2 - 2026-10-28
 
 Nomi dei dispositivi che non comparivano, e nuova versione dell'app.
