@@ -1,5 +1,46 @@
 # Sardroid Server — Changelog
 
+## 9.6.5 - 2026-10-30
+
+Il broker ha due facce: una per il server, una per i telefoni.
+
+### Broker visto dai dispositivi
+
+- Un broker aziendale si raggiunge in due modi diversi. Dalla rete
+  interna e' un indirizzo IP, spesso sulla 1883 in chiaro; esposto
+  verso Internet e' un nome DNS, sulla 8883 con TLS o in WebSocket
+  sulla 443. Il server usa la faccia interna.
+- Il QR di accoppiamento pero' serve ai telefoni, che con la loro SIM
+  dati possono usare solo quella esterna: annunciare i parametri del
+  server li mandava verso un indirizzo che dalla rete dati non esiste.
+- Una sezione nuova nelle impostazioni di rete descrive come i
+  dispositivi raggiungono il broker - host, porta, protocollo (MQTT
+  nativo o WebSocket), TLS e path. Il QR annuncia quei valori, il
+  server continua a usare i propri.
+- L'insieme si accende con una spunta e vale tutto o niente: host e
+  porta diventano obbligatori. Mezza configurazione - l'indirizzo
+  esterno con la porta interna - produrrebbe un QR che fallisce sul
+  campo, dove nessuno puo' piu' correggerlo.
+- Un riquadro mostra le due facce a confronto prima di generare il QR,
+  perche' qui un errore non da' alcun segno finche' un telefono non
+  resta in timeout davanti a chi lo sta accoppiando.
+- Lasciando la spunta spenta non cambia nulla rispetto a prima.
+
+### Errori che si vedono quando servono
+
+- Salvando una configurazione dei dispositivi incompleta l'avviso
+  compariva, ma il salvataggio passava lo stesso: l'errore si
+  manifestava molto dopo, aprendo la finestra di accoppiamento. Ora il
+  salvataggio si ferma e indica il campo.
+- Viene segnalato anche l'indirizzo scritto con un percorso dentro
+  (`broker.esempio.it/mqtt`) o con `mqtt://` davanti: con MQTT nativo
+  il percorso non esiste e finirebbe nel nome da risolvere.
+- Nella finestra di accoppiamento un messaggio d'errore lungo usciva
+  dai bordi, perche' quello spazio e' dimensionato su un QR quadrato.
+- La scelta del protocollo per i dispositivi non era configurabile da
+  nessuna pagina: esisteva solo nel codice e si poteva cambiare
+  scrivendo nel database.
+
 ## 9.6.4 - 2026-10-29
 
 I nomi degli elementi sulla mappa, e da che parte e' cominciata una

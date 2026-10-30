@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.4",
+    "versione":  "9.6.5",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "I waypoint sulla mappa 2D erano puntini colorati senza nome: per",
-                 "Le aree il nome lo avevano, ma sempre: su una panoramica regionale",
-                 "Ora i nomi degli elementi compaiono dall'ingrandimento 15 in su -",
-                 "Un nome non intercetta i clic: resta possibile aprire il popup del",
-                 "Inizio e fine di una traccia erano due cerchi dello stesso colore,",
-                 "Ora il cerchio di partenza porta un triangolo e quello di arrivo un"
+                 "Un broker aziendale si raggiunge in due modi diversi. Dalla rete",
+                 "Il QR di accoppiamento pero' serve ai telefoni, che con la loro SIM",
+                 "Una sezione nuova nelle impostazioni di rete descrive come i",
+                 "L'insieme si accende con una spunta e vale tutto o niente: host e",
+                 "Un riquadro mostra le due facce a confronto prima di generare il QR,",
+                 "Lasciando la spunta spenta non cambia nulla rispetto a prima."
              ]
 }
