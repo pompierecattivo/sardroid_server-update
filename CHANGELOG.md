@@ -1,5 +1,55 @@
 # Sardroid Server — Changelog
 
+## 9.6.6 - 2026-10-30
+
+Un broker che non risponde non blocca piu' il programma, cambiarlo
+riconnette davvero, e il pannello di una traccia in corso si aggiorna
+mentre la squadra cammina.
+
+### Il programma si avvia anche senza broker
+
+- Con il broker irraggiungibile - indirizzo sbagliato, rete diversa,
+  macchina spenta - l'avvio restava fermo quasi un minuto: si provano
+  collegamento diretto, proxy, WebSocket su piu' porte e SOCKS5, e
+  ogni tentativo aspetta il proprio timeout.
+- Per tutto quel tempo il programma non rispondeva: niente pagina web,
+  cioe' niente modo di correggere proprio l'indirizzo sbagliato. Chi
+  portava il computer su un'altra rete si trovava davanti un programma
+  apparentemente morto.
+- Ora le prove di rete non fermano piu' il resto: la pagina risponde
+  in pochi secondi, e il collegamento al broker si stabilisce per
+  conto suo appena possibile. Misurato sullo stesso caso: da 58 a 3
+  secondi.
+
+### Cambiare broker riconnette davvero
+
+- Salvando l'indirizzo di un altro broker, le impostazioni cambiavano
+  ma il collegamento restava quello di prima. Da quel momento il
+  programma viveva una contraddizione silenziosa: il QR di
+  accoppiamento annunciava il broker nuovo - lo legge dalle
+  impostazioni - mentre i messaggi passavano ancora dal vecchio.
+- Un telefono accoppiato con quel QR andava dove gli era stato detto,
+  cioe' dove il server non ascoltava. L'accoppiamento restava appeso
+  senza alcun errore, e la dashboard mostrava il broker collegato -
+  perche' lo era davvero, solo che era un altro.
+- Ora cambiare indirizzo, porta, cifratura, credenziali o protocollo
+  riapre il collegamento sul broker nuovo.
+- E se per qualche motivo i due non coincidono, il QR non viene
+  generato: compare invece quale broker e' in uso e quale dicono le
+  impostazioni. Meglio leggerlo davanti alla dashboard che scoprirlo
+  sul campo, davanti a un telefono che non si accoppia.
+
+### Il pannello di una traccia in corso si aggiorna
+
+- Evidenziando una traccia si apre un pannello con distanza, durata,
+  velocita' e numero di punti. Su una traccia ancora in corso quei
+  numeri restavano fermi al momento dell'apertura: per vedere il dato
+  aggiornato bisognava chiudere e riaprire.
+- Ora salgono da soli, mentre la squadra cammina, sia sulla mappa in
+  piano sia sul globo.
+- Lo stato "in corso" si riconosce a colpo d'occhio da un punto verde
+  che pulsa, utile adesso che quei numeri si muovono.
+
 ## 9.6.5 - 2026-10-30
 
 Il broker ha due facce: una per il server, una per i telefoni.
