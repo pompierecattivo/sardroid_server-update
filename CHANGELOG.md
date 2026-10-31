@@ -1,5 +1,84 @@
 # Sardroid Server — Changelog
 
+## 9.6.7 - 2026-10-31
+
+Le carte che sanno gia' dove si trovano si caricano senza
+posizionarle a mano, i fumetti sulla mappa dicono quello che serve, e
+nell'elenco si vede chi sta trasmettendo la propria posizione.
+
+### Carte gia' georeferenziate
+
+- Una carta porta spesso con se' la propria posizione, scritta in un
+  file accanto all'immagine. Finora solo il GeoTIFF veniva
+  riconosciuto: per tutti gli altri formati bisognava piazzare i
+  punti di riferimento a mano sulla mappa, uno per uno, anche quando
+  il file li conteneva gia'.
+- Ora si riconoscono anche le carte **OziExplorer** (.map), molto
+  diffuse fra chi fa ricerca in montagna, i **world file** (.tfw,
+  .jgw, .pgw, .wld) che accompagnano le ortofoto, e i **KMZ/KML** con
+  sovrapposizione al suolo.
+- I punti compaiono gia' posizionati e la mappa di riferimento si
+  sposta sulla zona della carta. Il resto non cambia: si sceglie la
+  profondita' di zoom e si genera l'archivio come sempre.
+- I formati con la georeferenziazione in un file separato vogliono
+  due file insieme. Si possono **trascinare nella finestra**, anche
+  l'intera cartella che li contiene: il programma riconosce da solo
+  quali gli servono. Scegliendone uno solo, dice quale manca
+  chiamandolo per nome - lo legge dal file stesso - e riapre la
+  scelta.
+- Una carta in coordinate metriche di un sistema proiettato, o su un
+  riferimento diverso da WGS 84, viene segnalata invece di essere
+  collocata in silenzio nel posto sbagliato.
+- La finestra elenca i formati accettati, distinguendo quelli che si
+  posizionano da soli da quelli che richiedono i punti a mano.
+
+### I fumetti sulla mappa
+
+- Una zona di tipo punto mostrava il nome e "Tipo: point". Il tipo si
+  vede gia' guardando la mappa; le coordinate - il dato che serve per
+  comunicare la posizione di un posto comando - non c'erano.
+- Le aree dicevano nome, dispositivo e numero di vertici, ma nessuna
+  coordinata.
+- Sul globo andava peggio: zone e aree non avevano alcun fumetto, e
+  si leggeva il solo nome. Chi lavorava in tre dimensioni aveva meno
+  informazioni di chi guardava la mappa in piano, sugli stessi
+  elementi.
+- Ora zone e aree mostrano posizione, quota dove c'e', estensione -
+  il raggio di un cerchio, i vertici di un poligono - chi le ha
+  disegnate e quando. Il contenuto e' lo stesso nelle due viste, che
+  non possono piu' divergere.
+- I fumetti di inizio e fine traccia dicono ora dove si trova quel
+  capo: era l'informazione piu' ovvia da cercare e l'unica che
+  mancava.
+
+### Chi sta trasmettendo la posizione
+
+- L'etichetta ONLINE dice che un dispositivo e' raggiungibile, non
+  che stia dicendo dov'e': con il GPS spento, o l'app in pausa,
+  resta online senza trasmettere nulla. Sulla mappa la differenza si
+  vedeva gia' - il segnaposto ha un alone verde che pulsa - ma
+  nell'elenco a sinistra no.
+- Accanto alle coordinate di ogni dispositivo compare ora un punto:
+  verde e pulsante mentre arrivano posizioni, spento quando non ne
+  arrivano. Il criterio e' quello dell'alone sulla mappa, cosi' le
+  due viste concordano.
+- La spia si spegne da sola quando le posizioni smettono di
+  arrivare: smettere di trasmettere non produce alcun segnale, e
+  senza un controllo periodico sarebbe rimasta accesa per sempre
+  proprio nel caso che deve segnalare.
+
+### Tracce cliccabili sopra le aree
+
+- Una traccia che attraversa una zona o un'area non si riusciva a
+  selezionare: il clic finiva sempre sulla superficie sottostante,
+  anche se la traccia era ben visibile sopra di essa.
+- Le superfici coprono un'area intera e intercettano il clic ovunque;
+  una traccia e' larga pochi pixel. Stando sullo stesso piano di
+  disegno, vinceva chi veniva disegnato per ultimo - cioe' il caso.
+- Ora le tracce hanno un piano proprio, sopra le superfici e sotto i
+  segnaposti. Sul globo il problema non si poneva, perche' li' il
+  clic sceglie l'elemento piu' vicino a chi guarda.
+
 ## 9.6.6 - 2026-10-30
 
 Un broker che non risponde non blocca piu' il programma, cambiarlo

@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.6",
+    "versione":  "9.6.7",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Con il broker irraggiungibile - indirizzo sbagliato, rete diversa,",
-                 "Per tutto quel tempo il programma non rispondeva: niente pagina web,",
-                 "Ora le prove di rete non fermano piu' il resto: la pagina risponde",
-                 "Salvando l'indirizzo di un altro broker, le impostazioni cambiavano",
-                 "Un telefono accoppiato con quel QR andava dove gli era stato detto,",
-                 "Ora cambiare indirizzo, porta, cifratura, credenziali o protocollo"
+                 "Una carta porta spesso con se' la propria posizione, scritta in un",
+                 "Ora si riconoscono anche le carte **OziExplorer** (.map), molto",
+                 "I punti compaiono gia' posizionati e la mappa di riferimento si",
+                 "I formati con la georeferenziazione in un file separato vogliono",
+                 "Una carta in coordinate metriche di un sistema proiettato, o su un",
+                 "La finestra elenca i formati accettati, distinguendo quelli che si"
              ]
 }
