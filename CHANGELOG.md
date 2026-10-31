@@ -1,5 +1,62 @@
 # Sardroid Server — Changelog
 
+## 9.6.9 - 2026-10-31
+
+Il nome di una traccia non si perde piu', l'avviso di inizio compare
+una volta sola, e cambiando colore a un dispositivo cambia tutto
+quello che gli appartiene.
+
+### Il nome della traccia non si perde
+
+- Alcune tracce comparivano nell'elenco come "Traccia ccb9898f",
+  l'identificativo interno, invece del nome completo con sessione,
+  squadra e orario.
+- Una traccia puo' nascere in due modi: dal messaggio di avvio mandato
+  dal telefono, oppure dalla prima posizione che arriva, se l'avvio
+  tarda. Quando l'avvio arrivava dopo, il nome veniva aggiornato - ed
+  e' giusto, perche' di solito porta quello scelto dall'app.
+- Ma non sempre lo porta. Se arrivava senza nome, il programma ne
+  fabbricava uno di ripiego e con quello cancellava il nome buono gia'
+  presente: nel registro si leggeva "nome aggiornato da 'ALPETTE 2026 -
+  CARLETTI - 31/10 15:04' a 'Traccia ccb9898f'".
+- Ora un aggiornamento puo' solo migliorare quello che trova: se
+  l'avvio non porta un nome, quello che c'e' resta.
+
+### Un solo avviso quando una traccia inizia
+
+- Avviando una registrazione dal telefono comparivano due avvisi
+  identici, uno dopo l'altro.
+- Il programma annuncia l'inizio sia quando riceve il messaggio di
+  avvio sia quando crea una traccia dalla prima posizione. Di norma ne
+  scatta uno solo, ma l'app inizia a trasmettere subito: se una
+  posizione arriva per prima - cosa del tutto normale - scattavano
+  entrambi.
+- Ora l'inizio si annuncia una volta sola. Il secondo messaggio
+  continua ad arrivare, perche' porta il nome della traccia, ma non si
+  presenta piu' come un nuovo inizio.
+
+### Il colore del dispositivo vale per tutto
+
+- Cambiando colore a un dispositivo cambiavano il suo segnaposto e la
+  linea delle sue tracce, ma non i cerchi di partenza e arrivo, i suoi
+  waypoint e le sue foto: lo stesso dispositivo appariva di due colori
+  diversi sulla stessa mappa.
+- Quei segni sono disegni costruiti una volta sola, con il colore
+  scritto dentro, e nessuno li rifaceva.
+- Ora si ridisegnano tutti insieme, in piano e sul globo.
+
+### Pulsanti sulla mappa leggibili con il tema chiaro
+
+- I pulsanti della misura e del passaggio a tre dimensioni sfumavano
+  verso il colore delle schede: blu profondo con il tema scuro, quasi
+  bianco con quello chiaro. Il testo pero' resta bianco, e sul chiaro
+  il pulsante si dissolveva contro la mappa.
+- Ora la sfumatura e' la stessa nei due temi. Quei pulsanti stanno
+  sopra la cartografia, che non cambia con il tema: seguire il fondo su
+  cui poggiano e' piu' sensato che seguire il tema.
+- Un'ombra e un bordo sottile li staccano dalla mappa anche sopra un
+  bosco o un'ortofoto.
+
 ## 9.6.8 - 2026-10-31
 
 Le aree tornano tratteggiate, e quelle circolari si disegnano anche

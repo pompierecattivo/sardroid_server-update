@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.8",
+    "versione":  "9.6.9",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Dalla 9.6.7 le aree inviate dai dispositivi comparivano piene e",
-                 "La causa stava nella correzione che ha reso le tracce selezionabili",
-                 "Ora il motivo nasce insieme alla forma che lo usa, qualunque piano",
-                 "Un'area circolare non veniva disegnata sulla mappa in piano, e",
-                 "Per sapere quanto spazio occupa un cerchio di quattrocento metri",
-                 "Ora l'estensione si calcola senza passare dalla mappa."
+                 "Alcune tracce comparivano nell'elenco come \"Traccia ccb9898f\",",
+                 "Una traccia puo' nascere in due modi: dal messaggio di avvio mandato",
+                 "Ma non sempre lo porta. Se arrivava senza nome, il programma ne",
+                 "Ora un aggiornamento puo' solo migliorare quello che trova: se",
+                 "Avviando una registrazione dal telefono comparivano due avvisi",
+                 "Il programma annuncia l'inizio sia quando riceve il messaggio di"
              ]
 }
