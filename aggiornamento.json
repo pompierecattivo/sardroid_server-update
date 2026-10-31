@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.7",
+    "versione":  "9.6.8",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Una carta porta spesso con se' la propria posizione, scritta in un",
-                 "Ora si riconoscono anche le carte **OziExplorer** (.map), molto",
-                 "I punti compaiono gia' posizionati e la mappa di riferimento si",
-                 "I formati con la georeferenziazione in un file separato vogliono",
-                 "Una carta in coordinate metriche di un sistema proiettato, o su un",
-                 "La finestra elenca i formati accettati, distinguendo quelli che si"
+                 "Dalla 9.6.7 le aree inviate dai dispositivi comparivano piene e",
+                 "La causa stava nella correzione che ha reso le tracce selezionabili",
+                 "Ora il motivo nasce insieme alla forma che lo usa, qualunque piano",
+                 "Un'area circolare non veniva disegnata sulla mappa in piano, e",
+                 "Per sapere quanto spazio occupa un cerchio di quattrocento metri",
+                 "Ora l'estensione si calcola senza passare dalla mappa."
              ]
 }

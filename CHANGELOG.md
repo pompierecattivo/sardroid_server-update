@@ -1,5 +1,36 @@
 # Sardroid Server — Changelog
 
+## 9.6.8 - 2026-10-31
+
+Le aree tornano tratteggiate, e quelle circolari si disegnano anche
+sulla mappa in piano.
+
+### Aree di nuovo tratteggiate
+
+- Dalla 9.6.7 le aree inviate dai dispositivi comparivano piene e
+  opache sulla mappa in piano, coprendo la cartografia sottostante
+  invece di lasciarla intravedere. Il bordo tratteggiato era sparito.
+- La causa stava nella correzione che ha reso le tracce selezionabili
+  sopra le aree: dando alle superfici un piano di disegno proprio, il
+  motivo a righe diagonali e' rimasto definito nel piano precedente, e
+  il riferimento puntava a qualcosa che non esisteva piu'.
+- Ora il motivo nasce insieme alla forma che lo usa, qualunque piano
+  le venga assegnato. Sul globo non era mai cambiato nulla, perche'
+  li' il tratteggio e' un'immagine.
+
+### Aree circolari
+
+- Un'area circolare non veniva disegnata sulla mappa in piano, e
+  cliccandola nell'elenco la vista non si spostava. Sul globo invece
+  funzionava.
+- Per sapere quanto spazio occupa un cerchio di quattrocento metri
+  bisogna convertire i metri in gradi, e quella conversione dipende
+  dalla proiezione: chiederla a un cerchio non ancora disegnato
+  produceva un errore che interrompeva tutto il resto.
+- Ora l'estensione si calcola senza passare dalla mappa.
+- Le applicazioni non inviano ancora aree circolari, quindi il difetto
+  non si era mai manifestato sul campo.
+
 ## 9.6.7 - 2026-10-31
 
 Le carte che sanno gia' dove si trovano si caricano senza
