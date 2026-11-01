@@ -1,5 +1,70 @@
 # Sardroid Server — Changelog
 
+## 9.7.0 - 2026-11-01
+
+La mappa in tre dimensioni: segnaposti appoggiati al terreno anche in
+montagna, scala che segue il rilievo, e la libreria aggiornata di
+trentatre versioni.
+
+### Dove stanno i segni sul globo
+
+- Waypoint, dispositivi, foto, zone e capi traccia fluttuavano sopra
+  il terreno, a volte di centinaia di metri guardando da lontano, e si
+  assestavano solo avvicinandosi. In montagna il difetto restava anche
+  da vicino.
+- La causa: la quota di ciascun segno veniva lasciata stimare alla
+  libreria, che con la veduta ampia non ha ancora scaricato il terreno
+  al dettaglio necessario e risponde con una stima grossolana - spesso
+  vicina al livello del mare.
+- Ora la quota viene chiesta esplicitamente, e si legge la superficie
+  che viene effettivamente disegnata invece del modello numerico: le
+  due differiscono di qualche metro, e solo la prima corrisponde a cio'
+  che si vede.
+- I cerchi di inizio e fine traccia stavano al livello del mare: in
+  montagna finivano centinaia di metri sotto la superficie, quindi
+  invisibili.
+- Resta un distacco di un metro, deliberato: dove il terreno e'
+  irregolare un segno posato esattamente sulla superficie sparisce
+  dentro il pendio, e un segno appena sollevato si legge mentre uno
+  sepolto non esiste.
+
+### La scala della mappa 3D
+
+- Avvicinandosi oltre un certo punto la scala smetteva di cambiare:
+  restava ferma mentre lo zoom continuava a stringere.
+- La misura veniva presa contro l'ellissoide terrestre, una sfera
+  liscia al livello del mare. Guardando il fondovalle le due cose
+  coincidono; avvicinandosi a una montagna la telecamera si accosta
+  alla cima mentre il calcolo continua a misurare contro il mare, e la
+  distanza apparente smette di diminuire.
+- Ora la misura segue il terreno vero.
+
+### Inizio e fine traccia sul globo
+
+- Cliccando un cerchio di inizio o fine traccia compariva solo un
+  codice interno, lungo e privo di significato.
+- Ora si apre lo stesso riquadro della mappa in piano: nome della
+  traccia, squadra, orario, coordinate, distanza e numero di punti.
+- I cerchi portano anche il colore della traccia e i simboli di
+  partenza e arrivo, come in piano: prima erano verde e rosso fissi,
+  senza simboli.
+
+### Inquadratura delle zone
+
+- Cliccando una zona poligonale nell'elenco la telecamera finiva sotto
+  il terreno e troppo vicina.
+- Il centro dell'inquadratura veniva collocato al livello del mare:
+  sopra un paese di montagna a mille metri, la telecamera puntava
+  mille metri dentro la roccia. Ora usa la quota del terreno.
+
+### Libreria della mappa 3D aggiornata
+
+- Da Cesium 1.113 a 1.146. Fra le correzioni di quelle versioni ce ne
+  sono tre che riguardano proprio il posizionamento dei segni appoggiati
+  al terreno e l'allineamento delle etichette.
+- Non cambia nulla nell'uso, ne' nel modo di installare o aggiornare il
+  programma.
+
 ## 9.6.9 - 2026-10-31
 
 Il nome di una traccia non si perde piu', l'avviso di inizio compare

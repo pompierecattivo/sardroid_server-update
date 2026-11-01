@@ -1,13 +1,13 @@
 {
-    "versione":  "9.6.9",
+    "versione":  "9.7.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Alcune tracce comparivano nell'elenco come \"Traccia ccb9898f\",",
-                 "Una traccia puo' nascere in due modi: dal messaggio di avvio mandato",
-                 "Ma non sempre lo porta. Se arrivava senza nome, il programma ne",
-                 "Ora un aggiornamento puo' solo migliorare quello che trova: se",
-                 "Avviando una registrazione dal telefono comparivano due avvisi",
-                 "Il programma annuncia l'inizio sia quando riceve il messaggio di"
+                 "Waypoint, dispositivi, foto, zone e capi traccia fluttuavano sopra",
+                 "La causa: la quota di ciascun segno veniva lasciata stimare alla",
+                 "Ora la quota viene chiesta esplicitamente, e si legge la superficie",
+                 "I cerchi di inizio e fine traccia stavano al livello del mare: in",
+                 "Resta un distacco di un metro, deliberato: dove il terreno e'",
+                 "Avvicinandosi oltre un certo punto la scala smetteva di cambiare:"
              ]
 }
