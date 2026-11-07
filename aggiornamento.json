@@ -1,13 +1,11 @@
 {
-    "versione":  "9.8.0",
+    "versione":  "9.8.1",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Una traccia da cinquemila punti pesava circa un megabyte: troppo per",
-                 "L'app ora comprime l'elenco dei punti prima di cifrarlo. Misurato su",
-                 "Il limite dei punti per traccia passa da mille a cinquemila. Il mille",
-                 "I dati che identificano la traccia - nome, orari, numero di punti -",
-                 "Il server accetta entrambe le forme, compressa e non, in modo",
-                 "Si decomprime con un tetto calcolato dal numero di punti dichiarato:"
+                 "Il pulsante \"Scarica certificato\" in Impostazioni, Rete, non",
+                 "La causa: il percorso del certificato era ricostruito a mano a",
+                 "Quindi il difetto non si vedeva provando il programma in sviluppo:",
+                 "La 9.8.0 e' rimasta pubblicata meno di un'ora. Chi l'ha installata"
              ]
 }

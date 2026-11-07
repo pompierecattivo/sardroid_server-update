@@ -1,5 +1,31 @@
 # Sardroid Server — Changelog
 
+## 9.8.1 - 2026-11-07
+
+Il pulsante che scarica il certificato, introdotto nella 9.8.0,
+rispondeva "certificato non trovato" nel programma installato.
+
+### Il certificato si scarica davvero
+
+- Il pulsante "Scarica certificato" in Impostazioni, Rete, non
+  restituiva nulla: il server cercava il file in una cartella che nel
+  programma compilato non esiste. L'altro pulsante, quello che scarica
+  l'installatore, funzionava: costruisce il proprio contenuto senza
+  leggere da disco. Uno dei due andava e l'altro no, e questo rendeva
+  il difetto difficile da attribuire.
+- La causa: il percorso del certificato era ricostruito a mano a
+  partire dalla posizione del file di programma. In sviluppo quella
+  posizione e' la cartella del sorgente e il conto torna; nel programma
+  compilato punta all'interno dell'eseguibile, dove non c'e' nessuna
+  cartella dei certificati.
+- Quindi il difetto non si vedeva provando il programma in sviluppo:
+  compariva soltanto nella versione che gli utenti installano. Ora il
+  percorso si chiede al modulo che scrive il certificato, che e' l'unico
+  a sapere dove lo ha messo.
+- La 9.8.0 e' rimasta pubblicata meno di un'ora. Chi l'ha installata
+  puo' aggiornare: il resto di quella versione funziona, mancava solo
+  il certificato da scaricare.
+
 ## 9.8.0 - 2026-11-07
 
 Le tracce complete viaggiano compresse e il limite dei punti sale a
