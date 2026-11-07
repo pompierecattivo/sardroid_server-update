@@ -1,5 +1,43 @@
 # Sardroid Server — Changelog
 
+## 9.8.3 - 2026-11-07
+
+Tolta l'installazione del certificato, introdotta nella 9.8.0: chiedeva
+un lavoro all'operatore e non dava nulla in cambio.
+
+### Via i pulsanti del certificato
+
+- In Impostazioni, Rete, c'erano due pulsanti per scaricare il
+  certificato del server e un programma che lo installava, cosi' il
+  browser smetteva di avvisare che il sito non e' sicuro.
+- Sembrava un miglioramento, e non lo era. Il certificato cambia ogni
+  volta che il server si trova su un indirizzo nuovo: a quel punto
+  quello installato non vale piu', e l'avviso torna. Chi porta il
+  computer da una sede a un'altra avrebbe dovuto rifare
+  l'installazione - che non e' un clic, ma un file da scaricare,
+  mettere nella cartella giusta, e una conferma da amministratore.
+- Provato sul campo: accettando l'avviso del browser, la dashboard si
+  apre e la mappa si aggiorna in tempo reale come sempre. Il
+  certificato installato non aggiungeva nulla di funzionante: toglieva
+  un avviso, in cambio di un lavoro da rifare.
+- Un avviso che si accetta una volta per browser costa meno di
+  un'installazione da rifare a ogni cambio di rete. I due pulsanti
+  sono stati rimossi.
+- Resta un difetto che l'operazione aveva reso visibile: con due
+  installazioni di Sardroid sulla stessa macchina, installare il
+  certificato di una impediva di raggiungere l'altra, senza che nulla
+  lo spiegasse. Rimuovendo i pulsanti, il caso non si presenta piu'.
+
+### Il certificato dura di piu' e copre tutte le schede
+
+- Il certificato del server si rifaceva ogni volta che cambiava
+  l'indirizzo principale, anche quando il nuovo indirizzo era gia'
+  dentro al certificato. Ora si rifa' solo se serve davvero.
+- Copriva il solo indirizzo della scheda da cui si esce verso
+  internet. Una macchina con cavo e wifi insieme ne ha piu' d'uno, e
+  sugli altri il browser rifiutava il collegamento. Ora li comprende
+  tutti.
+
 ## 9.8.2 - 2026-11-07
 
 Il server si scollegava dal broker da solo, in continuazione, e i

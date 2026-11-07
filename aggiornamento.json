@@ -1,13 +1,13 @@
 {
-    "versione":  "9.8.2",
+    "versione":  "9.8.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il collegamento al broker cadeva ogni pochi secondi senza una",
-                 "La causa era un giro vizioso dentro il programma. La riconnessione,",
-                 "Ora il server distingue una chiusura che ha chiesto lui da una",
-                 "La conseguenza pratica era che i telefoni non riuscivano ad",
-                 "Il nome con cui il server si presenta al broker era costruito dal",
-                 "Il protocollo non lo permette: quando due si presentano uguali, il"
+                 "In Impostazioni, Rete, c'erano due pulsanti per scaricare il",
+                 "Sembrava un miglioramento, e non lo era. Il certificato cambia ogni",
+                 "Provato sul campo: accettando l'avviso del browser, la dashboard si",
+                 "Un avviso che si accetta una volta per browser costa meno di",
+                 "Resta un difetto che l'operazione aveva reso visibile: con due",
+                 "Il certificato del server si rifaceva ogni volta che cambiava"
              ]
 }
