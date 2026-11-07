@@ -1,13 +1,13 @@
 {
-    "versione":  "9.7.0",
+    "versione":  "9.8.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Waypoint, dispositivi, foto, zone e capi traccia fluttuavano sopra",
-                 "La causa: la quota di ciascun segno veniva lasciata stimare alla",
-                 "Ora la quota viene chiesta esplicitamente, e si legge la superficie",
-                 "I cerchi di inizio e fine traccia stavano al livello del mare: in",
-                 "Resta un distacco di un metro, deliberato: dove il terreno e'",
-                 "Avvicinandosi oltre un certo punto la scala smetteva di cambiare:"
+                 "Una traccia da cinquemila punti pesava circa un megabyte: troppo per",
+                 "L'app ora comprime l'elenco dei punti prima di cifrarlo. Misurato su",
+                 "Il limite dei punti per traccia passa da mille a cinquemila. Il mille",
+                 "I dati che identificano la traccia - nome, orari, numero di punti -",
+                 "Il server accetta entrambe le forme, compressa e non, in modo",
+                 "Si decomprime con un tetto calcolato dal numero di punti dichiarato:"
              ]
 }

@@ -1,5 +1,146 @@
 # Sardroid Server — Changelog
 
+## 9.8.0 - 2026-11-07
+
+Le tracce complete viaggiano compresse e il limite dei punti sale a
+cinquemila. Risolto il caso, accaduto sul campo, di squadre che escono
+dalla copertura e non si ritrovano piu' col server dopo aver cambiato
+broker. Il certificato del server si installa con due clic, e l'avviso
+di "sito non sicuro" smette di comparire.
+
+### Tracce compresse
+
+- Una traccia da cinquemila punti pesava circa un megabyte: troppo per
+  alcuni broker, e lenta da trasmettere da una valle con poco campo.
+- L'app ora comprime l'elenco dei punti prima di cifrarlo. Misurato su
+  una traccia vera, dal telefono al server: da 1079 a 94 kilobyte, il
+  nove per cento dell'originale.
+- Il limite dei punti per traccia passa da mille a cinquemila. Il mille
+  era stato scelto temendo un limite di MQTT che si e' rivelato molto
+  piu' alto di quanto si credesse.
+- I dati che identificano la traccia - nome, orari, numero di punti -
+  restano in chiaro: se la decompressione fallisse si saprebbe
+  comunque di quale traccia si tratta.
+- Il server accetta entrambe le forme, compressa e non, in modo
+  permanente: un dispositivo che non si aggiorna per mesi continua a
+  funzionare.
+- Si decomprime con un tetto calcolato dal numero di punti dichiarato:
+  senza, cinquanta kilobyte costruiti ad arte potrebbero espanderne
+  cinquanta milioni ed esaurire la memoria del server.
+- Verificato dal vivo con un telefono: ottantotto punti, byte identici
+  a quelli arrivati per la strada non compressa.
+
+### Quando le squadre escono dalla copertura
+
+Il caso, raccontato da chi lo ha vissuto: installazione nuova, broker
+integrato, telefoni accoppiati in sede che trasmettono. Le squadre si
+allontanano, perdono la rete locale, e il passaggio a un broker
+pubblico non basta a farli tornare. Le cause erano quattro, due per
+parte; qui le due del server.
+
+- Il codice di accoppiamento poteva annunciare ai telefoni un broker
+  diverso da quello in uso. La voce "broker visto dai dispositivi"
+  risultava attiva anche da spenta: era registrata come testo, e la
+  parola "False" vale "vero" per il programma. Un telefono accoppiato
+  con quel codice andava dove il server non ascolta.
+- Lo stesso difetto affliggeva altre quattro voci, fra cui quelle del
+  TLS e del proxy. Ora il valore si legge per cio' che significa, non
+  per come e' scritto.
+- In sviluppo potevano partire due server sulla stessa cartella: il
+  controllo guardava se la porta fosse occupata, ma la porta viene
+  presa secondi dopo l'avvio. Due server si contendevano porte e
+  sessione, producendo sintomi che sembravano difetti del programma.
+
+### Il broker integrato e l'avvio
+
+- Il broker integrato, con una restrizione di rete attiva, faceva
+  abortire l'avvio dell'intero server: nessuna porta aperta, processo
+  vivo, pagina bianca. Mancava un listener con il nome che la libreria
+  pretende.
+- L'indirizzo proposto per i codici di accoppiamento poteva essere
+  quello di una VPN, che esiste solo finche' la VPN e' connessa.
+  Salvato e poi scomparso, rendeva i codici inutilizzabili. Ora si
+  propongono solo indirizzi che appartengono davvero a una scheda.
+- Salvare un indirizzo inesistente lascia un avviso nel registro, con
+  l'elenco di quelli validi.
+
+### La direzione di marcia, perduta da gennaio
+
+- Il server leggeva un campo chiamato `bearing`, l'app ne manda uno
+  chiamato `heading`: lo stesso dato con due nomi diversi. La
+  direzione veniva scartata in silenzio.
+- Durava da sempre: su 4365 punti raccolti da gennaio, con cinque
+  versioni diverse dell'app, nessuno aveva la direzione registrata,
+  mentre velocita' e quota c'erano tutte.
+- Le frecce dei dispositivi sulla mappa puntavano tutte a nord. Non
+  mancavano: erano disegnate, e mentivano. Un segno che mente e'
+  peggio di un segno assente, perche' nessuno pensa a controllarlo.
+- In ricerca la direzione dice da che parte guardava una squadra
+  quando ha passato un punto. I punti passati non si recuperano: quel
+  dato non e' mai stato scritto.
+
+### L'ordine dei punti e i conteggi
+
+- I percorsi si ricostruivano ordinando per orario. L'app campiona al
+  millesimo di secondo, e su una traccia da migliaia di punti due
+  letture possono cadere nello stesso istante: l'ordine diventava
+  indefinito, e due punti scambiati disegnano un dente mai percorso.
+- Il registro diceva "88 su 88 posizioni inserite" anche quando tutti
+  gli 88 erano duplicati gia' presenti. Ora conta le righe davvero
+  scritte e dice quante erano gia' li'.
+- Un messaggio cifrato con una chiave non piu' valida veniva segnalato
+  come "possibile tentativo di iniezione". Accade normalmente nei
+  millisecondi dopo un accoppiamento: chiamare "attacco" un fatto
+  fisiologico logora l'attenzione di chi legge, e il giorno di un
+  attacco vero nessuno lo distinguerebbe dal rumore.
+
+### Avvisi: quello che prima non si vedeva
+
+- Con il broker integrato, il semaforo della dashboard diventa giallo
+  e la scheda Broker lampeggia. Prima un broker integrato connesso
+  risultava verde, identico a uno raggiungibile da tutta la provincia,
+  mentre copre solo chi condivide la rete del computer.
+- Nella scheda Broker compare la spiegazione: le squadre fuori dalla
+  rete smettono di essere tracciate, e per cambiare broker occorre
+  farlo su entrambi i lati.
+- Se la sessione attiva non ha dispositivi accoppiati mentre un'altra
+  ne ha, lo si segnala con il nome della sessione da riattivare: i
+  telefoni usano l'identificativo della sessione in cui sono stati
+  accoppiati e non lo cambiano mai.
+- Il server si accorge dei dispositivi che comunicano su una sessione
+  diversa da quella attiva. Prima non poteva: ascoltava solo i propri
+  topic, e quei messaggi non gli arrivavano affatto.
+- Scegliendo un broker pubblico, il registro dice cosa comporta.
+
+### Riservatezza sui broker pubblici
+
+- L'identificativo di sessione non contiene piu' il nome scelto
+  dall'operatore. Quell'identificativo viaggia nei topic, che restano
+  in chiaro anche quando il contenuto e' cifrato: su un broker
+  pubblico chiunque ascolti leggeva il luogo dell'intervento. Per una
+  persona scomparsa, dire dove si cerca pesa piu' che dire quanti
+  cercano.
+- Il nome leggibile non si perde: resta negli archivi della sessione,
+  nella dashboard e nel codice di accoppiamento, e l'app continua a
+  mostrarlo. Le sessioni esistenti restano invariate: rinominarle
+  scollegherebbe i dispositivi accoppiati.
+- Verificato durante le prove: i contenuti restano illeggibili a chi
+  ascolta. Due dispositivi estranei comparsi su un broker pubblico
+  sono stati respinti da entrambe le parti.
+
+### Il certificato e l'avviso di "sito non sicuro"
+
+- In Impostazioni, Rete, si scaricano il certificato del server e un
+  programma che lo installa. Due clic su ogni computer, una volta
+  sola, e l'avviso non compare piu' per un anno.
+- Il certificato contiene solo la parte pubblica: si puo' consegnare a
+  chiunque debba collegarsi.
+- Sui telefoni non serve: l'app non usa il browser.
+- Una sessione nuova eredita dalla precedente la configurazione del
+  broker e della rete. Prima ripartiva dai valori del file di
+  configurazione, che su un'installazione pulita indicano un broker
+  dove non risponde nessuno.
+
 ## 9.7.0 - 2026-11-01
 
 La mappa in tre dimensioni: segnaposti appoggiati al terreno anche in
