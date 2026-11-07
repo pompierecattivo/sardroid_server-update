@@ -1,5 +1,60 @@
 # Sardroid Server — Changelog
 
+## 9.8.2 - 2026-11-07
+
+Il server si scollegava dal broker da solo, in continuazione, e i
+telefoni non riuscivano piu' ad accoppiarsi. Emerso la sera stessa del
+rilascio precedente, durante una prova sul campo con un telefono vero.
+
+### Il server si scollegava da solo
+
+- Il collegamento al broker cadeva ogni pochi secondi senza una
+  ragione visibile. In una sera: 212 connessioni e 236 tentativi di
+  riconnessione, con il collegamento che durava fra un secondo e
+  mezzo e otto secondi. Nel registro compariva solo "disconnesso:
+  Unspecified error".
+- La causa era un giro vizioso dentro il programma. La riconnessione,
+  per ripulire il collegamento precedente, ne chiedeva la chiusura; ma
+  quella chiusura veniva interpretata come una caduta, e faceva partire
+  una seconda riconnessione sopra la prima. Due collegamenti vivi
+  insieme, il broker ne chiudeva uno, e si ricominciava.
+- Ora il server distingue una chiusura che ha chiesto lui da una
+  caduta vera, e non si rilancia piu' addosso a se stesso.
+- La conseguenza pratica era che i telefoni non riuscivano ad
+  accoppiarsi: il server era raggiungibile solo a tratti di pochi
+  secondi, e la richiesta di accoppiamento cadeva in una delle finestre
+  in cui non c'era. Sul telefono si leggeva soltanto "ripeti la
+  scansione", che non lasciava capire nulla.
+
+### Due server sulla stessa sessione
+
+- Il nome con cui il server si presenta al broker era costruito dal
+  solo identificativo della sessione. Ma la sessione e' il soccorso,
+  non il computer: due installazioni che lavorano sullo stesso
+  intervento - il server in sede e un portatile sul posto, o una
+  macchina su cui e' stato importato il salvataggio di un'altra -
+  arrivavano al broker con lo stesso nome.
+- Il protocollo non lo permette: quando due si presentano uguali, il
+  broker espelle il precedente, quello rientra ed espelle l'altro. I
+  due si scalciano senza fine, e nel registro si legge la stessa frase
+  che non spiega niente.
+- Ora ogni installazione genera un proprio codice, scritto una volta e
+  conservato, che distingue il server da ogni altro anche a parita' di
+  sessione. Il codice resta lo stesso fra un riavvio e l'altro: se
+  cambiasse ogni volta, il broker conserverebbe messaggi per un
+  destinatario che non torna piu'.
+
+### Un consiglio sbagliato nel registro
+
+- Quando la connessione al broker non andava a buon fine con il TLS
+  attivo, il registro suggeriva di disattivare il TLS. Su un caso
+  reale quel consiglio era falso: la porta rispondeva e completava la
+  cifratura in meno di un secondo, e il problema stava altrove.
+- Seguirlo avrebbe tolto la protezione del collegamento senza
+  risolvere nulla. Ora si elencano le cause in ordine di probabilita' -
+  un altro Sardroid sulla stessa sessione, le credenziali - e il TLS
+  resta per ultimo.
+
 ## 9.8.1 - 2026-11-07
 
 Il pulsante che scarica il certificato, introdotto nella 9.8.0,

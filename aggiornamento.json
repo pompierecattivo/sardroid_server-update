@@ -1,11 +1,13 @@
 {
-    "versione":  "9.8.1",
+    "versione":  "9.8.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il pulsante \"Scarica certificato\" in Impostazioni, Rete, non",
-                 "La causa: il percorso del certificato era ricostruito a mano a",
-                 "Quindi il difetto non si vedeva provando il programma in sviluppo:",
-                 "La 9.8.0 e' rimasta pubblicata meno di un'ora. Chi l'ha installata"
+                 "Il collegamento al broker cadeva ogni pochi secondi senza una",
+                 "La causa era un giro vizioso dentro il programma. La riconnessione,",
+                 "Ora il server distingue una chiusura che ha chiesto lui da una",
+                 "La conseguenza pratica era che i telefoni non riuscivano ad",
+                 "Il nome con cui il server si presenta al broker era costruito dal",
+                 "Il protocollo non lo permette: quando due si presentano uguali, il"
              ]
 }
