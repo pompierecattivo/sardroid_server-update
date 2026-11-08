@@ -1,5 +1,33 @@
 # Sardroid Server — Changelog
 
+## 9.8.6 - 2026-11-08
+
+I waypoint sulla mappa si leggono meglio e dicono chi li ha mandati.
+
+### I waypoint sulla mappa
+
+- Il nome compariva in basso a destra rispetto al segnaposto, in
+  difformita' da ogni altro elemento della mappa. Con piu' waypoint
+  vicini non era ovvio quale nome appartenesse a quale punto. Ora e'
+  centrato sopra il segnaposto.
+- Il riquadro che si apre cliccando su un waypoint non diceva chi lo
+  aveva mandato, mentre aree e tracce lo dicono da sempre. In una
+  ricerca sapere quale squadra ha segnato un punto e' parte
+  dell'informazione, non un dettaglio. Ora c'e', nella stessa forma
+  usata dagli altri elementi.
+- Il nome di chi ha mandato il waypoint si legge dall'archivio della
+  sessione invece che dall'elenco a schermo: resta corretto anche per
+  un dispositivo che e' stato tolto dai dispositivi attivi.
+
+### Eliminazioni che sembravano non riuscire
+
+- Eliminando tutte le tracce, o tutti i dispositivi, l'elenco a schermo
+  poteva continuare a mostrare quello che era appena stato cancellato.
+- Il programma chiedeva l'elenco aggiornato ma non aspettava la
+  risposta: proseguiva, mostrava il messaggio di riuscita, e se
+  l'elenco arrivava un istante dopo restava quello di prima. Ora
+  aspetta.
+
 ## 9.8.5 - 2026-11-08
 
 Il certificato che il server crea per se' stesso era incompleto: ora
