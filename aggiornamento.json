@@ -1,11 +1,13 @@
 {
-    "versione":  "9.8.4",
+    "versione":  "9.8.5",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "In Impostazioni, Rete, Servizi esposti, si puo' indicare su quale",
-                 "Il guasto era invisibile proprio a chi poteva ripararlo. Dal computer",
-                 "Ora l'indirizzo viene rifiutato al momento del salvataggio, con la",
-                 "E se sparisce dopo - si sceglie un indirizzo valido, si cambia rete,"
+                 "Il programma porta con se' l'app da installare sui telefoni, quella che si scarica inquadrando il codice a quadretti in Impostazioni. Questa versione ne contiene una nuova.",
+                 "La scheda della mappa e' stata rivista nella disposizione.",
+                 "L'app ora resta sempre in verticale. Ruotando il telefono non si gira piu': su uno schermo piccolo la vista orizzontale lasciava troppo poco spazio alla mappa, che e' quello che serve guardare.",
+                 "Chi ha gia' l'app sul telefono puo' aggiornarla inquadrando di nuovo il codice dalla dashboard.",
+                 "Mancavano due dichiarazioni che un certificato di server deve contenere: a cosa serve (autenticare un server, non firmare posta o programmi) e cosa puo' fare la chiave. Non c'erano affatto.",
+                 "Peggio: il certificato si dichiarava \"autorita' di certificazione\", cioe' uno di quelli che firmano certificati altrui, mentre serviva semplicemente la pagina. Era una contraddizione interna."
              ]
 }

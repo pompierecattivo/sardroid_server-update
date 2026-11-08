@@ -1,5 +1,46 @@
 # Sardroid Server — Changelog
 
+## 9.8.5 - 2026-11-08
+
+Il certificato che il server crea per se' stesso era incompleto: ora
+dichiara a cosa serve, come ogni certificato di questo tipo deve fare.
+
+### L'app per i telefoni
+
+- Il programma porta con se' l'app da installare sui telefoni, quella
+  che si scarica inquadrando il codice a quadretti in Impostazioni.
+  Questa versione ne contiene una nuova.
+- La scheda della mappa e' stata rivista nella disposizione.
+- L'app ora resta sempre in verticale. Ruotando il telefono non si
+  gira piu': su uno schermo piccolo la vista orizzontale lasciava
+  troppo poco spazio alla mappa, che e' quello che serve guardare.
+- Chi ha gia' l'app sul telefono puo' aggiornarla inquadrando di nuovo
+  il codice dalla dashboard.
+
+### Un certificato fatto come si deve
+
+- Mancavano due dichiarazioni che un certificato di server deve
+  contenere: a cosa serve (autenticare un server, non firmare posta o
+  programmi) e cosa puo' fare la chiave. Non c'erano affatto.
+- Peggio: il certificato si dichiarava "autorita' di certificazione",
+  cioe' uno di quelli che firmano certificati altrui, mentre serviva
+  semplicemente la pagina. Era una contraddizione interna.
+- Un certificato che dichiara di essere una cosa e viene usato come
+  un'altra puo' essere rifiutato da browser e programmi piu' severi,
+  anche quando tutto il resto e' in ordine.
+- Ora dichiara "autenticazione server", limita l'uso della chiave a
+  quello che serve davvero, e non si spaccia piu' per autorita'.
+- Aggiunto anche l'indirizzo locale in forma estesa (::1). Su Windows
+  e' il primo indirizzo a cui il nome "localhost" viene risolto, e il
+  certificato non lo conteneva: il browser lo contattava con un nome
+  che il certificato non copriva.
+- Non c'e' nulla da fare: il server rifa' il certificato da se' al
+  primo avvio, in un istante, senza chiedere niente a nessuno. L'unica
+  cosa che si nota e' che il browser chiede di accettare l'avviso una
+  volta in piu', perche' si trova davanti a un certificato diverso da
+  quello di prima. Succedeva gia' ogni volta che il server cambiava
+  rete.
+
 ## 9.8.4 - 2026-11-08
 
 Chi sceglie su quale rete esporre il server non puo' piu' chiudersi
