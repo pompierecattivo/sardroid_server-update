@@ -1,5 +1,28 @@
 # Sardroid Server — Changelog
 
+## 9.8.4 - 2026-11-08
+
+Chi sceglie su quale rete esporre il server non puo' piu' chiudersi
+fuori senza accorgersene.
+
+### L'indirizzo su cui il server accetta i collegamenti
+
+- In Impostazioni, Rete, Servizi esposti, si puo' indicare su quale
+  indirizzo il server accetta i collegamenti. Si poteva indicarne uno
+  che non appartiene a nessuna scheda del computer: da quel momento
+  telefoni e altri computer venivano rifiutati.
+- Il guasto era invisibile proprio a chi poteva ripararlo. Dal computer
+  del server la dashboard continua ad aprirsi - cio' che arriva da
+  questo stesso computer passa sempre, per non restare chiusi fuori -
+  mentre i dispositivi non si collegavano piu' e dall'elenco sembrava
+  soltanto che nessuno stesse trasmettendo.
+- Ora l'indirizzo viene rifiutato al momento del salvataggio, con la
+  spiegazione di cosa comporterebbe.
+- E se sparisce dopo - si sceglie un indirizzo valido, si cambia rete,
+  si riavvia - all'avvio il server lo dice nel registro: sta accettando
+  solo i collegamenti da questo computer, e come rimediare. Prima
+  restava a rifiutare in silenzio un indirizzo che non esisteva piu'.
+
 ## 9.8.3 - 2026-11-07
 
 Tolta l'installazione del certificato, introdotta nella 9.8.0: chiedeva
