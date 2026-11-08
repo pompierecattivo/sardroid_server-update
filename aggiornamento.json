@@ -1,12 +1,13 @@
 {
-    "versione":  "9.8.6",
+    "versione":  "9.9.0",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il nome compariva in basso a destra rispetto al segnaposto, in difformita' da ogni altro elemento della mappa. Con piu' waypoint vicini non era ovvio quale nome appartenesse a quale punto. Ora e' centrato sopra il segnaposto.",
-                 "Il riquadro che si apre cliccando su un waypoint non diceva chi lo aveva mandato, mentre aree e tracce lo dicono da sempre. In una ricerca sapere quale squadra ha segnato un punto e' parte dell'informazione, non un dettaglio. Ora c'e', nella stessa forma usata dagli altri elementi.",
-                 "Il nome di chi ha mandato il waypoint si legge dall'archivio della sessione invece che dall'elenco a schermo: resta corretto anche per un dispositivo che e' stato tolto dai dispositivi attivi.",
-                 "Eliminando tutte le tracce, o tutti i dispositivi, l'elenco a schermo poteva continuare a mostrare quello che era appena stato cancellato.",
-                 "Il programma chiedeva l'elenco aggiornato ma non aspettava la risposta: proseguiva, mostrava il messaggio di riuscita, e se l'elenco arrivava un istante dopo restava quello di prima. Ora aspetta."
+                 "Un messaggio scritto dal telefono mentre il server non rispondeva **non veniva nemmeno registrato**: chi lo scriveva lo vedeva sparire e non restava da nessuna parte. Ora resta in attesa e parte da solo appena il server torna.",
+                 "Accanto a ogni messaggio si vede a che punto e': in attesa, uscito dal telefono, oppure arrivato al server. Prima \"inviato\" voleva dire soltanto che il programma aveva provato a mandarlo.",
+                 "Il server diceva \"inviato\" senza guardare se il messaggio fosse davvero partito. Ora lo verifica.",
+                 "Lo stato di lettura, che prima si vedeva solo per i messaggi urgenti, vale ora per tutti: accanto a ogni messaggio mandato dal posto comando si legge chi l'ha letto e, soprattutto, chi no. In operazione il dato che serve e' il secondo.",
+                 "L'avviso sulla chat diceva che i messaggi possono non arrivare e non essere recuperati. Non e' piu' vero in uscita dai dispositivi, ed era scritto in modo da scoraggiare l'uso di uno strumento che adesso funziona. Ora dice la cosa che resta vera: un messaggio scritto a un dispositivo spento non viene recapitato quando torna.",
+                 "Le conferme di lettura comparivano una per una: aprendo la chat sul telefono, la mappa veniva coperta da una ventina di riquadri. Ora si riuniscono in un avviso solo."
              ]
 }

@@ -1,5 +1,141 @@
 # Sardroid Server — Changelog
 
+## 9.9.0 - 2026-11-08
+
+Niente di quanto viene raccolto o scritto si perde piu' quando il
+collegamento manca: punti traccia, waypoint, foto e messaggi restano
+in attesa e arrivano quando la comunicazione torna. E arrivano con
+l'ora in cui sono stati presi, non con quella dell'arrivo.
+
+### I messaggi non si perdono e si vede se sono arrivati
+
+- Un messaggio scritto dal telefono mentre il server non rispondeva
+  **non veniva nemmeno registrato**: chi lo scriveva lo vedeva sparire
+  e non restava da nessuna parte. Ora resta in attesa e parte da solo
+  appena il server torna.
+- Accanto a ogni messaggio si vede a che punto e': in attesa, uscito
+  dal telefono, oppure arrivato al server. Prima "inviato" voleva dire
+  soltanto che il programma aveva provato a mandarlo.
+- Il server diceva "inviato" senza guardare se il messaggio fosse
+  davvero partito. Ora lo verifica.
+- Lo stato di lettura, che prima si vedeva solo per i messaggi urgenti,
+  vale ora per tutti: accanto a ogni messaggio mandato dal posto
+  comando si legge chi l'ha letto e, soprattutto, chi no. In operazione
+  il dato che serve e' il secondo.
+- L'avviso sulla chat diceva che i messaggi possono non arrivare e non
+  essere recuperati. Non e' piu' vero in uscita dai dispositivi, ed era
+  scritto in modo da scoraggiare l'uso di uno strumento che adesso
+  funziona. Ora dice la cosa che resta vera: un messaggio scritto a un
+  dispositivo spento non viene recapitato quando torna.
+- Le conferme di lettura comparivano una per una: aprendo la chat sul
+  telefono, la mappa veniva coperta da una ventina di riquadri. Ora si
+  riuniscono in un avviso solo.
+
+### Punti traccia, waypoint e foto che restavano indietro
+
+Un telefono senza rete, o con il server spento, continua a registrare.
+Quando la comunicazione torna, manda indietro quello che ha accumulato.
+In questo passaggio qualcosa si fermava.
+
+- La conferma che il server manda per una traccia completa dice ora
+  quanti punti ha davvero registrato e se vale la pena ritentare. Il
+  telefono poteva soltanto sapere che il messaggio era arrivato, non
+  che i punti fossero al sicuro: dava per spediti punti che erano
+  ancora suoi, e nessuno li cercava piu'.
+- Quando i dati di un percorso arrivano illeggibili, la conferma lo
+  dice esplicitamente. Rimandare lo stesso messaggio darebbe sempre lo
+  stesso esito: senza questa indicazione il telefono ritentava senza
+  fine, consumando batteria e rete di una squadra in ricerca.
+- La conferma per l'avvio e l'arresto di una traccia non portava il
+  riferimento della traccia stessa: il telefono la riceveva e non
+  sapeva a cosa riferirla, quindi la scartava.
+
+Provato con otto prove: server spento a meta' percorso, undici minuti
+senza collegamento, applicazione chiusa di forza, traccia nata e chiusa
+a server spento, waypoint e foto creati a server spento. Nessun dato
+perso.
+
+### L'ora dei dati differiti
+
+- Waypoint e foto portavano l'ora in cui il server li riceveva, non
+  quella in cui erano stati presi. Un punto segnato mezz'ora prima,
+  perche' il telefono era senza rete, risultava di adesso. Chi coordina
+  legge quell'ora per sapere QUANDO una squadra ha trovato qualcosa, e
+  un'ora sbagliata sposta il fatto nel tempo.
+- Un dato arretrato non fa piu' risultare acceso un dispositivo. Un
+  waypoint o una foto consegnati in ritardo aggiornavano l'ultimo
+  segno di vita del telefono, che poteva essere spento da un pezzo.
+  Sapere chi e' davvero raggiungibile conta quanto non perdere il dato.
+- Alcune tracce risultavano finite prima di essere iniziate, con un'ora
+  esatta di scarto. Le date venivano scritte in due forme diverse nello
+  stesso archivio, una con il riferimento al fuso e una senza.
+
+### Mappa 3D allineata a quella piana
+
+- Il riquadro di un waypoint sul globo non diceva chi lo aveva mandato,
+  mentre sulla mappa piana lo dice.
+- Il riquadro di una foto sul globo non mostrava l'ora dello scatto.
+- Il nome di chi manda un waypoint o una foto viaggia ora insieme al
+  dato: prima veniva cercato nell'elenco dei dispositivi a schermo e
+  restava vuoto per un dispositivo non ancora comparso.
+
+### Come si chiamano le cose
+
+- La scheda delle impostazioni che contiene la configurazione del
+  broker si chiamava soltanto "Rete", pur contenendone sei sezioni.
+  Ora "Rete e broker".
+- La scheda del broker nella schermata principale ora dice "Broker
+  MQTT": dove lo spazio lo consente si usano entrambe le parole, dove
+  e' stretto resta "Broker".
+
+### Punti traccia, waypoint e foto che restavano indietro
+
+Un telefono senza rete, o con il server spento, continua a registrare.
+Quando la comunicazione torna, manda indietro quello che ha accumulato.
+In questo passaggio qualcosa si fermava.
+
+- La conferma che il server manda per una traccia completa dice ora
+  quanti punti ha davvero registrato e se vale la pena ritentare. Il
+  telefono poteva soltanto sapere che il messaggio era arrivato, non
+  che i punti fossero al sicuro: dava per spediti punti che erano
+  ancora suoi, e nessuno li cercava piu'.
+- Quando i dati di un percorso arrivano illeggibili, la conferma lo
+  dice esplicitamente. Rimandare lo stesso messaggio darebbe sempre lo
+  stesso esito: senza questa indicazione il telefono ritentava senza
+  fine, consumando batteria e rete di una squadra in ricerca.
+- La conferma per l'avvio e l'arresto di una traccia non portava il
+  riferimento della traccia stessa: il telefono la riceveva e non
+  sapeva a cosa riferirla, quindi la scartava. Ora c'e'.
+
+Provato con otto prove: server spento a meta' percorso, undici minuti
+senza collegamento, applicazione chiusa di forza, traccia nata e chiusa
+a server spento, waypoint e foto creati a server spento. Nessun dato
+perso.
+
+### L'ora dei dati differiti
+
+- Waypoint e foto portavano l'ora in cui il server li riceveva, non
+  quella in cui erano stati presi. Un punto segnato mezz'ora prima,
+  perche' il telefono era senza rete, risultava di adesso. Chi coordina
+  legge quell'ora per sapere QUANDO una squadra ha trovato qualcosa, e
+  un'ora sbagliata sposta il fatto nel tempo.
+- Un dato arretrato non fa piu' risultare acceso un dispositivo. Un
+  waypoint o una foto consegnati in ritardo aggiornavano l'ultimo
+  segno di vita del telefono, che poteva essere spento da un pezzo.
+  Sapere chi e' davvero raggiungibile conta quanto non perdere il dato.
+- Alcune tracce risultavano finite prima di essere iniziate, con un'ora
+  esatta di scarto. Le date venivano scritte in due forme diverse nello
+  stesso archivio, una con il riferimento al fuso e una senza.
+
+### Mappa 3D allineata a quella piana
+
+- Il riquadro di un waypoint sul globo non diceva chi lo aveva mandato,
+  mentre sulla mappa piana lo dice.
+- Il riquadro di una foto sul globo non mostrava l'ora dello scatto.
+- Il nome di chi manda un waypoint o una foto viaggia ora insieme al
+  dato: prima veniva cercato nell'elenco dei dispositivi a schermo e
+  restava vuoto per un dispositivo non ancora comparso.
+
 ## 9.8.6 - 2026-11-08
 
 I waypoint sulla mappa si leggono meglio e dicono chi li ha mandati.
