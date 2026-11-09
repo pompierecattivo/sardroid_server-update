@@ -1,5 +1,46 @@
 # Sardroid Server — Changelog
 
+## 9.9.1 - 2026-11-09
+
+Correzioni di dettaglio alla dashboard, e una frase delle note della
+9.9.0 che non era vera.
+
+### L'avviso sulla chat diceva troppo
+
+- L'avviso in cima alla chat dichiarava che un messaggio a un
+  dispositivo spento **non viene recapitato** quando torna e che va
+  riscritto. Non si sa: dipende da come il telefono si era staccato e
+  da quanto tempo e' passato, e in diversi casi arriva. Ora dice che
+  **puo' non essere recapitato**, nelle tre lingue.
+
+Era una certezza che nessuno ha misurato, scritta nella 9.9.0 di ieri.
+In operazione una certezza falsa e' peggio di un dubbio dichiarato: chi
+legge "non viene recapitato" riscrive un messaggio che era partito, o
+passa alla radio quando non serviva.
+
+### Avvisi che comparivano senza essere stati chiesti
+
+- Cambiando il colore di un dispositivo comparivano gli avvisi del
+  caricamento delle fotografie. Il colore si cambia in un elenco, e
+  non c'e' ragione che la pagina annunci di aver letto delle foto:
+  l'operatore ha chiesto un'altra cosa.
+- Alla radice c'era un lavoro inutile: per cambiare un colore la
+  pagina rileggeva dal server tracce, waypoint e fotografie, dati che
+  aveva gia' tutti. Ora ridisegna i segni con il colore nuovo senza
+  chiedere niente a nessuno. Su una ricerca con molte tracce la
+  differenza si vede.
+- Il caricamento delle fotografie annunciava quante ne aveva lette
+  anche quando nessuno glielo aveva chiesto - dopo l'eliminazione di un
+  dispositivo, per esempio. Tracce e waypoint, caricati negli stessi
+  momenti, non hanno mai annunciato nulla: era questo a essere
+  l'eccezione.
+
+### L'applicazione distribuita
+
+- La cartella da cui il server distribuisce l'applicazione contiene ora
+  la versione 7.8. Un telefono che chiede l'aggiornamento al server la
+  riceve; la stessa versione e' sul Play Store.
+
 ## 9.9.0 - 2026-11-08
 
 Niente di quanto viene raccolto o scritto si perde piu' quando il
