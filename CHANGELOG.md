@@ -1,5 +1,28 @@
 # Sardroid Server — Changelog
 
+## 9.9.2 - 2026-11-09
+
+### Le aree non dicevano chi le aveva disegnate
+
+- Il fumetto di un'area mostrava l'identificativo del dispositivo -
+  `SD_528B6CE7` - invece del nome della squadra. Succedeva sulla mappa
+  in piano e sul globo, e nell'elenco delle aree. Il nome c'era: la
+  richiesta delle aree lo porta, unito dal server, ma la pagina non lo
+  leggeva e cercava solo nel proprio elenco. Ora si guarda prima quello
+  che manda il server, come fanno da ieri waypoint, fotografie, tracce
+  e SOS.
+- Un'area che arriva mentre la dashboard e' aperta non portava con se'
+  il nome del mittente: il server non lo metteva nell'avviso. Era
+  rimasta fuori quando il nome e' stato aggiunto agli altri elementi.
+  Senza questa correzione il nome compariva ricaricando la pagina ma
+  non sull'area appena arrivata.
+
+Un'area senza mittente, in una ricerca con piu' squadre sul campo, e'
+un'area di cui non si sa chi risponde.
+
+Provato con un'area mandata da un telefono: il nome compare in piano,
+sul globo e nell'elenco.
+
 ## 9.9.1 - 2026-11-09
 
 Correzioni di dettaglio alla dashboard, e una frase delle note della

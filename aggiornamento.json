@@ -1,12 +1,9 @@
 {
-    "versione":  "9.9.1",
+    "versione":  "9.9.2",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "L'avviso in cima alla chat dichiarava che un messaggio a un dispositivo spento **non viene recapitato** quando torna e che va riscritto. Non si sa: dipende da come il telefono si era staccato e da quanto tempo e' passato, e in diversi casi arriva. Ora dice che **puo' non essere recapitato**, nelle tre lingue.",
-                 "Cambiando il colore di un dispositivo comparivano gli avvisi del caricamento delle fotografie. Il colore si cambia in un elenco, e non c'e' ragione che la pagina annunci di aver letto delle foto: l'operatore ha chiesto un'altra cosa.",
-                 "Alla radice c'era un lavoro inutile: per cambiare un colore la pagina rileggeva dal server tracce, waypoint e fotografie, dati che aveva gia' tutti. Ora ridisegna i segni con il colore nuovo senza chiedere niente a nessuno. Su una ricerca con molte tracce la differenza si vede.",
-                 "Il caricamento delle fotografie annunciava quante ne aveva lette anche quando nessuno glielo aveva chiesto - dopo l'eliminazione di un dispositivo, per esempio. Tracce e waypoint, caricati negli stessi momenti, non hanno mai annunciato nulla: era questo a essere l'eccezione.",
-                 "La cartella da cui il server distribuisce l'applicazione contiene ora la versione 7.8. Un telefono che chiede l'aggiornamento al server la riceve; la stessa versione e' sul Play Store."
+                 "Il fumetto di un'area mostrava l'identificativo del dispositivo - `SD_528B6CE7` - invece del nome della squadra. Succedeva sulla mappa in piano e sul globo, e nell'elenco delle aree. Il nome c'era: la richiesta delle aree lo porta, unito dal server, ma la pagina non lo leggeva e cercava solo nel proprio elenco. Ora si guarda prima quello che manda il server, come fanno da ieri waypoint, fotografie, tracce e SOS.",
+                 "Un'area che arriva mentre la dashboard e' aperta non portava con se' il nome del mittente: il server non lo metteva nell'avviso. Era rimasta fuori quando il nome e' stato aggiunto agli altri elementi. Senza questa correzione il nome compariva ricaricando la pagina ma non sull'area appena arrivata."
              ]
 }
