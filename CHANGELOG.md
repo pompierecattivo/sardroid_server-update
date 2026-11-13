@@ -1,5 +1,39 @@
 # Sardroid Server — Changelog
 
+## 9.9.5 - 2026-11-13
+
+### Il contrassegno dice di quale controllo si parla
+
+- Quando il controllo degli aggiornamenti non riesce, il contrassegno in
+  basso dice "Controllo aggiornamenti non riuscito". Prima diceva solo
+  "Controllo non riuscito": in una barra dove convivono lo stato di
+  Internet, del broker e del collegamento, non era detto a quale dei
+  controlli si riferisse. Vale nelle tre lingue.
+
+### Il server non dichiara piu' un broker che non ha
+
+- Quando il collegamento al broker non parte, lo si legge nel diario
+  insieme al motivo. Finora veniva scritto "MQTT client connesso a
+  broker esterno" in ogni caso: la procedura di collegamento, davanti a
+  un proxy non configurato o a nessuna strada praticabile, rinunciava
+  annotandosi il motivo e usciva in silenzio, e chi la chiamava non
+  aveva modo di accorgersene. Il diario diceva connesso mentre il
+  contrassegno del broker, in alto, era rosso.
+- Lo stesso valeva per l'avvio del broker interno da remoto, che
+  rispondeva "client connesso" senza averlo verificato, e per il
+  ricollegamento dopo un cambio di broker, che si dichiarava completato
+  comunque. Ora entrambi riferiscono l'esito vero.
+- Un collegamento che fallisce in modalita' broker interno ora si vede:
+  prima non lasciava traccia ne' riuscendo ne' fallendo.
+
+### Il diario del server torna leggibile
+
+- Il diario non si riempie piu' di avvisi su connessioni chiuse dal
+  browser. Ogni scheda chiusa e ogni sospensione della macchina ne
+  lasciava uno, con tanto di traccia d'errore, pur non essendo un
+  guasto: su tre giorni erano nove righe su dieci, e cio' che conta -
+  avvii, broker, dispositivi - ci restava sepolto sotto.
+
 ## 9.9.4 - 2026-11-13
 
 Il server non vedeva gli aggiornamenti, e non lo diceva.
