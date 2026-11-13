@@ -1,9 +1,10 @@
 {
-    "versione":  "9.9.2",
+    "versione":  "9.9.3",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Il fumetto di un'area mostrava l'identificativo del dispositivo - `SD_528B6CE7` - invece del nome della squadra. Succedeva sulla mappa in piano e sul globo, e nell'elenco delle aree. Il nome c'era: la richiesta delle aree lo porta, unito dal server, ma la pagina non lo leggeva e cercava solo nel proprio elenco. Ora si guarda prima quello che manda il server, come fanno da ieri waypoint, fotografie, tracce e SOS.",
-                 "Un'area che arriva mentre la dashboard e' aperta non portava con se' il nome del mittente: il server non lo metteva nell'avviso. Era rimasta fuori quando il nome e' stato aggiunto agli altri elementi. Senza questa correzione il nome compariva ricaricando la pagina ma non sull'area appena arrivata."
+                 "Un telefono spento restava acceso e lampeggiante nell'elenco, con scritto accanto \"visto l'ultima volta sei ore fa\": due informazioni che si contraddicevano, e quella in evidenza era la falsa. Ora la pagina, quando si ricollega al server, rilegge lo stato dei dispositivi invece di fidarsi di quello che ricordava.",
+                 "La risposta che conferma l'accoppiamento non porta piu' l'identificativo della sessione. E' l'unico messaggio che il server manda in chiaro - parte subito dopo lo scambio delle chiavi, quando la cifratura e' appena stata stabilita - e l'applicazione non ne aveva bisogno: l'identificativo lo prende dal codice da inquadrare. Veniva ricevuto e buttato. Un dato che nessuno legge non si trasmette, tanto meno su un broker che puo' essere pubblico.",
+                 "La cartella da cui il server distribuisce l'applicazione contiene ora la versione 8.1. Un telefono che chiede l'aggiornamento al server la riceve; la stessa versione e' sul Play Store."
              ]
 }

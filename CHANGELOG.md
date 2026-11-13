@@ -1,5 +1,71 @@
 # Sardroid Server — Changelog
 
+## 9.9.3 - 2026-11-13
+
+### Un dispositivo spento che risultava ancora in trasmissione
+
+- Un telefono spento restava acceso e lampeggiante nell'elenco, con
+  scritto accanto "visto l'ultima volta sei ore fa": due informazioni
+  che si contraddicevano, e quella in evidenza era la falsa. Ora la
+  pagina, quando si ricollega al server, rilegge lo stato dei
+  dispositivi invece di fidarsi di quello che ricordava.
+
+Succedeva dopo ogni interruzione - computer sospeso, rete che va via,
+riavvio del server. Mentre il collegamento era giu' la pagina non
+riceveva nulla, e gli avvisi passati nel frattempo sono persi: non si
+ripetono. Nel caso misurato il server aveva dichiarato il telefono
+spento in 310 millisecondi, ma la pagina si e' ricollegata un secondo
+e mezzo dopo quell'avviso e non lo ha mai visto. Nessun evento sarebbe
+arrivato a correggerla, perche' un telefono spento non manda niente.
+
+### Un dato in chiaro in meno nell'accoppiamento
+
+- La risposta che conferma l'accoppiamento non porta piu'
+  l'identificativo della sessione. E' l'unico messaggio che il server
+  manda in chiaro - parte subito dopo lo scambio delle chiavi, quando
+  la cifratura e' appena stata stabilita - e l'applicazione non ne
+  aveva bisogno: l'identificativo lo prende dal codice da inquadrare.
+  Veniva ricevuto e buttato. Un dato che nessuno legge non si
+  trasmette, tanto meno su un broker che puo' essere pubblico.
+
+Questo non nasconde la sessione a chi ascolta il broker: il suo
+identificativo e' nel nome di ogni messaggio successivo. Per le
+sessioni create dal 7 novembre in avanti quell'identificativo non
+contiene piu' il nome scelto dall'operatore, che e' la parte che conta - dire
+DOVE si cerca pesa piu' che dire quanti cercano. Le sessioni piu'
+vecchie lo portano ancora nel nome, e per cambiarlo occorre crearne
+una nuova e riaccoppiare i dispositivi.
+
+Provato con un accoppiamento reale da telefono: l'applicazione lo
+completa senza l'identificativo nella risposta.
+
+### L'applicazione distribuita
+
+- La cartella da cui il server distribuisce l'applicazione contiene ora
+  la versione 8.1. Un telefono che chiede l'aggiornamento al server la
+  riceve; la stessa versione e' sul Play Store.
+
+### Nessuna modifica, ma una verifica che vale registrare
+
+Si e' guardato cosa un estraneo collegato al broker puo' leggere. I
+contenuti sono cifrati: posizioni, chiamate di soccorso, fotografie,
+messaggi, percorsi, punti e aree. I nomi delle persone non passano di
+la': restano nel database del server.
+
+Dai nomi dei messaggi, che non sono cifrabili, si ricava quanti
+dispositivi ci sono in una sessione e quando entrano ed escono. Non chi
+sono, e per le sessioni create dal 7 novembre 2026 nemmeno il nome
+dell'operazione, che spesso e' il luogo. L'identificativo del
+dispositivo non viene da nulla del telefono: lo genera l'applicazione a
+caso e lo rinnova a ogni reinstallazione.
+
+Era stata ipotizzata una copertura anche di quell'identificativo
+(colonna `topic_uuid`, nel database da tempo e mai usata). Scartata: non
+toglierebbe il conteggio dei dispositivi, che e' il dato piu'
+significativo, e chiederebbe di cambiare i nomi dei messaggi
+concordati fra server e applicazione. Il motivo per cui la colonna resta
+vuota e' scritto accanto alla colonna stessa.
+
 ## 9.9.2 - 2026-11-09
 
 ### Le aree non dicevano chi le aveva disegnate
