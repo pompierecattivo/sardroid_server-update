@@ -1,5 +1,21 @@
 # Sardroid Server — Changelog
 
+## 9.9.6 - 2026-11-13
+
+### Si vede sempre come sta messo il server
+
+- Il contrassegno in basso a destra dice anche quando va tutto bene:
+  verde, fermo, "Aggiornato". Prima restava invisibile, e il nulla non
+  e' una risposta - un server all'ultima versione e una pagina che non
+  aveva ancora chiesto niente si somigliavano troppo. Gli stati
+  dichiarati sono ora tre e si riconoscono dal colore: viola che pulsa
+  se esiste una versione nuova, grigio fermo se il controllo non e'
+  riuscito, verde se non c'e' nulla da fare. Ne compare uno solo per
+  volta. Vale nelle tre lingue.
+- Anche una versione messa da parte lascia il verde acceso: non si
+  insiste con l'annuncio, ma non si torna al silenzio.
+
+
 ## 9.9.5 - 2026-11-13
 
 ### Il contrassegno dice di quale controllo si parla

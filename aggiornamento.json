@@ -1,12 +1,9 @@
 {
-    "versione":  "9.9.5",
+    "versione":  "9.9.6",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Quando il controllo degli aggiornamenti non riesce, il contrassegno in basso dice \"Controllo aggiornamenti non riuscito\". Prima diceva solo \"Controllo non riuscito\": in una barra dove convivono lo stato di Internet, del broker e del collegamento, non era detto a quale dei controlli si riferisse. Vale nelle tre lingue.",
-                 "Quando il collegamento al broker non parte, lo si legge nel diario insieme al motivo. Finora veniva scritto \"MQTT client connesso a broker esterno\" in ogni caso: la procedura di collegamento, davanti a un proxy non configurato o a nessuna strada praticabile, rinunciava annotandosi il motivo e usciva in silenzio, e chi la chiamava non aveva modo di accorgersene. Il diario diceva connesso mentre il contrassegno del broker, in alto, era rosso.",
-                 "Lo stesso valeva per l'avvio del broker interno da remoto, che rispondeva \"client connesso\" senza averlo verificato, e per il ricollegamento dopo un cambio di broker, che si dichiarava completato comunque. Ora entrambi riferiscono l'esito vero.",
-                 "Un collegamento che fallisce in modalita' broker interno ora si vede: prima non lasciava traccia ne' riuscendo ne' fallendo.",
-                 "Il diario non si riempie piu' di avvisi su connessioni chiuse dal browser. Ogni scheda chiusa e ogni sospensione della macchina ne lasciava uno, con tanto di traccia d'errore, pur non essendo un guasto: su tre giorni erano nove righe su dieci, e cio' che conta - avvii, broker, dispositivi - ci restava sepolto sotto."
+                 "Il contrassegno in basso a destra dice anche quando va tutto bene: verde, fermo, \"Aggiornato\". Prima restava invisibile, e il nulla non e' una risposta - un server all'ultima versione e una pagina che non aveva ancora chiesto niente si somigliavano troppo. Gli stati dichiarati sono ora tre e si riconoscono dal colore: viola che pulsa se esiste una versione nuova, grigio fermo se il controllo non e' riuscito, verde se non c'e' nulla da fare. Ne compare uno solo per volta. Vale nelle tre lingue.",
+                 "Anche una versione messa da parte lascia il verde acceso: non si insiste con l'annuncio, ma non si torna al silenzio."
              ]
 }
