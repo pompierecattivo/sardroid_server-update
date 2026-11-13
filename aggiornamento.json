@@ -1,10 +1,11 @@
 {
-    "versione":  "9.9.3",
+    "versione":  "9.9.4",
     "url":  "https://github.com/pompierecattivo/sardroid_server-update/releases/latest/download/SardroidServer.exe",
     "changelog_url":  "https://github.com/pompierecattivo/sardroid_server-update/blob/main/CHANGELOG.md",
     "note":  [
-                 "Un telefono spento restava acceso e lampeggiante nell'elenco, con scritto accanto \"visto l'ultima volta sei ore fa\": due informazioni che si contraddicevano, e quella in evidenza era la falsa. Ora la pagina, quando si ricollega al server, rilegge lo stato dei dispositivi invece di fidarsi di quello che ricordava.",
-                 "La risposta che conferma l'accoppiamento non porta piu' l'identificativo della sessione. E' l'unico messaggio che il server manda in chiaro - parte subito dopo lo scambio delle chiavi, quando la cifratura e' appena stata stabilita - e l'applicazione non ne aveva bisogno: l'identificativo lo prende dal codice da inquadrare. Veniva ricevuto e buttato. Un dato che nessuno legge non si trasmette, tanto meno su un broker che puo' essere pubblico.",
-                 "La cartella da cui il server distribuisce l'applicazione contiene ora la versione 8.1. Un telefono che chiede l'aggiornamento al server la riceve; la stessa versione e' sul Play Store."
+                 "Il controllo aggiornamenti ora usa il proxy configurato in Impostazioni -> Rete, credenziali comprese. Prima le cercava solo nell'ambiente del sistema e nel file di configurazione aziendale, che porta l'indirizzo del proxy ma nessuna credenziale: il server riceveva un rifiuto e nessun aggiornamento risultava mai disponibile.",
+                 "Quando il controllo non riesce lo si vede. Il contrassegno in basso dice \"Controllo non riuscito\", in grigio e fermo, e cliccandolo spiega che il sito degli aggiornamenti non e' stato raggiunto. Prima un controllo fallito e un server aggiornato davano la stessa schermata: un server rimasto indietro di mesi non si distingueva da uno all'ultima versione.",
+                 "Il server verifica da solo se esiste una versione piu' recente, una volta all'ora. Prima si guardava soltanto all'apertura della dashboard: in sala operativa una pagina resta aperta per settimane, nessuno la ricarica, e un aggiornamento pubblicato nel frattempo non si scopriva.",
+                 "Quando lo stato cambia, la pagina lo viene a sapere subito e accende il contrassegno. Non si apre nulla e non si avvisa: chi coordina una ricerca non va interrotto per una versione nuova. Vale anche al contrario, per un controllo che aveva smesso di riuscire e ha ripreso."
              ]
 }

@@ -1,5 +1,52 @@
 # Sardroid Server — Changelog
 
+## 9.9.4 - 2026-11-13
+
+Il server non vedeva gli aggiornamenti, e non lo diceva.
+
+### Dietro un proxy aziendale non si aggiornava, in silenzio
+
+- Il controllo aggiornamenti ora usa il proxy configurato in
+  Impostazioni -> Rete, credenziali comprese. Prima le cercava solo
+  nell'ambiente del sistema e nel file di configurazione aziendale, che
+  porta l'indirizzo del proxy ma nessuna credenziale: il server
+  riceveva un rifiuto e nessun aggiornamento risultava mai disponibile.
+
+Quelle credenziali l'operatore le aveva gia' scritte, e il server le
+usava per il broker e per le mappe: qui non arrivavano.
+- Quando il controllo non riesce lo si vede. Il contrassegno in basso
+  dice "Controllo non riuscito", in grigio e fermo, e cliccandolo
+  spiega che il sito degli aggiornamenti non e' stato raggiunto. Prima
+  un controllo fallito e un server aggiornato davano la stessa
+  schermata: un server rimasto indietro di mesi non si distingueva da
+  uno all'ultima versione.
+
+Chi esce in diretta continua a uscire in diretta: le impostazioni del
+server si consultano solo quando l'uscita diretta non funziona. Una
+macchina portata fuori sede, con il proxy ancora scritto nelle
+impostazioni, non ne resta prigioniera.
+
+Provato con le credenziali reali su questa rete: prima rifiuto 407,
+ora il controllo arriva a destinazione.
+
+### Si controlla ogni ora, non solo all'apertura
+
+- Il server verifica da solo se esiste una versione piu' recente, una
+  volta all'ora. Prima si guardava soltanto all'apertura della
+  dashboard: in sala operativa una pagina resta aperta per settimane,
+  nessuno la ricarica, e un aggiornamento pubblicato nel frattempo non
+  si scopriva.
+- Quando lo stato cambia, la pagina lo viene a sapere subito e accende
+  il contrassegno. Non si apre nulla e non si avvisa: chi coordina una
+  ricerca non va interrotto per una versione nuova. Vale anche al
+  contrario, per un controllo che aveva smesso di riuscire e ha
+  ripreso.
+
+Costa una richiesta a un file di 1,6 KB, ventiquattro volte al giorno.
+Il controllo dell'ora, che il server fa da sempre, ne fa dodici volte
+tante. Si parla alla pagina solo quando qualcosa cambia, non a ogni
+giro.
+
 ## 9.9.3 - 2026-11-13
 
 ### Un dispositivo spento che risultava ancora in trasmissione
