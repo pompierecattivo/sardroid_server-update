@@ -1,5 +1,38 @@
 # Sardroid Server — Changelog
 
+## 9.9.7 - 2026-11-14
+
+### Due guide all'uso, raggiungibili dal programma
+
+- In Impostazioni -> Info, accanto al collegamento verso sardroid.it,
+  ci sono due pulsanti nuovi: la guida al server, per chi coordina dalla
+  sala, e la guida all'app, da passare alle squadre. Sono pagine in rete
+  scritte per situazioni reali invece che per elenchi di comandi, con
+  scenari, esempi d'uso e una parte sulla sicurezza del sistema. Stanno
+  in Info e non nella dashboard per una ragione precisa: una guida letta
+  in sala operativa e' una guida letta troppo tardi, e quella barra
+  serve a coordinare. Vale nelle tre lingue.
+- La guida all'app e' nel server perche' serve a chi coordina per
+  girarla ai soccorritori, non per leggerla lui: e' un indirizzo da
+  copiare in un messaggio.
+
+### Il preset del broker con TLS era irraggiungibile
+
+- Nel Quick Setup dei broker pubblici c'e' ora anche "Mosquitto TLS",
+  che si collega a test.mosquitto.org sulla porta 8883 con la cifratura
+  attiva. La configurazione esisteva nel programma da tempo ma nessun
+  pulsante la richiamava: per provarla si doveva digitare a mano
+  indirizzo, porta e spunta, cioe' fare lo sforzo maggiore proprio per
+  la scelta piu' protetta.
+- Serve a una prova che prima non si poteva fare in fretta: se il TLS
+  passa dalla rete in cui si lavora. Certi firewall aziendali aprono il
+  traffico cifrato per ispezionarlo e lo interrompono, e il collegamento
+  resta appeso senza errori - il guasto peggiore da riconoscere.
+- Resta un broker pubblico, e l'avviso lo dice come per gli altri: il
+  TLS nasconde il contenuto a chi ascolta il filo, non rende quel broker
+  adatto a un'operazione reale. Per quella servono credenziali.
+
+
 ## 9.9.6 - 2026-11-13
 
 ### Si vede sempre come sta messo il server
