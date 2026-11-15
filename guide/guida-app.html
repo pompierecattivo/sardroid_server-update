@@ -497,7 +497,15 @@ td .min { font-family: var(--mono); font-size: 0.74rem; color: var(--inchiostro-
   /* blocchi corti: il browser puo' sempre tenerli uniti. Un riquadro
      spezzato lascia il titolo orfano in fondo a una pagina e tre righe
      di coda in cima alla successiva, che poi resta vuota. */
-  tr, li, .anello, .riquadro, .passi li { break-inside: avoid; }
+  tr, li, .anello, .riquadro, .passi li, .vocegesto { break-inside: avoid; }
+
+  /* Le righe di tabella: niente avoid sulla TABELLA. Oggi le tre stanno
+     in pagina, ma basta che un testo cresca perche' una superi l'altezza
+     utile, e allora il browser la manda tutta a pagina nuova lasciando il
+     vuoto sopra. Vincolo la penultima riga all'ultima: cosi' l'ultima non
+     scavalca da sola, e due righe il browser le accontenta sempre. */
+  thead { break-after: avoid; }
+  tbody tr:nth-last-child(2) { break-after: avoid; }
 
   /* la chiusura e il piede sono poche righe: una pagina tutta per loro
      e' carta sprecata. Basta non spezzarli. */
@@ -3362,6 +3370,33 @@ function linguaIniziale() {
     if (mq.addEventListener) { mq.addEventListener("change", reagisci); }
     else if (mq.addListener) { mq.addListener(reagisci); }
     if (mq.matches) { apriPerStampa(); }
+  }
+})();
+
+
+/* ---- il collegamento alla guida del server ----
+   Nel markup e' relativo ("guida-server.html"): cosi' funziona su
+   GitHub Pages e da una chiavetta senza rete, dove il file sta
+   accanto. Ma la stessa pagina vive anche come artifact su claude.ai,
+   dove quel file accanto non c'e'. Qui, se non siamo in nessuno dei due
+   posti buoni, lo faccio puntare all'indirizzo pieno. */
+(function () {
+  var PIENO = "https://pompierecattivo.github.io/sardroid_server-update/guide/guida-server.html";
+  function accanto() {
+    var p = location.protocol;
+    if (p === "file:") { return true; }           /* chiavetta */
+    return /\.github\.io$/.test(location.hostname); /* Pages */
+  }
+  function sistema() {
+    if (accanto()) { return; }
+    var a = document.querySelectorAll('a[href="guida-server.html"]');
+    for (var i = 0; i < a.length; i++) { a[i].setAttribute("href", PIENO); }
+  }
+  sistema();
+  /* la riscrittura di lingua rimette il markup del dizionario: risistemo */
+  var bb = document.querySelectorAll(".lingue button");
+  for (var i = 0; i < bb.length; i++) {
+    bb[i].addEventListener("click", function () { setTimeout(sistema, 0); });
   }
 })();
 
