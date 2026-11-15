@@ -1,5 +1,52 @@
 # Sardroid Server — Changelog
 
+## 9.9.8 - 2026-11-15
+
+### L'app nel server e' la 8.3
+
+- Il file di installazione dell'app che si scarica dalla dashboard e'
+  ora la versione 8.3. Chi la installa da qui ha gia' dentro il pulsante
+  che apre la guida al nuovo indirizzo, senza doverla aggiornare dopo.
+
+### Le guide hanno un indirizzo nostro
+
+- I due pulsanti in Impostazioni -> Info non portano piu' a una pagina
+  ospitata altrove: le guide stanno adesso su un indirizzo del progetto,
+  insieme agli aggiornamenti del programma. Chi preme il pulsante non si
+  accorge di niente, ma l'indirizzo e' nostro e non dipende piu' da un
+  servizio esterno - una guida gia' distribuita con la 9.9.7 non poteva
+  restare appesa a qualcosa su cui non abbiamo voce in capitolo.
+- Le stesse guide sono anche da stampare, in PDF e nelle tre lingue, allo
+  stesso indirizzo. E adesso sono complete: nei PDF di prima si leggevano
+  soltanto i titoli delle situazioni, mentre gli orari, i passi e i
+  riquadri non venivano stampati. Il difetto c'era da sempre e non si
+  vedeva guardando il programma, perche' a schermo funzionava tutto: si
+  vedeva solo aprendo il PDF. La guida al server e' passata da 20 a 30
+  pagine, quella all'app da 20 a 26.
+- La guida al server ha una settima situazione, la prima che non e' una
+  ricerca: un gruppo di persone che si sparpaglia in un bosco, senza
+  nessuno che comandi e senza una sala operativa dietro. Serve anche a
+  chi fa soccorso, perche' e' il posto dove il limite del broker
+  integrato si vede nudo: per cinque ore la mappa resta vuota e non c'e'
+  niente di rotto. Le sei situazioni di soccorso restano tutte, e
+  restano per prime.
+- Dice anche una cosa che prima non era scritta da nessuna parte: dove
+  non c'e' una sala operativa che guarda lo schermo, l'SOS dell'app non
+  e' un modo per chiedere aiuto. Serve a lasciare un punto con un'ora,
+  che si legge al ritorno; per l'aiuto restano il telefono e il 112.
+
+### Dentro, per chi ci lavora
+
+- I programmi che compongono le guide stanno adesso nel progetto, in
+  docs\guide\sorgente, e c'e' release-guide.bat accanto a release.bat
+  che le rigenera, le controlla nelle tre lingue - fermandosi senza
+  pubblicare se qualcosa manca - le pubblica e verifica che siano
+  raggiungibili. Prima quei programmi vivevano solo nella cartella di
+  lavoro di chi aveva scritto le guide, che prima o poi sparisce; e
+  senza un comando solo una correzione si dimentica, perche' le copie
+  pubblicate non si aggiornano piu' da sole.
+
+
 ## 9.9.7 - 2026-11-14
 
 ### Due guide all'uso, raggiungibili dal programma
