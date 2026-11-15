@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Guide Sardroid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Stessa tavolozza delle due guide: carta tecnica, inchiostro, rosso
+   soccorso. Questa pagina e' solo un ingresso - due porte e i PDF -
+   quindi resta corta e non prova a raccontare niente. */
+:root {
+  --carta: #f7f5f1; --carta-alta: #ffffff;
+  --inchiostro: #1c1a17; --inchiostro-tenue: #5c564d; --tratto: #ddd8ce;
+  --rosso: #c4342b; --rosso-tenue: rgba(196, 52, 43, 0.09);
+  --ombra: 0 1px 2px rgba(28,26,23,.05), 0 8px 24px -12px rgba(28,26,23,.14);
+  --titolo: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --testo: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --carta: #161513; --carta-alta: #211f1c;
+    --inchiostro: #efece6; --inchiostro-tenue: #a39d92; --tratto: #332f2a;
+    --rosso: #f4766c; --rosso-tenue: rgba(244,118,108,.13);
+    --ombra: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --carta: #161513; --carta-alta: #211f1c;
+  --inchiostro: #efece6; --inchiostro-tenue: #a39d92; --tratto: #332f2a;
+  --rosso: #f4766c; --rosso-tenue: rgba(244,118,108,.13);
+  --ombra: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--carta); color: var(--inchiostro); font-family: var(--testo);
+  font-size: 1rem; line-height: 1.65; margin: 0; -webkit-font-smoothing: antialiased; }
+.pagina { max-width: 46rem; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 3rem 4rem; }
+h1, h2 { font-family: var(--titolo); text-wrap: balance; line-height: 1.18; margin: 0; }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; }
+h2 { font-size: 1.15rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--rosso); }
+.occhiello { font-family: var(--mono); font-size: .7rem; text-transform: uppercase;
+  letter-spacing: .13em; color: var(--rosso); margin-bottom: .8rem; }
+.sottotitolo { font-size: 1.05rem; color: var(--inchiostro-tenue); margin-top: 1rem; }
+
+.porte { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: .8rem; margin-top: 2.4rem; }
+.porta { display: block; background: var(--carta-alta); border: 1px solid var(--tratto);
+  border-radius: 3px; box-shadow: var(--ombra); padding: 1.4rem; text-decoration: none;
+  color: inherit; min-width: 0; transition: border-color .14s; }
+.porta:hover { border-color: var(--rosso); }
+.porta:focus-visible { outline: 2px solid var(--rosso); outline-offset: 2px; }
+.porta .chi { font-family: var(--mono); font-size: .67rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--inchiostro-tenue); margin-bottom: .5rem; }
+.porta h2 { color: var(--rosso); }
+.porta p { font-size: .91rem; color: var(--inchiostro-tenue); margin-top: .5rem; }
+
+.carta { margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--tratto); }
+.carta h2 { font-size: 1rem; }
+.carta p { font-size: .9rem; color: var(--inchiostro-tenue); margin-top: .4rem; }
+.file { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .9rem; }
+.file a { font-family: var(--mono); font-size: .76rem; padding: .35rem .7rem;
+  border: 1px solid var(--tratto); border-radius: 2px; text-decoration: none;
+  color: var(--inchiostro-tenue); white-space: nowrap; }
+.file a:hover { border-color: var(--rosso); color: var(--inchiostro); }
+.file a:focus-visible { outline: 2px solid var(--rosso); outline-offset: 2px; }
+.file .et { font-family: var(--testo); font-size: .84rem; color: var(--inchiostro);
+  align-self: center; margin-right: .3rem; }
+
+.coda { margin-top: 3rem; padding-top: 1.3rem; border-top: 2px solid var(--inchiostro);
+  font-size: .85rem; color: var(--inchiostro-tenue); }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+  <div class="occhiello">Sardroid &middot; Guide all'uso</div>
+  <h1>Le due guide</h1>
+  <p class="sottotitolo">Sardroid è fatto di due metà: un server che tiene il quadro di una
+  ricerca, e un'app che sta nella tasca di chi cammina. Ciascuna ha la sua guida, scritta
+  per chi la usa davvero. Entrambe in italiano, inglese e spagnolo.</p>
+
+  <div class="porte">
+    <a class="porta" href="guida-server.html">
+      <div class="chi">per chi coordina, in sala</div>
+      <h2>Sardroid Server sul campo</h2>
+      <p>Sette situazioni raccontate dall'inizio alla fine, dodici gesti concreti, la scelta
+      del broker MQTT e cosa comporta, la sicurezza del sistema.</p>
+    </a>
+    <a class="porta" href="guida-app.html">
+      <div class="chi">per chi è in squadra, sul terreno</div>
+      <h2>SARDroid in tasca</h2>
+      <p>Cosa premere e come, le soglie dei gesti, cosa fare prima di uscire e cosa succede
+      quando il telefono resta senza campo.</p>
+    </a>
+  </div>
+
+  <div class="carta">
+    <h2>Da stampare</h2>
+    <p>Le stesse guide in PDF, per chi preferisce il foglio. Il contenuto è identico: su carta
+    le schede diventano capitoli, uno dopo l'altro.</p>
+    <div class="file">
+      <span class="et">Server</span>
+      <a href="Sardroid-Server-guida-IT.pdf">IT</a>
+      <a href="Sardroid-Server-guida-EN.pdf">EN</a>
+      <a href="Sardroid-Server-guida-ES.pdf">ES</a>
+    </div>
+    <div class="file">
+      <span class="et">App</span>
+      <a href="SARDroid-app-guida-IT.pdf">IT</a>
+      <a href="SARDroid-app-guida-EN.pdf">EN</a>
+      <a href="SARDroid-app-guida-ES.pdf">ES</a>
+    </div>
+  </div>
+
+  <footer class="coda">
+    <p>Guide aggiornate al 15 novembre 2026. Sono fotografie di come funziona il programma
+    oggi: se l'avete aggiornato da allora, qualche nome sullo schermo può essere cambiato.</p>
+  </footer>
+
+</div>
+</body>
+</html>
