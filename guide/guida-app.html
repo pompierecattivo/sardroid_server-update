@@ -981,7 +981,7 @@ td .min { font-family: var(--mono); font-size: 0.74rem; color: var(--inchiostro-
 <!-- ============ SCENARI ============ -->
 <div class="pannello" role="tabpanel" id="p-scenari" aria-labelledby="t-scenari" hidden>
   <section>
-    <h2 data-i18n="k078">Otto situazioni vere</h2>
+    <h2 data-i18n="k078">Situazioni vere</h2>
     <p class="intro-sez no-stampa" data-i18n="k079">Aprine una alla volta. Ognuna dice cosa premi, in che ordine, e cosa vedi
     sullo schermo.</p>
     <p class="intro-sez solo-stampa-riga" data-i18n="k079p">Ognuna dice cosa premi, in che ordine, e cosa vedi
@@ -1285,6 +1285,62 @@ td .min { font-family: var(--mono); font-size: 0.74rem; color: var(--inchiostro-
             link (anche Drive o Dropbox). Dal server l'integrità del file viene verificata; da un link
             esterno no, quindi quella strada va usata con materiale di cui ti fidi.</span>
     </div>
+        </div>
+      </details>
+
+      <details class="scenario">
+        <summary data-i18n="k338">
+          <span class="num">09</span>
+          <span class="titolo-sc"><span class="tit-testo" data-i18n="x053">A funghi con gli amici, nessuno che comanda</span>
+            <span class="luogo" data-i18n="x054">mattina &middot; bosco fitto, il portatile resta in macchina</span></span>
+          <span class="piu">+</span>
+        </summary>
+        <div class="corpo">
+          <p data-i18n="k339">Siete in sei, nessuno &egrave; il capo, non c'&egrave; nessuno da cercare. Vi sparpagliate e vi
+          ritrovate alla macchina alle due. Uno del gruppo porta il portatile e lo lascia acceso nel
+          bagagliaio. Dal tuo lato, con il telefono in tasca, cambiano tre cose rispetto a una ricerca.</p>
+          <ol class="passi">
+            <li><span class="ora">08:15</span><div><b data-i18n="k340">Ti agganci come sempre, appoggiato al cofano</b>
+              <span class="nota" data-i18n="k341">Il QR sul portatile, dieci minuti per tutti e sei, una volta sola. Da l&igrave;
+              in avanti il telefono resta agganciato anche le volte dopo.</span></div></li>
+            <li><span class="ora">08:20</span><div><b data-i18n="k342">Accendi la traccia, e nessuno ti dice dove andare</b>
+              <span class="nota" data-i18n="k343">Qui non ci sono zone assegnate: ve lo dite a voce. La traccia la accendi lo stesso,
+              ed &egrave; l'unica cosa che conta di questa giornata.</span></div></li>
+            <li><span class="ora">08:35</span><div><b data-i18n="k344">Cinquanta metri dentro il bosco, diventi grigio</b>
+              <span class="nota" data-i18n="k345">Nella card Sessione leggi <strong>&quot;Offline&quot;</strong>. &Egrave; la condizione normale
+              di oggi, non un guasto: il portatile in macchina fa da <strong>broker MQTT</strong> con
+              il suo Wi&#8209;Fi, che sotto le piante arriva a poche decine di metri. Non c'&egrave;
+              niente da riparare e niente da premere.</span></div></li>
+            <li><span class="ora">10:00</span><div><b data-i18n="k346">Il telefono continua a lavorare in tasca</b>
+              <span class="nota" data-i18n="k347">La traccia si registra lo stesso, con le ore vere. Foto e waypoint pure: restano
+              nel telefono e aspettano. Non devi tenerlo in mano n&eacute; guardarlo.</span></div></li>
+            <li><span class="ora">13:40</span><div><b data-i18n="k348">Rientri, e tutto parte da solo</b>
+              <span class="nota" data-i18n="k349">Appena il telefono rivede il Wi&#8209;Fi della macchina, cinque ore di cammino si
+              riversano sulla mappa in pochi secondi, con l'ora in cui sei passato davvero. Tu non
+              premi niente.</span></div></li>
+            <li><span class="ora">14:20</span><div><b data-i18n="k350">Manca uno, e la sua traccia dice da dove ripartire</b>
+              <span class="nota" data-i18n="k351">La sua si ferma alle 11:50 su un crinale a nord. Non &egrave; successo niente: da l&igrave;
+              in poi &egrave; andato dove il telefono non ha pi&ugrave; visto il Wi&#8209;Fi, e quel pezzo &egrave;
+              ancora nel suo telefono. Non sapete dov'&egrave; adesso, sapete dov'era alle 11:50 e in che
+              direzione andava. Si sale da quella parte invece che a caso.</span></div></li>
+          </ol>
+          <div class="riquadro verde">
+            <b data-i18n="k352">Perch&eacute; grigio tutto il giorno non &egrave; un problema</b><span class="corpo-riq" data-i18n="k353">La traccia non ha bisogno di nessuno per essere registrata: il telefono scrive in
+            tasca e consegna al ritorno. &Egrave; la stessa cosa che fa una squadra fuori copertura in una
+            ricerca, solo che qui dura tutto il giorno invece di mezz'ora. Con un broker raggiungibile
+            da Internet, e un minimo di campo, le tracce arriverebbero man mano e alle 11:50 si sarebbe
+            visto subito che uno si stava allontanando &mdash; vedi <a href="#sicurezza">Il broker MQTT</a>.</span>
+          </div>
+          <div class="riquadro">
+            <b data-i18n="k354">Qui l'SOS non chiama nessuno</b><span class="corpo-riq" data-i18n="k355">In una ricerca l'SOS arriva in sala operativa, dove qualcuno guarda lo schermo. Qui
+            arriverebbe a un portatile chiuso in una macchina, e solo se tu fossi dentro il raggio del
+            suo Wi&#8209;Fi &mdash; cio&egrave; quasi mai. Se lo premi fuori copertura il telefono non lo
+            perde: riprova ogni trenta secondi con la posizione aggiornata, e continua anche se lo
+            riavvii, finch&eacute; non riceve conferma. Ma la conferma arriva quando rientri, non quando
+            serve. <strong>In una giornata cos&igrave; l'SOS dell'app non &egrave; un modo per chiedere aiuto:
+            per quello restano il telefono e il 112.</strong> Serve a lasciare un punto con un'ora, che
+            si legge al ritorno.</span>
+          </div>
         </div>
       </details>
 
@@ -1678,6 +1734,26 @@ var DIZ = {
     d_scaduta: "Passati 5 secondi senza la seconda conferma: il cursore è tornato indietro. Niente è partito. Si ricomincia dal primo scorrimento."
   },
   en: {
+    k338: "<span class=\"num\">09</span> <span class=\"titolo-sc\">Mushroom picking with friends, nobody in charge <span class=\"luogo\">morning &middot; thick woods, the laptop stays in the car</span></span> <span class=\"piu\">+</span>",
+    k339: "There are six of you, nobody is in charge, and there is nobody to search for. You spread out and meet back at the car at two. One of you brings the laptop and leaves it running in the boot. From your side, with the phone in your pocket, three things are different from a search.",
+    k340: "You pair as always, leaning on the bonnet",
+    k341: "The QR code on the laptop, ten minutes for all six, once only. From then on the phone stays paired for the next times too.",
+    k342: "You start the track, and nobody tells you where to go",
+    k343: "There are no assigned zones here: you sort it out by talking. You start the track anyway, and it is the one thing that matters today.",
+    k344: "Fifty metres into the woods, you turn grey",
+    k345: "The Session card reads <strong>&quot;Offline&quot;</strong>. That is today's normal condition, not a fault: the laptop in the car acts as the <strong>MQTT broker</strong> over its own Wi&#8209;Fi, which under the trees reaches a few tens of metres. There is nothing to fix and nothing to press.",
+    k346: "The phone keeps working in your pocket",
+    k347: "The track records all the same, with the real times. Photos and waypoints too: they stay in the phone and wait. You do not need to hold it or look at it.",
+    k348: "You come back, and everything goes on its own",
+    k349: "As soon as the phone sees the car's Wi&#8209;Fi again, five hours of walking pour onto the map in a few seconds, with the time you actually passed. You press nothing.",
+    k350: "One is missing, and their track says where to start from",
+    k351: "Theirs stops at 11:50 on a ridge to the north. Nothing happened: from there on they went where the phone never saw the Wi&#8209;Fi again, and that part is still in their phone. You do not know where they are now; you know where they were at 11:50 and which way they were heading. You walk up that way instead of at random.",
+    k352: "Why being grey all day is not a problem",
+    k353: "The track does not need anybody in order to be recorded: the phone writes in your pocket and hands over on the way back. It is the same thing a team out of coverage does during a search, only here it lasts all day instead of half an hour. With a broker reachable from the Internet, and a little signal, the tracks would have arrived as they went, and at 11:50 you would have seen straight away that one of you was moving away &mdash; see <a href=\"#sicurezza\">The MQTT broker</a>.",
+    k354: "Here the SOS calls nobody",
+    k355: "In a search the SOS reaches the control room, where somebody is watching the screen. Here it would reach a laptop shut inside a car, and only if you were within range of its Wi&#8209;Fi &mdash; which is almost never. If you press it out of coverage the phone does not lose it: it retries every thirty seconds with an updated position, and keeps going even if you restart it, until it gets confirmation. But the confirmation arrives when you come back, not when you need it. <strong>On a day like this the app's SOS is not a way to call for help: for that, the phone and the emergency number remain.</strong> It is there to leave a point with a time on it, to be read on the way back.",
+    x053: "Mushroom picking with friends, nobody in charge",
+    x054: "morning &middot; thick woods, the laptop stays in the car",
     c_conferma: "CONFIRM →",
     c_inviato_sos: "✓ SOS SENT",
     c_inviato_traccia: "✓ RECORDING",
@@ -1769,7 +1845,7 @@ var DIZ = {
     k075: "confirm",
     k076: "3 vertices",
     k077: "If a gesture does not take",
-    k078: "Eight real situations",
+    k078: "Real situations",
     k079: "Open one at a time. Each one tells you what you press, in what order, and what you see on the screen.",
     k079p: "Each one tells you what you press, in what order, and what you see on the screen.",
     k080: "<span class=\"num\">01</span> <span class=\"titolo-sc\">First day: they hand you the phone <span class=\"luogo\">at the station &middot; before going out</span></span> <span class=\"piu\">+</span>",
@@ -2175,6 +2251,26 @@ var DIZ = {
     y015: "state"
   },
   es: {
+    k338: "<span class=\"num\">09</span> <span class=\"titolo-sc\">De setas con los amigos, nadie al mando <span class=\"luogo\">mañana &middot; bosque espeso, el portátil se queda en el coche</span></span> <span class=\"piu\">+</span>",
+    k339: "Sois seis, nadie manda, y no hay a nadie a quien buscar. Os separáis y quedáis en el coche a las dos. Uno del grupo lleva el portátil y lo deja encendido en el maletero. Desde tu lado, con el teléfono en el bolsillo, cambian tres cosas respecto a una búsqueda.",
+    k340: "Te asocias como siempre, apoyado en el capó",
+    k341: "El QR en el portátil, diez minutos para los seis, una sola vez. A partir de ahí el teléfono sigue asociado también las veces siguientes.",
+    k342: "Enciendes la ruta, y nadie te dice dónde ir",
+    k343: "Aquí no hay zonas asignadas: os lo decís de viva voz. La ruta la enciendes igual, y es lo único que cuenta en este día.",
+    k344: "Cincuenta metros dentro del bosque, te pones gris",
+    k345: "En la tarjeta Sesión lees <strong>&quot;Sin conexión&quot;</strong>. Es la condición normal de hoy, no una avería: el portátil en el coche hace de <strong>broker MQTT</strong> con su propio Wi&#8209;Fi, que bajo los árboles llega a unas pocas decenas de metros. No hay nada que arreglar ni nada que pulsar.",
+    k346: "El teléfono sigue trabajando en el bolsillo",
+    k347: "La ruta se registra igual, con las horas reales. Las fotos y los waypoints también: se quedan en el teléfono y esperan. No hace falta tenerlo en la mano ni mirarlo.",
+    k348: "Vuelves, y todo sale solo",
+    k349: "En cuanto el teléfono vuelve a ver el Wi&#8209;Fi del coche, cinco horas de camino se vuelcan en el mapa en unos segundos, con la hora en que pasaste de verdad. Tú no pulsas nada.",
+    k350: "Falta uno, y su ruta dice por dónde empezar",
+    k351: "La suya se detiene a las 11:50 en una cresta al norte. No ha pasado nada: de ahí en adelante fue donde el teléfono ya no vio el Wi&#8209;Fi, y esa parte sigue en su teléfono. No sabéis dónde está ahora; sabéis dónde estaba a las 11:50 y en qué dirección iba. Se sube por ahí en vez de al azar.",
+    k352: "Por qué estar gris todo el día no es un problema",
+    k353: "La ruta no necesita a nadie para registrarse: el teléfono escribe en el bolsillo y entrega al volver. Es lo mismo que hace un equipo fuera de cobertura en una búsqueda, solo que aquí dura todo el día en vez de media hora. Con un broker alcanzable desde Internet, y un mínimo de cobertura, las rutas habrían ido llegando y a las 11:50 se habría visto enseguida que uno se alejaba &mdash; ver <a href=\"#sicurezza\">El broker MQTT</a>.",
+    k354: "Aquí el SOS no llama a nadie",
+    k355: "En una búsqueda el SOS llega a la sala de operaciones, donde alguien mira la pantalla. Aquí llegaría a un portátil cerrado en un coche, y solo si estuvieras dentro del alcance de su Wi&#8209;Fi &mdash; es decir, casi nunca. Si lo pulsas fuera de cobertura el teléfono no lo pierde: reintenta cada treinta segundos con la posición actualizada, y sigue aunque lo reinicies, hasta que recibe confirmación. Pero la confirmación llega cuando vuelves, no cuando hace falta. <strong>En un día así el SOS de la app no es una forma de pedir ayuda: para eso quedan el teléfono y el número de emergencias.</strong> Sirve para dejar un punto con una hora, que se lee al volver.",
+    x053: "De setas con los amigos, nadie al mando",
+    x054: "mañana &middot; bosque espeso, el portátil se queda en el coche",
     c_conferma: "CONFIRMAR →",
     c_inviato_sos: "✓ SOS ENVIADO",
     c_inviato_traccia: "✓ ACTIVA",
@@ -2266,7 +2362,7 @@ var DIZ = {
     k075: "confirmar",
     k076: "3 vértices",
     k077: "Si un gesto no responde",
-    k078: "Ocho situaciones reales",
+    k078: "Situaciones reales",
     k079: "Abre una a la vez. Cada una dice qué pulsas, en qué orden, y qué ves en la pantalla.",
     k079p: "Cada una dice qué pulsas, en qué orden, y qué ves en la pantalla.",
     k080: "<span class=\"num\">01</span> <span class=\"titolo-sc\">Primer día: te entregan el teléfono <span class=\"luogo\">en el cuartel &middot; antes de salir</span></span> <span class=\"piu\">+</span>",
