@@ -10,7 +10,11 @@
 <style>
 /* Stessa tavolozza delle due guide: carta tecnica, inchiostro, rosso
    soccorso. Questa pagina e' solo un ingresso - due porte e i PDF -
-   quindi resta corta e non prova a raccontare niente. */
+   quindi resta corta e non prova a raccontare niente.
+
+   Tre lingue come le guide a cui porta: una pagina d'ingresso in
+   italiano davanti a guide tradotte manderebbe via chi non lo legge
+   prima ancora di fargli vedere che esiste la sua lingua. */
 :root {
   --carta: #f7f5f1; --carta-alta: #ffffff;
   --inchiostro: #1c1a17; --inchiostro-tenue: #5c564d; --tratto: #ddd8ce;
@@ -53,6 +57,16 @@ a { color: var(--rosso); }
   letter-spacing: .13em; color: var(--rosso); margin-bottom: .8rem; }
 .sottotitolo { font-size: 1.05rem; color: var(--inchiostro-tenue); margin-top: 1rem; }
 
+/* selettore di lingua, come nelle due guide */
+.lingue { display: flex; gap: .3rem; margin-top: 1.4rem; }
+.lingue button { font-family: var(--mono); font-size: .76rem; padding: .35rem .7rem;
+  background: transparent; color: var(--inchiostro-tenue); border: 1px solid var(--tratto);
+  border-radius: 2px; cursor: pointer; letter-spacing: .06em; }
+.lingue button:hover { border-color: var(--rosso); color: var(--inchiostro); }
+.lingue button[aria-pressed="true"] { background: var(--inchiostro);
+  border-color: var(--inchiostro); color: var(--carta); }
+.lingue button:focus-visible { outline: 2px solid var(--rosso); outline-offset: 2px; }
+
 .porte { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
   gap: .8rem; margin-top: 2.4rem; }
 .porta { display: block; background: var(--carta-alta); border: 1px solid var(--tratto);
@@ -84,39 +98,45 @@ a { color: var(--rosso); }
 <body>
 <div class="pagina">
 
-  <div class="occhiello">Sardroid &middot; Guide all'uso</div>
-  <h1>Le due guide</h1>
-  <p class="sottotitolo">Sardroid Ã¨ fatto di due metÃ : un server che tiene il quadro di una
-  ricerca, e un'app che sta nella tasca di chi cammina. Ciascuna ha la sua guida, scritta
-  per chi la usa davvero. Entrambe in italiano, inglese e spagnolo.</p>
+  <div class="occhiello" data-t="occhiello">Sardroid &middot; Guide all'uso</div>
+  <h1 data-t="titolo">Le due guide</h1>
+  <p class="sottotitolo" data-t="sottotitolo">Sardroid è fatto di due metà: un server che tiene
+  il quadro di una ricerca, e un'app che sta nella tasca di chi cammina. Ciascuna ha la sua
+  guida, scritta per chi la usa davvero. Entrambe in italiano, inglese e spagnolo.</p>
+
+  <div class="lingue" role="group" aria-label="Lingua / Language / Idioma">
+    <button type="button" data-l="it" aria-pressed="true" lang="it" title="Italiano">IT</button>
+    <button type="button" data-l="en" aria-pressed="false" lang="en" title="English">EN</button>
+    <button type="button" data-l="es" aria-pressed="false" lang="es" title="Español">ES</button>
+  </div>
 
   <div class="porte">
     <a class="porta" href="guida-server.html">
-      <div class="chi">per chi coordina, in sala</div>
-      <h2>Sardroid Server sul campo</h2>
-      <p>Sette situazioni raccontate dall'inizio alla fine, dodici gesti concreti, la scelta
-      del broker MQTT e cosa comporta, la sicurezza del sistema.</p>
+      <div class="chi" data-t="srv_chi">per chi coordina, in sala</div>
+      <h2 data-t="srv_tit">Sardroid Server sul campo</h2>
+      <p data-t="srv_txt">Sette situazioni raccontate dall'inizio alla fine, dodici gesti
+      concreti, la scelta del broker MQTT e cosa comporta, la sicurezza del sistema.</p>
     </a>
     <a class="porta" href="guida-app.html">
-      <div class="chi">per chi Ã¨ in squadra, sul terreno</div>
-      <h2>SARDroid in tasca</h2>
-      <p>Cosa premere e come, le soglie dei gesti, cosa fare prima di uscire e cosa succede
-      quando il telefono resta senza campo.</p>
+      <div class="chi" data-t="app_chi">per chi è in squadra, sul terreno</div>
+      <h2 data-t="app_tit">SARDroid in tasca</h2>
+      <p data-t="app_txt">Cosa premere e come, le soglie dei gesti, cosa fare prima di uscire
+      e cosa succede quando il telefono resta senza campo.</p>
     </a>
   </div>
 
   <div class="carta">
-    <h2>Da stampare</h2>
-    <p>Le stesse guide in PDF, per chi preferisce il foglio. Il contenuto Ã¨ identico: su carta
-    le schede diventano capitoli, uno dopo l'altro.</p>
+    <h2 data-t="pdf_tit">Da stampare</h2>
+    <p data-t="pdf_txt">Le stesse guide in PDF, per chi preferisce il foglio. Il contenuto è
+    identico: su carta le schede diventano capitoli, uno dopo l'altro.</p>
     <div class="file">
-      <span class="et">Server</span>
+      <span class="et" data-t="et_srv">Server</span>
       <a href="Sardroid-Server-guida-IT.pdf">IT</a>
       <a href="Sardroid-Server-guida-EN.pdf">EN</a>
       <a href="Sardroid-Server-guida-ES.pdf">ES</a>
     </div>
     <div class="file">
-      <span class="et">App</span>
+      <span class="et" data-t="et_app">App</span>
       <a href="SARDroid-app-guida-IT.pdf">IT</a>
       <a href="SARDroid-app-guida-EN.pdf">EN</a>
       <a href="SARDroid-app-guida-ES.pdf">ES</a>
@@ -124,10 +144,115 @@ a { color: var(--rosso); }
   </div>
 
   <footer class="coda">
-    <p>Guide aggiornate al 16 novembre 2026. Sono fotografie di come funziona il programma
-    oggi: se l'avete aggiornato da allora, qualche nome sullo schermo puÃ² essere cambiato.</p>
+    <p data-t="coda">Guide aggiornate al 16 novembre 2026. Sono fotografie di come funziona il
+    programma oggi: se l'avete aggiornato da allora, qualche nome sullo schermo può essere
+    cambiato.</p>
   </footer>
 
 </div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Le tre lingue. L'italiano e' gia' nel markup e fa da riserva: se una
+     chiave mancasse, resta l'italiano invece di sparire. */
+  var D = {
+    en: {
+      occhiello: "Sardroid · User guides",
+      titolo: "The two guides",
+      sottotitolo: "Sardroid is made of two halves: a server that holds the picture of a " +
+        "search, and an app that sits in the pocket of whoever is walking. Each has its own " +
+        "guide, written for the people who actually use it. Both in Italian, English and Spanish.",
+      srv_chi: "for whoever coordinates, in the control room",
+      srv_tit: "Sardroid Server in the field",
+      srv_txt: "Seven situations told from beginning to end, twelve concrete actions, the " +
+        "choice of MQTT broker and what it entails, the security of the system.",
+      app_chi: "for whoever is on a team, on the ground",
+      app_tit: "SARDroid in your pocket",
+      app_txt: "What to press and how, the thresholds of each gesture, what to do before " +
+        "setting out and what happens when the phone loses signal.",
+      pdf_tit: "To print",
+      pdf_txt: "The same guides as PDFs, for anyone who prefers paper. The content is " +
+        "identical: on paper the tabs become chapters, one after another.",
+      et_srv: "Server",
+      et_app: "App",
+      coda: "Guides updated on 16 November 2026. They are snapshots of how the software works " +
+        "today: if you have updated it since, some names on screen may have changed."
+    },
+    es: {
+      occhiello: "Sardroid · Guías de uso",
+      titolo: "Las dos guías",
+      sottotitolo: "Sardroid está hecho de dos mitades: un servidor que mantiene el cuadro " +
+        "de una búsqueda, y una aplicación que va en el bolsillo de quien camina. Cada " +
+        "una tiene su guía, escrita para quien la usa de verdad. Ambas en italiano, " +
+        "inglés y español.",
+      srv_chi: "para quien coordina, en la sala",
+      srv_tit: "Sardroid Server sobre el terreno",
+      srv_txt: "Siete situaciones contadas de principio a fin, doce gestos concretos, la " +
+        "elección del bróker MQTT y lo que implica, la seguridad del sistema.",
+      app_chi: "para quien está en un equipo, sobre el terreno",
+      app_tit: "SARDroid en el bolsillo",
+      app_txt: "Qué pulsar y cómo, los umbrales de los gestos, qué hacer antes de " +
+        "salir y qué ocurre cuando el teléfono se queda sin cobertura.",
+      pdf_tit: "Para imprimir",
+      pdf_txt: "Las mismas guías en PDF, para quien prefiere el papel. El contenido es " +
+        "idéntico: en papel las pestañas se convierten en capítulos, uno tras otro.",
+      et_srv: "Servidor",
+      et_app: "App",
+      coda: "Guías actualizadas al 16 de noviembre de 2026. Son fotografías de cómo " +
+        "funciona el programa hoy: si lo habéis actualizado desde entonces, algunos nombres " +
+        "en pantalla pueden haber cambiado."
+    }
+  };
+
+  /* L'italiano com'e' scritto nel markup, preso una volta sola all'avvio:
+     e' la riserva a cui si torna scegliendo IT. */
+  var ITA = {};
+  var nodi = document.querySelectorAll("[data-t]");
+  for (var i = 0; i < nodi.length; i++) {
+    ITA[nodi[i].getAttribute("data-t")] = nodi[i].innerHTML;
+  }
+
+  function applica(l) {
+    var d = (l === "it") ? ITA : D[l];
+    if (!d) { return; }
+    for (var i = 0; i < nodi.length; i++) {
+      var k = nodi[i].getAttribute("data-t");
+      var v = (l === "it") ? ITA[k] : d[k];
+      if (v) { nodi[i].innerHTML = v; }
+    }
+    document.documentElement.setAttribute("lang", l);
+    var b = document.querySelectorAll(".lingue button[data-l]");
+    for (var j = 0; j < b.length; j++) {
+      b[j].setAttribute("aria-pressed", b[j].getAttribute("data-l") === l ? "true" : "false");
+    }
+    try { localStorage.setItem("guide-lingua", l); } catch (e) { /* ignora */ }
+  }
+
+  /* La lingua: prima quella chiesta nell'indirizzo, poi quella scelta la
+     volta scorsa, poi quella del browser. Come nelle due guide. */
+  function scegli() {
+    var q = (location.search.match(/[?&]lang=(it|en|es)\b/i) || [])[1];
+    if (q) { return q.toLowerCase(); }
+    try {
+      var s = localStorage.getItem("guide-lingua");
+      if (s === "it" || s === "en" || s === "es") { return s; }
+    } catch (e) { /* ignora */ }
+    var n = (navigator.language || "it").slice(0, 2).toLowerCase();
+    return (n === "en" || n === "es") ? n : "it";
+  }
+
+  var sel = document.querySelector(".lingue");
+  if (sel) {
+    sel.addEventListener("click", function (ev) {
+      var b = ev.target.closest("button[data-l]");
+      if (b) { applica(b.getAttribute("data-l")); }
+    });
+  }
+
+  applica(scegli());
+})();
+</script>
 </body>
 </html>
